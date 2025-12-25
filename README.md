@@ -5,30 +5,33 @@ A sandbox for refining intuition on Deep Learning architectures and researching 
 ## Roadmap
 
 ### 1. Architectural Mechanics (/mechanics)
-Low-level implementations to analyze signal flow and inductive biases.
-- [ ] **CNNs:** Analysis of translational invariance and receptive fields.
-- [ ] **Autoencoders:** Latent space compression and manifold visualization.
-- [ ] **Dense Layers:** Information mixing dynamics.
+Focus on signal flow, inductive biases, and information processing.
+- **The Mixer (Dense Layers):** Analysis of information mixing, saturation, and layer width dynamics.
+- **The Pipe (ResNets / Skip Connections):** Gradient flow experiments and residual learning mechanics.
+- **Visual Extraction (CNNs):** Spatial patterns, receptive fields, and translational invariance.
 
 ### 2. Memory Systems & State (/memory)
-Prototyping stateful architectures and sequence modeling.
-- [ ] **RNNs:** Gradient flow analysis and state degradation.
-- [ ] **Gating Mechanisms:** Implementing selection heuristics (LSTM/GRU style).
-- [ ] **State Space Models (SSMs):** Experiments with linear recurrence (Mamba/RWKV).
+Prototyping how networks compress and retain information over time.
+- **RNNs & Gating:** Analyzing state degradation and implementing selection heuristics (LSTM/GRU).
+- **Linear Recurrence (Mamba / SSMs):** Experiments with State Space Models for efficient constant-state memory.
+- **Autoencoders:** Understanding the bottleneck effect and latent space manifold representation.
 
-### 3. Research: Test-Time Training (/ttt)
-Experimental dynamic architectures that adapt during inference.
-- [ ] **Hebbian learning rules** implementation.
-- [ ] **Fast weights** and hypernetworks.
-- [ ] **Custom differentiable memory modules.**
+### 3. Dynamic Architectures & TTT (/ttt)
+Experimental systems where weights and states adapt during inference.
+- **The Fast Multiplier (Hypernetworks / Fast Weights):** Implementing networks that generate weights for other layers at runtime.
+- **Hebbian Learning:** Integrating activity-based weight updates within the forward pass.
+- **Test-Time Training (TTT):** Developing self-supervised loops for inference-time adaptation.
 
 ## Setup
 
-This project uses uv for modern dependency management and reproducibility.
+This project uses [uv](https://github.com/astral-sh/uv) for modern dependency management and reproducibility.
 
 ```bash
-# 1. Sync dependencies (creates .venv based on uv.lock)
+# 1. Install uv (if you don't have it)
+# curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# 2. Sync dependencies (creates .venv based on uv.lock)
 uv sync
 
-# 2. Run experiments
+# 3. Run experiments
 uv run python <path/to/script.py>
