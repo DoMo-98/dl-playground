@@ -5,22 +5,22 @@ A sandbox for refining intuition on Deep Learning architectures and researching 
 ## Roadmap
 
 ### 1. Architectural Mechanics (/mechanics)
-Focus on signal flow, inductive biases, and information processing.
-- **The Mixer (Dense Layers):** Analysis of information mixing, saturation, and layer width dynamics.
-- **The Pipe (ResNets / Skip Connections):** Gradient flow experiments and residual learning mechanics.
-- **Visual Extraction (CNNs):** Spatial patterns, receptive fields, and translational invariance.
+Low-level implementations to analyze signal flow and inductive biases.
+- [ ] **Dense Networks:** Perceptron and MLP implementations.
+- [ ] **Stable Training:** Initialization (Xavier/He), activations (ReLU/GELU), regularization (dropout, weight decay), normalization (BatchNorm/LayerNorm), and residual connections.
+- [ ] **CNNs:** ResNet architecture.
+- [ ] **Autoencoders:** Latent space compression and manifold visualization.
 
-### 2. Memory Systems & State (/memory)
-Prototyping how networks compress and retain information over time.
-- **RNNs & Gating:** Analyzing state degradation and implementing selection heuristics (LSTM/GRU).
-- **Linear Recurrence (Mamba / SSMs):** Experiments with State Space Models for efficient constant-state memory.
-- **Autoencoders:** Understanding the bottleneck effect and latent space manifold representation.
+### 2. Sequence & Memory (/memory)
+Prototyping stateful architectures and sequence modeling.
+- [ ] **RNNs/LSTMs:** State management and Backpropagation Through Time (BPTT).
+- [ ] **Transformers:** Multi-head attention mechanisms.
+- [ ] **Titans:** Long-term memory architectures.
 
-### 3. Dynamic Architectures & TTT (/ttt)
-Experimental systems where weights and states adapt during inference.
-- **The Fast Multiplier (Hypernetworks / Fast Weights):** Implementing networks that generate weights for other layers at runtime.
-- **Hebbian Learning:** Integrating activity-based weight updates within the forward pass.
-- **Test-Time Training (TTT):** Developing self-supervised loops for inference-time adaptation.
+### 3. Research: Optimization & Meta-Learning (/research)
+Advanced optimization techniques and nested learning loops.
+- [ ] **Meta-Learning:** Bilevel and nested optimization concepts.
+- [ ] **Nested Learning:** Experiments with Hope.
 
 ## Setup
 
