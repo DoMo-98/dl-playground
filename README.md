@@ -22,6 +22,18 @@ Advanced optimization techniques and nested learning loops.
 - [ ] **Meta-Learning:** Bilevel and nested optimization concepts.
 - [ ] **Nested Learning:** Experiments with Hope.
 
+## Web Planning
+
+Initial documentation for the interactive learning web lives in:
+
+- `docs/web/README.md`
+- `docs/web/product-definition.md`
+- `docs/web/content-map.md`
+- `docs/web/mvp.md`
+- `docs/web/architecture.md`
+- `docs/web/backlog.md`
+- `docs/web/scaffold-plan.md`
+
 ## Setup
 
 This project uses [uv](https://github.com/astral-sh/uv) for modern dependency management and reproducibility.
