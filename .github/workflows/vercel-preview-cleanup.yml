@@ -1,0 +1,63 @@
+name: Cleanup Vercel preview deployments
+
+on:
+  push:
+    branches-ignore:
+      - main
+      - master
+  schedule:
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: Optional branch name to clean up
+        required: false
+        type: string
+      dry_run:
+        description: Log deletions without deleting anything
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  cleanup:
+    if: github.event_name != 'push' || github.actor != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    concurrency:
+      group: vercel-preview-cleanup-${{ github.event.inputs.branch || github.ref_name || 'scheduled' }}
+      cancel-in-progress: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Resolve branch
+        id: branch
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ -n "${{ github.event.inputs.branch }}" ]]; then
+            branch='${{ github.event.inputs.branch }}'
+          elif [[ "${{ github.event_name }}" == "push" ]]; then
+            branch='${{ github.ref_name }}'
+          else
+            branch=''
+          fi
+
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
+
+      - name: Wait for newest preview deployment to settle
+        if: github.event_name == 'push'
+        run: sleep 360
+
+      - name: Cleanup old preview deployments for branch
+        if: github.event_name == 'push' || steps.branch.outputs.branch != ''
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_TEAM_ID: ${{ secrets.VERCEL_TEAM_ID }}
+          VERCEL_GIT_BRANCH: ${{ steps.branch.outputs.branch }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+        run: node scripts/vercel-preview-cleanup.mjs

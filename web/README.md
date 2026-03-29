@@ -40,3 +40,9 @@ Why:
 - the app uses `BrowserRouter`
 - deep links like `/learn/mechanics/perceptron/weighted-sum` need an SPA rewrite to `index.html`
 - `vercel.json` in this folder configures build/output, SPA rewrites, asset caching, and basic security headers
+
+Old preview deployments for the same branch are cleaned up automatically by `.github/workflows/vercel-preview-cleanup.yml`. To enable it, add these GitHub Actions secrets:
+
+- `VERCEL_TOKEN`: a Vercel personal account token with access to this project
+- `VERCEL_PROJECT_ID`: the Vercel project ID for this frontend
+- `VERCEL_TEAM_ID` (optional): only needed if the Vercel project lives under a team scope instead of a personal Hobby account
