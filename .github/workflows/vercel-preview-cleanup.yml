@@ -1,0 +1,75 @@
+name: Cleanup Vercel preview deployments
+
+on:
+  deployment_status:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: Optional branch name to clean up
+        required: false
+        type: string
+      current_deployment_id:
+        description: Optional deployment ID to preserve explicitly
+        required: false
+        type: string
+      current_deployment_url:
+        description: Optional deployment URL to preserve or use for metadata lookup
+        required: false
+        type: string
+      dry_run:
+        description: Log deletions without deleting anything
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  cleanup:
+    if: >-
+      github.event_name == 'workflow_dispatch' || (
+        github.event_name == 'deployment_status' &&
+        github.actor != 'dependabot[bot]' &&
+        github.event.deployment_status.state == 'success' &&
+        github.event.deployment.environment != 'Production' &&
+        github.event.deployment.environment != 'production'
+      )
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    concurrency:
+      group: vercel-preview-cleanup-${{ github.event.inputs.branch || github.event.deployment.ref || 'manual' }}
+      cancel-in-progress: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Resolve cleanup context
+        id: context
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            branch='${{ github.event.inputs.branch }}'
+            current_deployment_id='${{ github.event.inputs.current_deployment_id }}'
+            current_deployment_url='${{ github.event.inputs.current_deployment_url }}'
+          else
+            branch='${{ github.event.deployment.ref }}'
+            current_deployment_id='${{ github.event.deployment.id }}'
+            current_deployment_url='${{ github.event.deployment_status.environment_url || github.event.deployment_status.target_url }}'
+          fi
+
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
+          echo "current_deployment_id=$current_deployment_id" >> "$GITHUB_OUTPUT"
+          echo "current_deployment_url=$current_deployment_url" >> "$GITHUB_OUTPUT"
+
+      - name: Cleanup old preview deployments for branch
+        if: steps.context.outputs.branch != ''
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_TEAM_ID: ${{ secrets.VERCEL_TEAM_ID }}
+          VERCEL_GIT_BRANCH: ${{ steps.context.outputs.branch }}
+          VERCEL_CURRENT_DEPLOYMENT_ID: ${{ steps.context.outputs.current_deployment_id }}
+          VERCEL_CURRENT_DEPLOYMENT_URL: ${{ steps.context.outputs.current_deployment_url }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+        run: node scripts/vercel-preview-cleanup.mjs
