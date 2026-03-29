@@ -3,7 +3,7 @@
 const token = process.env.VERCEL_TOKEN;
 const projectId = process.env.VERCEL_PROJECT_ID;
 const teamId = process.env.VERCEL_TEAM_ID || "";
-const branch = process.env.VERCEL_GIT_BRANCH || process.env.GITHUB_HEAD_REF || process.env.GITHUB_REF_NAME || "";
+const inputBranch = process.env.VERCEL_GIT_BRANCH || process.env.GITHUB_HEAD_REF || process.env.GITHUB_REF_NAME || "";
 const currentDeploymentId = process.env.VERCEL_CURRENT_DEPLOYMENT_ID || "";
 const dryRun = String(process.env.DRY_RUN || "false").toLowerCase() === "true";
 const apiBaseUrl = "https://api.vercel.com";
@@ -15,6 +15,62 @@ if (!token) {
 if (!projectId) {
   throw new Error("Missing VERCEL_PROJECT_ID environment variable.");
 }
+
+function looksLikeCommitSha(value) {
+  return /^[0-9a-f]{40}$/i.test(value);
+}
+
+function pickBranchCandidate(...values) {
+  for (const value of values) {
+    if (typeof value === "string" && value.trim() && !looksLikeCommitSha(value.trim())) {
+      return value.trim();
+    }
+  }
+
+  return "";
+}
+
+async function getDeployment(deploymentId) {
+  if (!deploymentId) {
+    return null;
+  }
+
+  const query = teamId ? `?teamId=${encodeURIComponent(teamId)}` : "";
+  return vercelFetch(`/v13/deployments/${deploymentId}${query}`);
+}
+
+async function resolveBranch() {
+  if (inputBranch && !looksLikeCommitSha(inputBranch)) {
+    return inputBranch;
+  }
+
+  if (inputBranch) {
+    console.log(`Input branch \"${inputBranch}\" looks like a commit SHA. Attempting to recover the real branch from Vercel deployment metadata.`);
+  }
+
+  if (!currentDeploymentId) {
+    return inputBranch;
+  }
+
+  const deployment = await getDeployment(currentDeploymentId);
+  const resolvedBranch = pickBranchCandidate(
+    deployment?.meta?.githubCommitRef,
+    deployment?.meta?.githubCommitBranch,
+    deployment?.gitSource?.ref,
+    deployment?.gitSource?.branch,
+    deployment?.source,
+  );
+
+  if (resolvedBranch) {
+    console.log(`Resolved branch \"${resolvedBranch}\" from deployment ${currentDeploymentId}.`);
+    return resolvedBranch;
+  }
+
+  console.log(`Could not recover a branch name from deployment ${currentDeploymentId}. Falling back to input value \"${inputBranch}\".`);
+  return inputBranch;
+}
+
+const branch = await resolveBranch();
 
 if (!branch) {
   console.log("No branch detected. Skipping cleanup.");
