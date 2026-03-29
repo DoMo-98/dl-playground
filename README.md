@@ -4,6 +4,8 @@ An interactive deep learning playground for building intuition through explanati
 
 The project is evolving toward a learning experience where each lesson helps you understand **what a neural-network component does**, **why it exists**, and **how its behavior changes when you manipulate it**.
 
+**Live demo:** https://dl-playground.vercel.app/
+
 ## Current direction
 
 `dl-playground` has two complementary layers:
