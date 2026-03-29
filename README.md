@@ -84,15 +84,15 @@ The active runnable part of the repo is the web app.
 
 ```bash
 cd web
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 Other useful commands:
 
 ```bash
-npm run build
-npm run lint
+pnpm build
+pnpm lint
 ```
 
 ## Tech stack
