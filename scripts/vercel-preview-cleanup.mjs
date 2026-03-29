@@ -5,6 +5,7 @@ const projectId = process.env.VERCEL_PROJECT_ID;
 const teamId = process.env.VERCEL_TEAM_ID || "";
 const inputBranch = process.env.VERCEL_GIT_BRANCH || process.env.GITHUB_HEAD_REF || process.env.GITHUB_REF_NAME || "";
 const currentDeploymentId = process.env.VERCEL_CURRENT_DEPLOYMENT_ID || "";
+const currentDeploymentUrl = process.env.VERCEL_CURRENT_DEPLOYMENT_URL || "";
 const dryRun = String(process.env.DRY_RUN || "false").toLowerCase() === "true";
 const apiBaseUrl = "https://api.vercel.com";
 
@@ -30,6 +31,13 @@ function pickBranchCandidate(...values) {
   return "";
 }
 
+function normalizeDeploymentUrl(value) {
+  return String(value || "")
+    .trim()
+    .replace(/^https?:\/\//i, "")
+    .replace(/\/+$/, "");
+}
+
 async function getDeployment(deploymentId) {
   if (!deploymentId) {
     return null;
@@ -37,6 +45,39 @@ async function getDeployment(deploymentId) {
 
   const query = teamId ? `?teamId=${encodeURIComponent(teamId)}` : "";
   return vercelFetch(`/v13/deployments/${deploymentId}${query}`);
+}
+
+async function findDeploymentByUrl(deploymentUrl) {
+  const normalizedUrl = normalizeDeploymentUrl(deploymentUrl);
+
+  if (!normalizedUrl) {
+    return null;
+  }
+
+  const pageParams = new URLSearchParams({
+    projectId,
+    target: "preview",
+    limit: "100",
+  });
+
+  if (teamId) {
+    pageParams.set("teamId", teamId);
+  }
+
+  const payload = await vercelFetch(`/v6/deployments?${pageParams.toString()}`);
+  const pageItems = payload.deployments || [];
+
+  return pageItems.find((deployment) => normalizeDeploymentUrl(deployment.url) === normalizedUrl) || null;
+}
+
+function branchFromDeployment(deployment) {
+  return pickBranchCandidate(
+    deployment?.meta?.githubCommitRef,
+    deployment?.meta?.githubCommitBranch,
+    deployment?.gitSource?.ref,
+    deployment?.gitSource?.branch,
+    deployment?.source,
+  );
 }
 
 async function resolveBranch() {
@@ -48,25 +89,35 @@ async function resolveBranch() {
     console.log(`Input branch \"${inputBranch}\" looks like a commit SHA. Attempting to recover the real branch from Vercel deployment metadata.`);
   }
 
-  if (!currentDeploymentId) {
-    return inputBranch;
+  if (currentDeploymentUrl) {
+    const deploymentFromUrl = await findDeploymentByUrl(currentDeploymentUrl);
+    const resolvedFromUrl = branchFromDeployment(deploymentFromUrl);
+
+    if (resolvedFromUrl) {
+      console.log(`Resolved branch \"${resolvedFromUrl}\" from deployment URL ${currentDeploymentUrl}.`);
+      return resolvedFromUrl;
+    }
+
+    console.log(`Could not recover a branch name from deployment URL ${currentDeploymentUrl}.`);
   }
 
-  const deployment = await getDeployment(currentDeploymentId);
-  const resolvedBranch = pickBranchCandidate(
-    deployment?.meta?.githubCommitRef,
-    deployment?.meta?.githubCommitBranch,
-    deployment?.gitSource?.ref,
-    deployment?.gitSource?.branch,
-    deployment?.source,
-  );
+  if (currentDeploymentId) {
+    try {
+      const deployment = await getDeployment(currentDeploymentId);
+      const resolvedBranch = branchFromDeployment(deployment);
 
-  if (resolvedBranch) {
-    console.log(`Resolved branch \"${resolvedBranch}\" from deployment ${currentDeploymentId}.`);
-    return resolvedBranch;
+      if (resolvedBranch) {
+        console.log(`Resolved branch \"${resolvedBranch}\" from deployment ${currentDeploymentId}.`);
+        return resolvedBranch;
+      }
+
+      console.log(`Could not recover a branch name from deployment ${currentDeploymentId}.`);
+    } catch (error) {
+      console.log(`Deployment lookup by id ${currentDeploymentId} failed: ${error.message}`);
+    }
   }
 
-  console.log(`Could not recover a branch name from deployment ${currentDeploymentId}. Falling back to input value \"${inputBranch}\".`);
+  console.log(`Falling back to input value \"${inputBranch}\".`);
   return inputBranch;
 }
 
@@ -173,16 +224,25 @@ if (readyDeployments.length <= 1) {
   process.exit(0);
 }
 
-const keep = currentDeploymentId
-  ? readyDeployments.find((deployment) => deployment.uid === currentDeploymentId || deployment.id === currentDeploymentId) || readyDeployments[0]
+const normalizedCurrentDeploymentUrl = normalizeDeploymentUrl(currentDeploymentUrl);
+
+const keep = currentDeploymentId || normalizedCurrentDeploymentUrl
+  ? readyDeployments.find(
+      (deployment) =>
+        deployment.uid === currentDeploymentId ||
+        deployment.id === currentDeploymentId ||
+        normalizeDeploymentUrl(deployment.url) === normalizedCurrentDeploymentUrl,
+    ) || readyDeployments[0]
   : readyDeployments[0];
 
 const remove = readyDeployments.filter(
   (deployment) => deployment.uid !== keep.uid && deployment.id !== keep.id,
 );
 
-if (currentDeploymentId) {
-  console.log(`Triggered by deployment ${currentDeploymentId}. Preserving that deployment explicitly.`);
+if (currentDeploymentId || currentDeploymentUrl) {
+  console.log(
+    `Triggered by deployment context id=${currentDeploymentId || "n/a"} url=${currentDeploymentUrl || "n/a"}. Preserving that deployment explicitly when matched.`,
+  );
 }
 
 console.log(`Keeping deployment: ${formatDeployment(keep)}`);

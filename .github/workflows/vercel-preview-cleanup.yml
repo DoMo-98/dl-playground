@@ -12,6 +12,10 @@ on:
         description: Optional deployment ID to preserve explicitly
         required: false
         type: string
+      current_deployment_url:
+        description: Optional deployment URL to preserve or use for metadata lookup
+        required: false
+        type: string
       dry_run:
         description: Log deletions without deleting anything
         required: false
@@ -47,13 +51,16 @@ jobs:
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             branch='${{ github.event.inputs.branch }}'
             current_deployment_id='${{ github.event.inputs.current_deployment_id }}'
+            current_deployment_url='${{ github.event.inputs.current_deployment_url }}'
           else
             branch='${{ github.event.deployment.ref }}'
             current_deployment_id='${{ github.event.deployment.id }}'
+            current_deployment_url='${{ github.event.deployment_status.environment_url || github.event.deployment_status.target_url }}'
           fi
 
           echo "branch=$branch" >> "$GITHUB_OUTPUT"
           echo "current_deployment_id=$current_deployment_id" >> "$GITHUB_OUTPUT"
+          echo "current_deployment_url=$current_deployment_url" >> "$GITHUB_OUTPUT"
 
       - name: Cleanup old preview deployments for branch
         if: steps.context.outputs.branch != ''
@@ -63,5 +70,6 @@ jobs:
           VERCEL_TEAM_ID: ${{ secrets.VERCEL_TEAM_ID }}
           VERCEL_GIT_BRANCH: ${{ steps.context.outputs.branch }}
           VERCEL_CURRENT_DEPLOYMENT_ID: ${{ steps.context.outputs.current_deployment_id }}
+          VERCEL_CURRENT_DEPLOYMENT_URL: ${{ steps.context.outputs.current_deployment_url }}
           DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
         run: node scripts/vercel-preview-cleanup.mjs
