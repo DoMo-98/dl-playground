@@ -235,9 +235,16 @@ const keep = currentDeploymentId || normalizedCurrentDeploymentUrl
     ) || readyDeployments[0]
   : readyDeployments[0];
 
-const remove = readyDeployments.filter(
-  (deployment) => deployment.uid !== keep.uid && deployment.id !== keep.id,
-);
+const keepUid = keep?.uid || "";
+const keepId = keep?.id || "";
+const keepUrl = normalizeDeploymentUrl(keep?.url);
+
+const remove = readyDeployments.filter((deployment) => {
+  const sameUid = keepUid && deployment.uid === keepUid;
+  const sameId = keepId && deployment.id === keepId;
+  const sameUrl = keepUrl && normalizeDeploymentUrl(deployment.url) === keepUrl;
+  return !(sameUid || sameId || sameUrl);
+});
 
 if (currentDeploymentId || currentDeploymentUrl) {
   console.log(
