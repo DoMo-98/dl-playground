@@ -202,49 +202,61 @@ async function deleteDeployment(deploymentId) {
   });
 }
 
-const deployments = await listDeployments();
+const deployments = (await listDeployments())
+  .filter((deployment) => !deployment.deleted)
+  .sort((a, b) => b.created - a.created);
 
-console.log(`Found ${deployments.length} preview deployment(s) for branch ${branch}.`);
+console.log(`Found ${deployments.length} active preview deployment(s) for branch ${branch}.`);
 
 if (deployments.length === 0) {
   process.exit(0);
 }
 
-const readyDeployments = deployments
-  .filter((deployment) => deployment.readyState === "READY" && !deployment.deleted)
-  .sort((a, b) => b.created - a.created);
+const readyDeployments = deployments.filter((deployment) => deployment.readyState === "READY");
+const nonReadyDeployments = deployments.filter((deployment) => deployment.readyState !== "READY");
 
 console.log("Ready deployments:");
 for (const deployment of readyDeployments) {
   console.log(`- ${formatDeployment(deployment)}`);
 }
 
-if (readyDeployments.length <= 1) {
-  console.log("Nothing to clean up. Zero or one ready preview deployment found.");
-  process.exit(0);
+if (nonReadyDeployments.length > 0) {
+  console.log("Non-ready deployments:");
+  for (const deployment of nonReadyDeployments) {
+    console.log(`- ${formatDeployment(deployment)}`);
+  }
 }
 
 const normalizedCurrentDeploymentUrl = normalizeDeploymentUrl(currentDeploymentUrl);
 
-const keep = currentDeploymentId || normalizedCurrentDeploymentUrl
-  ? readyDeployments.find(
+function isSameDeployment(left, right) {
+  if (!left || !right) {
+    return false;
+  }
+
+  const sameUid = left.uid && right.uid && left.uid === right.uid;
+  const sameId = left.id && right.id && left.id === right.id;
+  const sameUrl = normalizeDeploymentUrl(left.url) && normalizeDeploymentUrl(right.url)
+    && normalizeDeploymentUrl(left.url) === normalizeDeploymentUrl(right.url);
+
+  return sameUid || sameId || sameUrl;
+}
+
+const explicitlyMatchedDeployment = currentDeploymentId || normalizedCurrentDeploymentUrl
+  ? deployments.find(
       (deployment) =>
         deployment.uid === currentDeploymentId ||
         deployment.id === currentDeploymentId ||
         normalizeDeploymentUrl(deployment.url) === normalizedCurrentDeploymentUrl,
-    ) || readyDeployments[0]
-  : readyDeployments[0];
+    ) || null
+  : null;
 
-const keepUid = keep?.uid || "";
-const keepId = keep?.id || "";
-const keepUrl = normalizeDeploymentUrl(keep?.url);
-
-const remove = readyDeployments.filter((deployment) => {
-  const sameUid = keepUid && deployment.uid === keepUid;
-  const sameId = keepId && deployment.id === keepId;
-  const sameUrl = keepUrl && normalizeDeploymentUrl(deployment.url) === keepUrl;
-  return !(sameUid || sameId || sameUrl);
-});
+// Conservative Option B policy:
+// - preserve the matched triggering deployment whenever it can be identified
+// - otherwise preserve the newest useful READY deployment
+// - only delete stale non-READY deployments when a useful READY deployment remains preserved
+const keep = explicitlyMatchedDeployment || readyDeployments[0] || null;
+const keepIsUseful = keep?.readyState === "READY";
 
 if (currentDeploymentId || currentDeploymentUrl) {
   console.log(
@@ -252,7 +264,28 @@ if (currentDeploymentId || currentDeploymentUrl) {
   );
 }
 
+if (!keep) {
+  console.log("No deployment could be selected safely for preservation. Skipping cleanup.");
+  process.exit(0);
+}
+
 console.log(`Keeping deployment: ${formatDeployment(keep)}`);
+
+const remove = deployments.filter((deployment) => {
+  if (isSameDeployment(deployment, keep)) {
+    return false;
+  }
+
+  if (deployment.readyState === "READY") {
+    return true;
+  }
+
+  return keepIsUseful;
+});
+
+if (!keepIsUseful && nonReadyDeployments.length > 0) {
+  console.log("No useful READY deployment was preserved, so non-ready deployments will be kept for safety.");
+}
 
 if (remove.length === 0) {
   console.log("Nothing else to delete.");
