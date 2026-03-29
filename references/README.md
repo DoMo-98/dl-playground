@@ -2,49 +2,43 @@
 
 This folder is the source-material area for `dl-playground`.
 
-## Quick drop zone
+## Current policy
 
-If you just want to upload papers without organizing them first, put them here:
+For now, the repository stores:
 
-- `references/inbox/`
+- paper metadata
+- official or preferred external source links
+- per-paper notes and summaries
+- lesson mapping and relevance
 
-Claws will later review them and move them into the curated structure.
+For now, the repository does **not** need to store the full PDFs when they are too heavy or inconvenient.
 
-## Curated structure
+## Structure
 
-- `references/inbox/` — raw incoming PDFs, exactly as uploaded
-- `references/papers/` — curated canonical paper files kept long-term
-- `references/notes/` — per-paper notes, summaries, key excerpts, and lesson links
-- `references/index.md` — master index of all tracked papers
+- `references/index.md` — master index of tracked papers
+- `references/notes/` — per-paper notes, summaries, excerpts, lesson ideas
+- `references/papers/` — optional curated local copies only if ever worth keeping
+- `references/inbox/` — optional temporary landing zone for lightweight files or extracted notes
 
-## Suggested upload rule
+## Source policy
 
-For now, upload all PDFs directly into:
+Preferred source order:
 
-- `references/inbox/`
+1. official proceedings or publisher page
+2. official archive (`arXiv`, `OpenReview`, `PMLR`, `JMLR`)
+3. author page or trusted institutional mirror
 
-No need to rename or sort them first.
+## Format notes
 
-## Preferred file quality
+Possible source/file states:
 
-Best: PDF files with selectable/extractable text.
+- `textual-pdf-likely`
+- `historical-scan-likely`
+- `html-or-pdf`
+- `unknown`
 
-Still acceptable, but less convenient:
+If a source is scanned or awkward to parse, the fallback is to create a concise markdown note capturing the useful parts.
 
-- scanned PDFs
-- image-only PDFs
+## Goal
 
-If a paper is image-only, it can still be useful, but it is better if an OCR version exists.
-
-## Naming guidance
-
-If convenient, this naming pattern is preferred:
-
-`YYYY-short-title.pdf`
-
-Examples:
-
-- `2017-attention-is-all-you-need.pdf`
-- `2024-titans-learning-to-memorize-at-test-time.pdf`
-
-But this is optional for the inbox.
+The repo should act as the structured knowledge layer for lesson creation, not as a heavy binary warehouse.
