@@ -67,6 +67,7 @@ Advanced optimization techniques and nested learning loops.
 ```text
 .
 ├── docs/web/      # product definition, architecture, MVP, backlog, scaffold plan
+├── references/    # papers, notes, and source-material index for lessons/research
 ├── web/           # interactive frontend
 └── README.md
 ```
