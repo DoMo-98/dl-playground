@@ -51,6 +51,22 @@ The expected chain is:
 
 `source paper(s) -> distilled mechanism -> lesson claim -> visualization -> interaction -> interpretation`
 
+### 2.1 Mandatory source investigation when access is not confirmed
+
+If a lesson's primary paper is not marked `full-text-ok` in `references/index.md`, the subagent must perform a **source investigation** before implementing the lesson.
+
+This applies to both:
+- `abstract-or-metadata-only`
+- `blocked-or-closed`
+
+Allowed outcomes:
+- `SOURCE_CONFIRMED` — sufficient access/readability was found, so the paper can remain the main anchor
+- `SOURCE_PARTIAL` — only partial confidence was achieved, so the lesson must either be clearly framed as provisional or be re-anchored
+- `SOURCE_BLOCKED` — sufficient access was not achieved, so the subagent must propose an alternative paper, a reformulation, or a deferment
+
+Hard rule:
+- no lesson may be presented as a faithful distillation of a paper unless the source investigation confirms sufficient access to that paper
+
 ---
 
 ## 3. Lessons are translations, not summaries

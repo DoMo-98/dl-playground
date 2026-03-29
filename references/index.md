@@ -16,6 +16,10 @@ Current policy:
   - `linked` — official or preferred source identified
   - `summarized` — has a companion note in `references/notes/`
   - `lesson-linked` — already mapped to a concrete lesson or module
+- **Access status**
+  - `full-text-ok` — practical readable full text confirmed with current tools
+  - `abstract-or-metadata-only` — source reachable, but full text not comfortably confirmed
+  - `blocked-or-closed` — configured sources are blocked or closed from current environment
 - **Source strategy**
   - `official-preferred` — publisher / proceedings / official archive to prioritize
   - `backup` — acceptable secondary source if needed
@@ -52,6 +56,7 @@ Current policy:
 - Teaching fit: foundational
 - Relevance: foundational perceptron framing for the first mechanics lessons and historical context.
 - Notes: `references/notes/1958-the-perceptron.md`
+- Access status: abstract-or-metadata-only
 - Potential lesson use:
   - perceptron origin story
   - threshold decision intuition
@@ -72,6 +77,7 @@ Current policy:
 - Teaching fit: foundational
 - Relevance: core source for how multilayer networks became trainable in practice.
 - Notes: `references/notes/1986-backpropagating-errors.md`
+- Access status: abstract-or-metadata-only
 - Potential lesson use:
   - gradient flow intuition
   - hidden layers become learnable
@@ -92,6 +98,7 @@ Current policy:
 - Teaching fit: visual-first
 - Relevance: classic reference for autoencoder-based compression and representation learning.
 - Notes: `references/notes/2006-reducing-dimensionality-with-autoencoders.md`
+- Access status: blocked-or-closed
 - Potential lesson use:
   - bottleneck intuition
   - encoding vs decoding
@@ -112,6 +119,7 @@ Current policy:
 - Teaching fit: visual-first
 - Relevance: strong candidate for visual lessons on embedding geometry and manifold intuition.
 - Notes: `references/notes/2008-tsne.md`
+- Access status: abstract-or-metadata-only
 - Potential lesson use:
   - neighborhood preservation intuition
   - why 2D visualization can distort reality
@@ -132,6 +140,7 @@ Current policy:
 - Teaching fit: visual-first
 - Relevance: useful for teaching robustness, corruption, and reconstruction-based learning.
 - Notes: `references/notes/2008-denoising-autoencoders.md`
+- Access status: blocked-or-closed
 - Potential lesson use:
   - noise removal intuition
   - robust feature learning
@@ -152,6 +161,7 @@ Current policy:
 - Teaching fit: foundational
 - Relevance: canonical source behind Xavier initialization and signal-scale stability.
 - Notes: `references/notes/2010-glorot-bengio-initialization.md`
+- Access status: abstract-or-metadata-only
 - Potential lesson use:
   - exploding vs vanishing activations
   - why initialization matters before learning starts
@@ -172,6 +182,7 @@ Current policy:
 - Teaching fit: visual-first
 - Relevance: essential VAE reference for probabilistic latent-space teaching.
 - Notes: `references/notes/2013-vae.md`
+- Access status: full-text-ok
 - Potential lesson use:
   - latent distribution intuition
   - reconstruction vs regularization tradeoff
@@ -192,10 +203,32 @@ Current policy:
 - Teaching fit: visual-first
 - Relevance: straightforward and teachable regularization mechanism with strong interactive potential.
 - Notes: `references/notes/2014-dropout.md`
+- Access status: abstract-or-metadata-only
 - Potential lesson use:
   - overfitting intuition
   - subnetworks and robustness
   - train vs eval behavior
+
+### Gradient-Based Learning Applied to Document Recognition
+- Authors: Yann LeCun, Léon Bottou, Yoshua Bengio, Patrick Haffner
+- Year: 1998
+- Status: linked
+- Topic(s): cnn, convolution, feature-maps, pooling
+- Source strategy:
+  - official-preferred: IEEE / canonical journal page
+  - backup: author-hosted PDF
+- Official source: https://ieeexplore.ieee.org/document/726791
+- Backup source: http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf
+- Format expectation: textual-pdf-likely
+- Lesson priority: high
+- Teaching fit: foundational
+- Relevance: strongest classic anchor for introducing convolution as a local pattern detector with shared kernels and feature maps.
+- Notes: to-add
+- Access status: abstract-or-metadata-only
+- Potential lesson use:
+  - local receptive field intuition
+  - shared-kernel scanning across an input grid
+  - feature maps and simple pooling intuition
 
 ### Deep Residual Learning for Image Recognition
 - Authors: Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun
@@ -212,6 +245,7 @@ Current policy:
 - Teaching fit: foundational
 - Relevance: central paper for skip connections and stable deep network training.
 - Notes: `references/notes/2015-resnet.md`
+- Access status: full-text-ok
 - Potential lesson use:
   - residual block intuition
   - identity path vs learned residual
@@ -232,6 +266,7 @@ Current policy:
 - Teaching fit: visual-first
 - Relevance: key source for rectifier behavior and He initialization.
 - Notes: `references/notes/2015-rectifiers.md`
+- Access status: abstract-or-metadata-only
 - Potential lesson use:
   - dead neurons intuition
   - ReLU family behavior
@@ -252,6 +287,7 @@ Current policy:
 - Teaching fit: visual-first
 - Relevance: core normalization paper with strong direct lesson value.
 - Notes: `references/notes/2015-batch-normalization.md`
+- Access status: abstract-or-metadata-only
 - Potential lesson use:
   - train-time batch statistics
   - running averages at inference
@@ -272,6 +308,7 @@ Current policy:
 - Teaching fit: foundational
 - Relevance: highly relevant for sequence and transformer lessons where batch statistics are awkward.
 - Notes: `references/notes/2016-layer-normalization.md`
+- Access status: full-text-ok
 - Potential lesson use:
   - batchnorm vs layernorm intuition
   - normalization axis comparison
@@ -292,6 +329,7 @@ Current policy:
 - Teaching fit: visual-first
 - Relevance: practical modern counterpart to t-SNE for manifold and embedding visualization lessons.
 - Notes: `references/notes/2018-umap.md`
+- Access status: full-text-ok
 - Potential lesson use:
   - local vs global structure intuition
   - embedding visualization comparison with t-SNE
@@ -316,6 +354,7 @@ Current policy:
 - Teaching fit: foundational
 - Relevance: direct conceptual bridge from standard backprop to recurrent sequence training.
 - Notes: `references/notes/1990-bptt.md`
+- Access status: blocked-or-closed
 - Potential lesson use:
   - unfolding through time
   - temporal credit assignment
@@ -336,6 +375,7 @@ Current policy:
 - Teaching fit: foundational
 - Relevance: foundational memory-gating architecture for sequence lessons.
 - Notes: `references/notes/1997-lstm.md`
+- Access status: blocked-or-closed
 - Potential lesson use:
   - cell state intuition
   - gates as information filters
@@ -356,6 +396,7 @@ Current policy:
 - Teaching fit: foundational
 - Relevance: foundational transformer source and central for the memory track.
 - Notes: `references/notes/2017-attention-is-all-you-need.md`
+- Access status: full-text-ok
 - Potential lesson use:
   - self-attention intuition
   - token-to-token communication
@@ -376,6 +417,7 @@ Current policy:
 - Teaching fit: visual-first
 - Relevance: useful bridge between standard attention and explicit recurrent memory extensions.
 - Notes: `references/notes/2019-transformer-xl.md`
+- Access status: full-text-ok
 - Potential lesson use:
   - segment recurrence intuition
   - extending context beyond a single window
@@ -384,18 +426,19 @@ Current policy:
 ### Titans: Learning to Memorize at Test Time
 - Authors: Ali Behrouz et al.
 - Year: 2024
-- Status: planned
+- Status: linked
 - Topic(s): titans, test-time-memory, continual-learning, memory
 - Source strategy:
   - official-preferred: arXiv
-  - backup: author page or project page
-- Official source: to-verify
-- Backup source: to-verify
+  - backup: ar5iv readable HTML or project page
+- Official source: https://arxiv.org/abs/2501.00663
+- Backup source: https://ar5iv.labs.arxiv.org/html/2501.00663
 - Format expectation: textual-pdf-likely
 - Lesson priority: research
 - Teaching fit: advanced-research
 - Relevance: highly aligned with the project's advanced memory and continual-learning direction.
 - Notes: `references/notes/2024-titans.md`
+- Access status: full-text-ok
 - Potential lesson use:
   - test-time memory mechanisms
   - externalized memory intuition
@@ -420,6 +463,7 @@ Current policy:
 - Teaching fit: advanced-research
 - Relevance: strong advanced source for teaching optimization-through-training dynamics.
 - Notes: `references/notes/2015-reversible-learning.md`
+- Access status: abstract-or-metadata-only
 - Potential lesson use:
   - learning hyperparameters by differentiation
   - reversing optimization trajectories
@@ -440,6 +484,7 @@ Current policy:
 - Teaching fit: advanced-research
 - Relevance: canonical learned-optimizer paper for the research track.
 - Notes: `references/notes/2016-learning-to-learn-by-gradient-descent.md`
+- Access status: full-text-ok
 - Potential lesson use:
   - optimizer as trainable model
   - inner loop vs outer loop intuition
@@ -460,6 +505,7 @@ Current policy:
 - Teaching fit: advanced-research
 - Relevance: standard reference for fast adaptation and meta-learning loops.
 - Notes: `references/notes/2017-maml.md`
+- Access status: abstract-or-metadata-only
 - Potential lesson use:
   - learn an initialization that adapts quickly
   - task distribution intuition
@@ -480,26 +526,28 @@ Current policy:
 - Teaching fit: advanced-research
 - Relevance: mathematically important paper for the research branch and nested optimization framing.
 - Notes: `references/notes/2018-bilevel-programming.md`
+- Access status: abstract-or-metadata-only
 - Potential lesson use:
   - inner objective vs outer objective
   - constraint intuition in meta-learning
   - bilevel optimization visual explanation
 
-### Nested Learning: The Illusion of Deep Architectures
+### Nested Learning: The Illusion of Deep Learning Architectures
 - Authors: Ali Behrouz et al.
 - Year: 2025
-- Status: planned
+- Status: linked
 - Topic(s): nested-learning, continual-learning, architecture-research
 - Source strategy:
-  - official-preferred: arXiv or official project page once confirmed
-  - backup: author page or trusted archive
-- Official source: to-verify
-- Backup source: to-verify
-- Format expectation: unknown
+  - official-preferred: arXiv
+  - backup: ar5iv readable HTML or official project page
+- Official source: https://arxiv.org/abs/2512.24695
+- Backup source: https://ar5iv.labs.arxiv.org/html/2512.24695
+- Format expectation: textual-pdf-likely
 - Lesson priority: research
 - Teaching fit: advanced-research
 - Relevance: directly aligned with the exploratory research direction of the project.
 - Notes: `references/notes/2025-nested-learning.md`
+- Access status: full-text-ok
 - Potential lesson use:
   - nested learning loops intuition
   - alternative framing for depth and adaptation

@@ -44,6 +44,11 @@ Notes:
 - official_url: https://jmlr.org/papers/v15/srivastava14a.html
 - backup_url: https://jmlr.org/papers/volume15/srivastava14a/srivastava14a.pdf
 
+### 1998 — Gradient-Based Learning Applied to Document Recognition
+- official_url: https://ieeexplore.ieee.org/document/726791
+- backup_url: http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf
+- note: canonical classic CNN paper for local receptive fields, shared kernels, pooling, and feature maps; current environment confirms metadata/landing access, but practical full-text extraction is still awkward.
+
 ### 2015 — Deep Residual Learning for Image Recognition
 - official_url: https://openaccess.thecvf.com/content_cvpr_2016/html/He_Deep_Residual_Learning_CVPR_2016_paper.html
 - backup_url: https://arxiv.org/abs/1512.03385
@@ -85,9 +90,9 @@ Notes:
 - backup_url: https://arxiv.org/abs/1901.02860
 
 ### 2024 — Titans: Learning to Memorize at Test Time
-- official_url: https://arxiv.org/search/?query=Titans%3A+Learning+to+Memorize+at+Test+Time&searchtype=all
-- backup_url: to-verify
-- note: needs final exact-URL verification in a follow-up pass.
+- official_url: https://arxiv.org/abs/2501.00663
+- backup_url: https://ar5iv.labs.arxiv.org/html/2501.00663
+- note: exact paper verified; prefer arXiv for canonical citation and ar5iv for practical readable HTML.
 
 ---
 
@@ -109,7 +114,7 @@ Notes:
 - official_url: https://proceedings.mlr.press/v80/franceschi18a.html
 - backup_url: https://proceedings.mlr.press/v80/franceschi18a/franceschi18a.pdf
 
-### 2025 — Nested Learning: The Illusion of Deep Architectures
-- official_url: to-verify
-- backup_url: to-verify
-- note: title is tracked from project planning, but exact public canonical source still needs verification.
+### 2025 — Nested Learning: The Illusion of Deep Learning Architectures
+- official_url: https://arxiv.org/abs/2512.24695
+- backup_url: https://ar5iv.labs.arxiv.org/html/2512.24695
+- note: public title and exact arXiv source verified; project planning previously omitted the word `Learning` in the title.
