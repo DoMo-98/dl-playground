@@ -4,6 +4,7 @@ const token = process.env.VERCEL_TOKEN;
 const projectId = process.env.VERCEL_PROJECT_ID;
 const teamId = process.env.VERCEL_TEAM_ID || "";
 const branch = process.env.VERCEL_GIT_BRANCH || process.env.GITHUB_HEAD_REF || process.env.GITHUB_REF_NAME || "";
+const currentDeploymentId = process.env.VERCEL_CURRENT_DEPLOYMENT_ID || "";
 const dryRun = String(process.env.DRY_RUN || "false").toLowerCase() === "true";
 const apiBaseUrl = "https://api.vercel.com";
 
@@ -116,9 +117,19 @@ if (readyDeployments.length <= 1) {
   process.exit(0);
 }
 
-const [keep, ...remove] = readyDeployments;
+const keep = currentDeploymentId
+  ? readyDeployments.find((deployment) => deployment.uid === currentDeploymentId || deployment.id === currentDeploymentId) || readyDeployments[0]
+  : readyDeployments[0];
 
-console.log(`Keeping latest ready deployment: ${formatDeployment(keep)}`);
+const remove = readyDeployments.filter(
+  (deployment) => deployment.uid !== keep.uid && deployment.id !== keep.id,
+);
+
+if (currentDeploymentId) {
+  console.log(`Triggered by deployment ${currentDeploymentId}. Preserving that deployment explicitly.`);
+}
+
+console.log(`Keeping deployment: ${formatDeployment(keep)}`);
 
 if (remove.length === 0) {
   console.log("Nothing else to delete.");

@@ -1,16 +1,15 @@
 name: Cleanup Vercel preview deployments
 
 on:
-  push:
-    branches-ignore:
-      - main
-      - master
-  schedule:
-    - cron: '17 3 * * *'
+  deployment_status:
   workflow_dispatch:
     inputs:
       branch:
         description: Optional branch name to clean up
+        required: false
+        type: string
+      current_deployment_id:
+        description: Optional deployment ID to preserve explicitly
         required: false
         type: string
       dry_run:
@@ -21,43 +20,48 @@ on:
 
 jobs:
   cleanup:
-    if: github.event_name != 'push' || github.actor != 'dependabot[bot]'
+    if: >-
+      github.event_name == 'workflow_dispatch' || (
+        github.event_name == 'deployment_status' &&
+        github.actor != 'dependabot[bot]' &&
+        github.event.deployment_status.state == 'success' &&
+        github.event.deployment.environment != 'Production' &&
+        github.event.deployment.environment != 'production'
+      )
     runs-on: ubuntu-latest
     permissions:
       contents: read
     concurrency:
-      group: vercel-preview-cleanup-${{ github.event.inputs.branch || github.ref_name || 'scheduled' }}
+      group: vercel-preview-cleanup-${{ github.event.inputs.branch || github.event.deployment.ref || 'manual' }}
       cancel-in-progress: false
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Resolve branch
-        id: branch
+      - name: Resolve cleanup context
+        id: context
         shell: bash
         run: |
           set -euo pipefail
 
-          if [[ -n "${{ github.event.inputs.branch }}" ]]; then
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             branch='${{ github.event.inputs.branch }}'
-          elif [[ "${{ github.event_name }}" == "push" ]]; then
-            branch='${{ github.ref_name }}'
+            current_deployment_id='${{ github.event.inputs.current_deployment_id }}'
           else
-            branch=''
+            branch='${{ github.event.deployment.ref }}'
+            current_deployment_id='${{ github.event.deployment.id }}'
           fi
 
           echo "branch=$branch" >> "$GITHUB_OUTPUT"
-
-      - name: Wait for newest preview deployment to settle
-        if: github.event_name == 'push'
-        run: sleep 360
+          echo "current_deployment_id=$current_deployment_id" >> "$GITHUB_OUTPUT"
 
       - name: Cleanup old preview deployments for branch
-        if: github.event_name == 'push' || steps.branch.outputs.branch != ''
+        if: steps.context.outputs.branch != ''
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
           VERCEL_TEAM_ID: ${{ secrets.VERCEL_TEAM_ID }}
-          VERCEL_GIT_BRANCH: ${{ steps.branch.outputs.branch }}
+          VERCEL_GIT_BRANCH: ${{ steps.context.outputs.branch }}
+          VERCEL_CURRENT_DEPLOYMENT_ID: ${{ steps.context.outputs.current_deployment_id }}
           DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
         run: node scripts/vercel-preview-cleanup.mjs
