@@ -42,43 +42,23 @@ The goal is not just to describe deep learning concepts, but to make them feel m
 
 ## Roadmap
 
-The roadmap is organized around the interactive learning path, with the web as the primary delivery layer.
+### 1. Architectural Mechanics (/mechanics)
+Low-level implementations to analyze signal flow and inductive biases.
+- [ ] **Dense Networks:** Perceptron and MLP implementations.
+- [ ] **Stable Training:** Initialization (Xavier/He), activations (ReLU/GELU), regularization (dropout, weight decay), normalization (BatchNorm/LayerNorm), and residual connections.
+- [ ] **CNNs:** ResNet architecture.
+- [ ] **Autoencoders:** Latent space compression and manifold visualization.
 
-### 1. Foundations
-Build intuitive entry points for the core optimization ideas behind neural networks.
+### 2. Sequence & Memory (/memory)
+Prototyping stateful architectures and sequence modeling.
+- [ ] **RNNs/LSTMs:** State management and Backpropagation Through Time (BPTT).
+- [ ] **Transformers:** Multi-head attention mechanisms.
+- [ ] **Titans:** Long-term memory architectures.
 
-- [ ] Gradient descent intuition
-- [ ] Loss landscape intuition
-- [ ] Learning rate behavior
-
-### 2. Architectural mechanics
-Develop small visual lessons that explain how basic neural-network building blocks behave.
-
-- [x] Perceptron · weighted sum and bias
-- [ ] Perceptron · decision boundary intuition
-- [ ] MLP · activation functions and non-linearity
-- [ ] Stable training basics: initialization, normalization, residual connections
-
-### 3. CNN intuition
-Explain how convolutional models detect patterns and build hierarchical features.
-
-- [ ] Convolution as local pattern detector
-- [ ] Feature maps and learned filters
-- [ ] Pooling and receptive fields
-
-### 4. Sequence and memory
-Expand the learning path toward stateful computation and memory-aware architectures.
-
-- [ ] RNN/LSTM state intuition
-- [ ] Attention and transformer mechanics
-- [ ] Memory modules and long-context ideas
-
-### 5. Sandbox and research layer
-Support the web experience with implementation notes, experiments, and research prototypes when useful.
-
-- [ ] Small supporting experiments for lessons
-- [ ] Architecture prototypes tied to learning units
-- [ ] Research notes for future advanced modules
+### 3. Research: Optimization & Meta-Learning (/research)
+Advanced optimization techniques and nested learning loops.
+- [ ] **Meta-Learning:** Bilevel and nested optimization concepts.
+- [ ] **Nested Learning:** Experiments with Hope.
 
 ## Repository structure
 
