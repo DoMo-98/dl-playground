@@ -98,6 +98,16 @@ pnpm build
 pnpm lint
 ```
 
+## Vercel deployment
+
+The recommended Vercel setup for this repository is:
+
+- create the Vercel project from this repo
+- set **Root Directory** to `web`
+- keep the deployed app as a static SPA backed by the `web/vercel.json` configuration
+
+This is important because the current frontend uses `react-router-dom` with `BrowserRouter`, so direct navigation to lesson URLs requires a rewrite to `index.html`.
+
 ## Tech stack
 
 Current web stack:

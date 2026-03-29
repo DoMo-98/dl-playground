@@ -21,8 +21,22 @@ Initial scaffold with:
 ## Commands
 
 ```bash
-npm install
-npm run dev
-npm run build
-npm run lint
+pnpm install
+pnpm dev
+pnpm build
+pnpm lint
 ```
+
+## Vercel deployment
+
+This frontend is configured for deployment on Vercel as a static Vite SPA.
+
+Recommended Vercel project setting:
+
+- **Root Directory:** `web`
+
+Why:
+
+- the app uses `BrowserRouter`
+- deep links like `/learn/mechanics/perceptron/weighted-sum` need an SPA rewrite to `index.html`
+- `vercel.json` in this folder configures build/output, SPA rewrites, asset caching, and basic security headers
