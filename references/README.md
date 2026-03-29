@@ -16,7 +16,10 @@ For now, the repository does **not** need to store the full PDFs when they are t
 ## Structure
 
 - `references/index.md` — master index of tracked papers
-- `references/notes/` — per-paper notes, summaries, excerpts, lesson ideas
+- `references/sources.md` — canonical source-link registry
+- `references/access-audit-2026-03-29.md` — current practical access/readability audit
+- `references/operational-paper-set.md` — papers safe to use right now for low-friction lesson authoring
+- `references/notes/` — per-paper notes, summaries, excerpts, lesson ideas, and task-specific source-investigation briefs
 - `references/papers/` — optional curated local copies only if ever worth keeping
 - `references/inbox/` — optional temporary landing zone for lightweight files or extracted notes
 
