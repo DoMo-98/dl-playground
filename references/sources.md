@@ -56,6 +56,7 @@ Notes:
 ### 2015 — Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification
 - official_url: https://openaccess.thecvf.com/content_iccv_2015/html/He_Delving_Deep_into_ICCV_2015_paper.html
 - backup_url: https://doi.org/10.1109/ICCV.2015.123
+- note: practical readable access confirmed from the ICCV open-access proceedings page in the current environment.
 
 ### 2015 — Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift
 - official_url: https://proceedings.mlr.press/v37/ioffe15.html
