@@ -28,6 +28,16 @@ describe('WeightedSumPage', () => {
     expect(getSummaryCard('Binary output', 'Threshold at 0')).toHaveTextContent('1')
   })
 
+  it('renders Spanish lesson copy on locale-aware routes', () => {
+    renderWithI18n(<WeightedSumPage />, { locale: 'es', initialEntries: ['/es/learn/mechanics/perceptron/weighted-sum'] })
+
+    expect(screen.getByRole('heading', { name: 'Suma ponderada y sesgo' })).toBeInTheDocument()
+    expect(screen.getByText(/¿Cómo hacen los pesos y el sesgo/)).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Preguntas guiadas de observación' })).toBeInTheDocument()
+    expect(getSummaryCard('Suma ponderada', 'x₁·w₁ + x₂·w₂ + b')).toHaveTextContent('0.60')
+    expect(getSummaryCard('Salida binaria', 'Umbral en 0')).toHaveTextContent('1')
+  })
+
   it('updates the computation when controls change', () => {
     renderWithI18n(<WeightedSumPage />, { initialEntries: ['/en/learn/mechanics/perceptron/weighted-sum'] })
 
