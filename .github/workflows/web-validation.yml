@@ -4,15 +4,9 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-      - 'web/**'
-      - '.github/workflows/web-validation.yml'
   push:
     branches:
       - main
-    paths:
-      - 'web/**'
-      - '.github/workflows/web-validation.yml'
 
 jobs:
   web-validation:
@@ -25,25 +19,44 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
+      - name: Detect web changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            web:
+              - 'web/**'
+              - '.github/workflows/web-validation.yml'
+
+      - name: Skip heavy validation when web files did not change
+        if: steps.changes.outputs.web != 'true'
+        run: echo "No web changes detected; marking web-validation as successful without running web checks."
+
       - name: Setup Node.js
+        if: steps.changes.outputs.web == 'true'
         uses: actions/setup-node@v5
         with:
           node-version: 22
 
       - name: Setup pnpm
+        if: steps.changes.outputs.web == 'true'
         uses: pnpm/action-setup@v4
         with:
           version: 10.30.3
           run_install: false
 
       - name: Install dependencies
+        if: steps.changes.outputs.web == 'true'
         run: pnpm install --frozen-lockfile
 
       - name: Run tests with coverage
+        if: steps.changes.outputs.web == 'true'
         run: pnpm test:coverage
 
       - name: Run lint
+        if: steps.changes.outputs.web == 'true'
         run: pnpm lint
 
       - name: Build
+        if: steps.changes.outputs.web == 'true'
         run: pnpm build
