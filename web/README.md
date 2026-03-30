@@ -25,7 +25,11 @@ pnpm install
 pnpm dev
 pnpm build
 pnpm lint
+pnpm test
+pnpm test:coverage
 ```
+
+`pnpm test:coverage` generates a local baseline coverage report in `web/coverage/` (HTML + lcov + terminal summary). The project keeps coverage informational for now so the MVP can track visibility without turning it into a high-friction quality gate too early.
 
 ## Vercel deployment
 
