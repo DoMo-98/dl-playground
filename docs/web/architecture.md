@@ -177,10 +177,16 @@ Use a hybrid approach:
 ### Static page metadata
 For route identity and sequencing:
 - title
+- short title
 - path
-- section
+- section + unit
 - prerequisites
 - learning objectives
+- key concepts
+- estimated time
+- readiness status
+
+A lightweight curriculum registry should own this metadata so overview pages, route scaffolding, and future progression UI all derive from one source of truth.
 
 ### Component-driven page content
 For the interactive experience itself.
