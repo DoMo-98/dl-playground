@@ -129,6 +129,8 @@ Current web stack:
 - React Router
 - Tailwind CSS v4
 
+The current SPA also includes a bilingual routing foundation for English and Spanish using locale-prefixed client routes (`/en/...`, `/es/...`) with in-app switching and persisted preference.
+
 Associated research/programming direction:
 
 - PyTorch

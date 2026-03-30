@@ -25,7 +25,7 @@ describe('learningPath registry', () => {
       expect(lesson.objectives.length).toBeGreaterThan(0)
       expect(lesson.concepts.length).toBeGreaterThan(0)
       expect(lesson.estimatedMinutes).toBeGreaterThan(0)
-      expect(lesson.href.startsWith('/learn/')).toBe(true)
+      expect(lesson.href.startsWith('/en/learn/')).toBe(true)
       expect(learningLessonById[lesson.id]).toEqual(lesson)
     }
   })
@@ -43,7 +43,7 @@ describe('learningPath registry', () => {
   it('surfaces the first ready lesson for overview CTA scaffolding', () => {
     expect(getNextReadyLesson()).toMatchObject({
       id: 'perceptron-weighted-sum',
-      href: '/learn/mechanics/perceptron/weighted-sum',
+      href: '/en/learn/mechanics/perceptron/weighted-sum',
       status: 'ready',
     })
   })
@@ -60,7 +60,7 @@ describe('learningPath registry', () => {
       totalMinutes: 30,
       completionRatio: 2 / 3,
     })
-    expect(getSectionPath(mechanics!)).toBe('/learn/mechanics/perceptron/weighted-sum')
+    expect(getSectionPath(mechanics!)).toBe('/en/learn/mechanics/perceptron/weighted-sum')
   })
 
   it('falls back safely when adjacency is requested for an unknown lesson', () => {
