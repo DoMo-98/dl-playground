@@ -161,7 +161,7 @@ Current policy:
 - Teaching fit: foundational
 - Relevance: canonical source behind Xavier initialization and signal-scale stability.
 - Notes: `references/notes/2010-glorot-bengio-initialization.md`
-- Access status: abstract-or-metadata-only
+- Access status: full-text-ok
 - Potential lesson use:
   - exploding vs vanishing activations
   - why initialization matters before learning starts
@@ -266,7 +266,7 @@ Current policy:
 - Teaching fit: visual-first
 - Relevance: key source for rectifier behavior and He initialization.
 - Notes: `references/notes/2015-rectifiers.md`
-- Access status: abstract-or-metadata-only
+- Access status: full-text-ok
 - Potential lesson use:
   - dead neurons intuition
   - ReLU family behavior
@@ -287,7 +287,7 @@ Current policy:
 - Teaching fit: visual-first
 - Relevance: core normalization paper with strong direct lesson value.
 - Notes: `references/notes/2015-batch-normalization.md`
-- Access status: abstract-or-metadata-only
+- Access status: full-text-ok
 - Potential lesson use:
   - train-time batch statistics
   - running averages at inference
