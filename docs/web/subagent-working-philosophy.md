@@ -280,6 +280,18 @@ Minimum quality bar:
 
 If these are not true, the task should remain incomplete or be explicitly reframed as scaffold/unblocking work.
 
+### 13.1 Testing rule for non-trivial functional changes
+
+If a lesson or supporting app behavior changes in a non-trivial way, the subagent should add or update tests unless there is a clear written reason why tests do not apply.
+
+Expected testing standard:
+
+- prefer behavioral tests that prove the teaching interaction or user-visible behavior works
+- avoid treating trivial markup-only assertions as sufficient coverage for functional changes
+- cover the main path plus at least one meaningful edge case, regression risk, or failure mode
+- run the applicable validation commands before claiming completion: test, coverage, lint, and build when available for the changed scope
+- report in the final summary which tests were added or updated and what risk they cover; if none were added, state why
+
 ---
 
 ## 14. Summary style for subagent completions
