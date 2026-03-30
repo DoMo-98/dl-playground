@@ -14,14 +14,16 @@ import {
   summarizeDataset,
 } from '../../../../features/perceptron/lib/decisionBoundary'
 import { getAdjacentLessons } from '../../../../content/learningPath'
+import { useI18n } from '../../../../app/i18n-context'
 
-const lessonSequence = getAdjacentLessons('perceptron-decision-boundary')
 
 const VIEWBOX_SIZE = 320
 const AXIS_MIN = -2
 const AXIS_MAX = 2
 
 export function DecisionBoundaryPage() {
+  const { locale } = useI18n()
+  const lessonSequence = getAdjacentLessons('perceptron-decision-boundary', locale)
   const [datasetId, setDatasetId] = useState(decisionBoundaryDatasets[0].id)
   const [w1, setW1] = useState(1)
   const [w2, setW2] = useState(1)

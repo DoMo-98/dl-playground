@@ -1,12 +1,13 @@
 import type { ReactNode } from 'react'
 import { ArrowRight, BookOpen, CheckCircle2, Clock3, Sparkles } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { useI18n } from '../../app/i18n-context'
 import {
   getNextReadyLesson,
+  getLearningSections,
   getSectionLessons,
   getSectionPath,
   getSectionStats,
-  learningSections,
 } from '../../content/learningPath'
 
 const statusTone = {
@@ -15,17 +16,16 @@ const statusTone = {
 } as const
 
 export function LearnOverviewPage() {
-  const nextReadyLesson = getNextReadyLesson()
+  const { locale, messages } = useI18n()
+  const learningSections = getLearningSections(locale)
+  const nextReadyLesson = getNextReadyLesson(locale)
 
   return (
     <div className="space-y-10">
       <section className="space-y-4">
-        <p className="text-sm font-medium uppercase tracking-[0.18em] text-cyan-300">Learning path</p>
-        <h1 className="text-4xl font-semibold tracking-tight text-white">Interactive deep learning lessons</h1>
-        <p className="max-w-3xl text-lg leading-8 text-slate-300">
-          The learning path is organized into small visual lessons. Each page is designed to explain a
-          concept, show it clearly, and let the learner change something meaningful.
-        </p>
+        <p className="text-sm font-medium uppercase tracking-[0.18em] text-cyan-300">{messages.learn.eyebrow}</p>
+        <h1 className="text-4xl font-semibold tracking-tight text-white">{messages.learn.title}</h1>
+        <p className="max-w-3xl text-lg leading-8 text-slate-300">{messages.learn.description}</p>
       </section>
 
       {nextReadyLesson ? (
@@ -34,18 +34,18 @@ export function LearnOverviewPage() {
             <div className="space-y-3">
               <div className="flex items-center gap-2 text-sm font-medium uppercase tracking-[0.16em] text-cyan-200">
                 <Sparkles className="h-4 w-4" />
-                Start with the first live lesson
+                {messages.learn.startEyebrow}
               </div>
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold text-white">{nextReadyLesson.title}</h2>
                 <p className="max-w-2xl text-sm leading-7 text-cyan-50">{nextReadyLesson.summary}</p>
               </div>
               <div className="flex flex-wrap gap-2 text-xs uppercase tracking-[0.14em] text-cyan-100">
-                <MetaBadge icon={<Clock3 className="h-3.5 w-3.5" />} label={`${nextReadyLesson.estimatedMinutes} min`} />
+                <MetaBadge icon={<Clock3 className="h-3.5 w-3.5" />} label={`${nextReadyLesson.estimatedMinutes} ${messages.learn.metaMinutes}`} />
                 <MetaBadge icon={<BookOpen className="h-3.5 w-3.5" />} label={nextReadyLesson.kind} />
                 <MetaBadge
                   icon={<CheckCircle2 className="h-3.5 w-3.5" />}
-                  label={`${nextReadyLesson.objectives.length} objectives`}
+                  label={`${nextReadyLesson.objectives.length} ${messages.learn.metaObjectives}`}
                 />
               </div>
             </div>
@@ -54,7 +54,7 @@ export function LearnOverviewPage() {
               to={nextReadyLesson.href}
               className="inline-flex items-center gap-2 rounded-full bg-cyan-300 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-200"
             >
-              Open lesson
+              {messages.learn.openLesson}
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -77,8 +77,8 @@ export function LearnOverviewPage() {
                 <p className="text-sm leading-6 text-slate-400">{section.goal}</p>
 
                 <div className="flex flex-wrap gap-2 text-xs uppercase tracking-[0.14em] text-slate-300">
-                  <MetaBadge icon={<CheckCircle2 className="h-3.5 w-3.5" />} label={`${stats.readyCount}/${stats.lessonCount} ready`} />
-                  <MetaBadge icon={<Clock3 className="h-3.5 w-3.5" />} label={`${stats.totalMinutes} min total`} />
+                  <MetaBadge icon={<CheckCircle2 className="h-3.5 w-3.5" />} label={messages.learn.readyCount(stats.readyCount, stats.lessonCount)} />
+                  <MetaBadge icon={<Clock3 className="h-3.5 w-3.5" />} label={messages.learn.totalMinutes(stats.totalMinutes)} />
                 </div>
               </div>
 
@@ -94,8 +94,9 @@ export function LearnOverviewPage() {
                           title={lesson.shortTitle}
                           summary={lesson.summary}
                           estimatedMinutes={lesson.estimatedMinutes}
-                          status={lesson.status}
+                          status={messages.learn.status[lesson.status]}
                           objectiveCount={lesson.objectives.length}
+                          objectiveLabel={messages.learn.metaObjectives}
                         />
                         <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-slate-400" />
                       </Link>
@@ -105,8 +106,9 @@ export function LearnOverviewPage() {
                           title={lesson.shortTitle}
                           summary={lesson.summary}
                           estimatedMinutes={lesson.estimatedMinutes}
-                          status={lesson.status}
+                          status={messages.learn.status[lesson.status]}
                           objectiveCount={lesson.objectives.length}
+                          objectiveLabel={messages.learn.metaObjectives}
                         />
                       </div>
                     )}
@@ -115,10 +117,10 @@ export function LearnOverviewPage() {
               </ul>
 
               <Link
-                to={getSectionPath(section)}
+                to={getSectionPath(section, locale)}
                 className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-cyan-300 transition hover:text-cyan-200"
               >
-                {stats.readyCount > 0 ? 'Open available lesson' : 'Section roadmap'}
+                {stats.readyCount > 0 ? messages.learn.openAvailableLesson : messages.learn.sectionRoadmap}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </article>
@@ -133,17 +135,18 @@ type LessonCardBodyProps = {
   title: string
   summary: string
   estimatedMinutes: number
-  status: 'ready' | 'planned'
+  status: string
   objectiveCount: number
+  objectiveLabel: string
 }
 
-function LessonCardBody({ title, summary, estimatedMinutes, status, objectiveCount }: LessonCardBodyProps) {
+function LessonCardBody({ title, summary, estimatedMinutes, status, objectiveCount, objectiveLabel }: LessonCardBodyProps) {
   return (
     <div className="space-y-2">
       <div className="flex flex-wrap items-center gap-2">
         <span className="font-medium text-white">{title}</span>
         <span
-          className={`inline-flex items-center rounded-full border px-2 py-1 text-[11px] font-medium uppercase tracking-[0.14em] ${statusTone[status]}`}
+          className={`inline-flex items-center rounded-full border px-2 py-1 text-[11px] font-medium uppercase tracking-[0.14em] ${statusTone[status === 'ready' || status === 'lista' ? 'ready' : 'planned']}`}
         >
           {status}
         </span>
@@ -151,7 +154,7 @@ function LessonCardBody({ title, summary, estimatedMinutes, status, objectiveCou
       <p className="max-w-md text-sm leading-6 text-slate-400">{summary}</p>
       <div className="flex flex-wrap gap-3 text-xs uppercase tracking-[0.14em] text-slate-500">
         <span>{estimatedMinutes} min</span>
-        <span>{objectiveCount} objectives</span>
+        <span>{objectiveCount} {objectiveLabel}</span>
       </div>
     </div>
   )

@@ -1,37 +1,29 @@
-import { render, screen } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
+import { screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
+import { renderWithI18n } from '../../test/renderWithI18n'
 import { LearnOverviewPage } from './LearnOverviewPage'
 
 describe('LearnOverviewPage', () => {
   it('highlights the first ready lesson and keeps planned lessons non-clickable', () => {
-    render(
-      <MemoryRouter>
-        <LearnOverviewPage />
-      </MemoryRouter>,
-    )
+    renderWithI18n(<LearnOverviewPage />, { initialEntries: ['/en/learn'] })
 
     const startLink = screen.getByRole('link', { name: 'Open lesson' })
-    expect(startLink).toHaveAttribute('href', '/learn/mechanics/perceptron/weighted-sum')
+    expect(startLink).toHaveAttribute('href', '/en/learn/mechanics/perceptron/weighted-sum')
 
     expect(screen.getByRole('link', { name: /weighted sum and bias/i })).toHaveAttribute(
       'href',
-      '/learn/mechanics/perceptron/weighted-sum',
+      '/en/learn/mechanics/perceptron/weighted-sum',
     )
     expect(screen.getByRole('link', { name: /decision boundary intuition/i })).toHaveAttribute(
       'href',
-      '/learn/mechanics/perceptron/decision-boundary',
+      '/en/learn/mechanics/perceptron/decision-boundary',
     )
     expect(screen.queryByRole('link', { name: /activations and non-linearity/i })).not.toBeInTheDocument()
     expect(screen.getByText('Activations and non-linearity')).toBeInTheDocument()
   })
 
   it('renders derived section readiness summaries from the curriculum registry', () => {
-    render(
-      <MemoryRouter>
-        <LearnOverviewPage />
-      </MemoryRouter>,
-    )
+    renderWithI18n(<LearnOverviewPage />, { initialEntries: ['/en/learn'] })
 
     expect(screen.getAllByText('2/3 ready').length).toBeGreaterThan(0)
     expect(screen.getAllByText('30 min total').length).toBeGreaterThan(0)

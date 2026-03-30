@@ -16,7 +16,30 @@ Initial scaffold with:
 
 - site shell
 - learning path overview
+- bilingual foundation (English + Spanish)
 - first interactive lesson: perceptron weighted sum and bias
+
+## Localization architecture
+
+The SPA now uses locale-prefixed routes:
+
+- `/en/...`
+- `/es/...`
+
+Implementation notes:
+
+- locale preference is detected from `localStorage` first, then browser language
+- switching language keeps the user on the equivalent route instead of sending them back home
+- shell and short UI strings live in `src/content/locales/`
+- curriculum metadata is merged through `src/content/learningPath.ts`
+- long-form page copy can be split into per-language content modules as lessons grow
+
+Key files:
+
+- `src/i18n.ts` — locale detection, persistence, and path helpers
+- `src/app/I18nProvider.tsx` + `src/app/i18n-context.ts` — locale context and switching
+- `src/content/locales/en.ts`
+- `src/content/locales/es.ts`
 
 ## Commands
 

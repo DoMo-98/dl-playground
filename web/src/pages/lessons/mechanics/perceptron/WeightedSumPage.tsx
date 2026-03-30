@@ -7,6 +7,7 @@ import {
   ObservationPromptsCard,
 } from '../../../../components/learning/LessonPrimitives'
 import { getAdjacentLessons } from '../../../../content/learningPath'
+import { useI18n } from '../../../../app/i18n-context'
 import { NeuronDiagram } from '../../../../features/perceptron/components/NeuronDiagram'
 import {
   computeBinaryOutput,
@@ -14,7 +15,8 @@ import {
 } from '../../../../features/perceptron/lib/perceptronMath'
 
 export function WeightedSumPage() {
-  const lessonSequence = getAdjacentLessons('perceptron-weighted-sum')
+  const { locale } = useI18n()
+  const lessonSequence = getAdjacentLessons('perceptron-weighted-sum', locale)
   const [x1, setX1] = useState(1)
   const [x2, setX2] = useState(0.5)
   const [w1, setW1] = useState(0.8)

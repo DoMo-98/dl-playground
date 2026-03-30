@@ -1,14 +1,10 @@
-import { fireEvent, render, screen } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
+import { fireEvent, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
+import { renderWithI18n } from '../../../../test/renderWithI18n'
 import { DecisionBoundaryPage } from './DecisionBoundaryPage'
 
 function renderPage() {
-  render(
-    <MemoryRouter>
-      <DecisionBoundaryPage />
-    </MemoryRouter>,
-  )
+  renderWithI18n(<DecisionBoundaryPage />, { initialEntries: ['/en/learn/mechanics/perceptron/decision-boundary'] })
 }
 
 describe('DecisionBoundaryPage', () => {
