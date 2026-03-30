@@ -59,9 +59,9 @@ That means roadmap execution depends on both:
 
 For the current next lesson:
 
-- `T1a` source investigation is already closed
-- Rosenblatt (1958) remains historical context rather than a comfortably readable primary implementation anchor from the current environment
-- the next implementation run is expected to **re-anchor safely if needed and build the minimum visible lesson in the same run**
+- `T1b` is already closed and the decision-boundary lesson is now part of the shipped app
+- `T2` is next, but its primary source path still requires focused investigation before the lesson can claim paper-grounded fidelity
+- the next implementation run should therefore confirm the strongest usable anchor for non-linearity, then build the smallest coherent interactive lesson around that claim
 
 ## How to use the rest of the docs in this folder
 

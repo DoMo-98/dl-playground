@@ -26,13 +26,13 @@ Implemented today:
 
 Immediate next lesson:
 
-- **Perceptron · decision boundary intuition**
+- **MLP · activation functions and non-linearity**
 
 Near-term queue after that:
 
-- MLP mechanics and non-linearity
 - gradient descent intuition
-- CNN intuition modules
+- convolution as local pattern detector
+- stable-training intuition modules
 - deeper sequence and memory topics
 
 For the canonical task state (`DONE`, `NEXT`, `QUEUED`) and the paper-readiness context behind that ordering, see:
