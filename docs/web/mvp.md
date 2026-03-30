@@ -27,6 +27,7 @@ The MVP should establish the page pattern and technical direction, not cover the
 - a consistent pedagogical page template
 - lightweight stateful controls and visual feedback
 - concise explanatory content
+- a curriculum registry with enough metadata to drive overview cards, sequencing, and readiness summaries from one source
 
 ### Not included yet
 - full roadmap coverage

@@ -24,12 +24,22 @@ Implemented today:
 - home page and overview flow
 - first interactive lesson: **Perceptron · weighted sum and bias**
 
-Planned next:
+Immediate next lesson:
 
-- more perceptron lessons
-- MLP mechanics and non-linearity
-- CNN intuition modules
+- **MLP · activation functions and non-linearity**
+
+Near-term queue after that:
+
+- gradient descent intuition
+- convolution as local pattern detector
+- stable-training intuition modules
 - deeper sequence and memory topics
+
+For the canonical task state (`DONE`, `NEXT`, `QUEUED`) and the paper-readiness context behind that ordering, see:
+
+- `docs/web/roadmap-status.md`
+- `docs/web/subagent-working-philosophy.md`
+- `references/operational-paper-set.md`
 
 ## Product intent
 
@@ -74,6 +84,7 @@ Advanced optimization techniques and nested learning loops.
 
 Important docs:
 
+- `docs/web/roadmap-status.md` — current status, current next lesson, and canonical planning links
 - `docs/web/product-definition.md`
 - `docs/web/content-map.md`
 - `docs/web/mvp.md`
