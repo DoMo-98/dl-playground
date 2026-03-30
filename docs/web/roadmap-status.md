@@ -25,11 +25,11 @@ Implemented in the app today:
 - home page
 - learning path overview at `/learn`
 - reusable `LearningPageLayout`
-- first interactive lesson: **Perceptron · weighted sum and bias**
+- interactive lesson: **Perceptron · weighted sum and bias**
+- interactive lesson: **Perceptron · decision boundary intuition**
 
 Not yet implemented in the app:
 
-- **Perceptron · decision boundary intuition**
 - **MLP · activation functions and non-linearity**
 - **Gradient descent intuition**
 - **Convolution as local pattern detector**
@@ -37,7 +37,7 @@ Not yet implemented in the app:
 
 ## Current next lesson
 
-**NEXT:** `T1b — Perceptron · decision boundary intuition · re-anchor + implementation mínima visible`
+**NEXT:** `T2 — MLP · activation functions and non-linearity`
 
 In plain English:
 
