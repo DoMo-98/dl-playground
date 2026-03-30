@@ -43,11 +43,13 @@ type LocalizedMessages = {
     openLesson: string
     metaMinutes: string
     metaObjectives: string
-    readyCount: (ready: number, total: number) => string
-    totalMinutes: (minutes: number) => string
     openAvailableLesson: string
     sectionRoadmap: string
+    readyCount: (ready: number, total: number) => string
+    totalMinutes: (minutes: number) => string
     status: Record<'ready' | 'planned', string>
+    lessonKind: Record<'interactive' | 'lab' | 'reading', string>
+    unavailableLabel: string
   }
   lessonChrome: {
     objectiveLabel: string
@@ -61,6 +63,15 @@ type LocalizedMessages = {
     backToLearningPath: string
     previous: string
     next: string
+    unavailableBadge: string
+    unavailableDescription: string
+  }
+  notFound: {
+    eyebrow: string
+    title: string
+    description: string
+    primaryCta: string
+    secondaryCta: string
   }
   perceptron: {
     neuronDiagram: {
@@ -170,14 +181,20 @@ export const enMessages: LocalizedMessages = {
     openLesson: 'Open lesson',
     metaMinutes: 'min',
     metaObjectives: 'objectives',
-    readyCount: (ready, total) => `${ready}/${total} ready`,
-    totalMinutes: (minutes) => `${minutes} min total`,
     openAvailableLesson: 'Open available lesson',
     sectionRoadmap: 'Section roadmap',
+    readyCount: (ready, total) => `${ready}/${total} ready`,
+    totalMinutes: (minutes) => `${minutes} min total`,
     status: {
       ready: 'ready',
       planned: 'planned',
     },
+    lessonKind: {
+      interactive: 'interactive',
+      lab: 'lab',
+      reading: 'reading',
+    },
+    unavailableLabel: 'Not available yet',
   },
   lessonChrome: {
     objectiveLabel: 'Learning objective',
@@ -191,6 +208,15 @@ export const enMessages: LocalizedMessages = {
     backToLearningPath: 'Back to learning path',
     previous: 'Previous',
     next: 'Next',
+    unavailableBadge: 'Planned',
+    unavailableDescription: 'This lesson is listed in the sequence, but it is not available to open yet.',
+  },
+  notFound: {
+    eyebrow: 'Page not found',
+    title: 'This route does not exist in the current locale.',
+    description: 'You are still browsing the English version. You can go back home or return to the learning path without leaving this locale.',
+    primaryCta: 'Go to home',
+    secondaryCta: 'Back to learning path',
   },
   perceptron: {
     neuronDiagram: {
@@ -250,10 +276,10 @@ export const enMessages: LocalizedMessages = {
         'A perceptron turns its weighted sum into a straight decision boundary. Changing the weights rotates that line; changing the bias slides it across the plane.',
       objective: 'How do weights and bias change the straight line that separates one class from the other?',
       coreIdeaDescription:
-        'This lesson stays deliberately narrow: one perceptron, one straight boundary, immediate geometric feedback. It does not try to explain training yet.',
+        'This lesson focuses on the geometry you can see right now: one perceptron, one straight boundary, and immediate visual feedback as you move the controls.',
       coreIdeaBullets: [
-        'Historical context still points back to Rosenblatt (1958), but that source remains operationally blocked here.',
-        'For implementation fidelity, this page is re-anchored to the classic linear-separator interpretation used across perceptron literature.',
+        'The weights control the orientation of the separating line.',
+        'The bias shifts the same line to cover a different part of the plane.',
         'A single perceptron can only draw one straight boundary in this 2D view.',
       ],
       datasetLegend: 'Prepared dataset',

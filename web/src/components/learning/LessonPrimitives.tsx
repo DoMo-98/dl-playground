@@ -1,7 +1,8 @@
 import type { ReactNode } from 'react'
-import { ArrowLeft, ArrowRight, BookOpen, Lightbulb, NotebookPen, Target } from 'lucide-react'
+import { ArrowLeft, ArrowRight, BookOpen, Lightbulb, Lock, NotebookPen, Target } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useI18n } from '../../app/i18n-context'
+import type { LessonStatus } from '../../content/learningPath'
 
 type LessonCardProps = {
   icon: ReactNode
@@ -101,17 +102,16 @@ export function ObservationPromptsCard({ prompts }: ObservationPromptsCardProps)
   )
 }
 
+type AdjacentLessonLink = {
+  title: string
+  href: string
+  status?: LessonStatus
+}
+
 type LessonNavigationProps = {
   overviewHref?: string
-  previousLesson?: {
-    title: string
-    href: string
-  } | null
-  nextLesson?: {
-    title: string
-    href: string
-    status?: string
-  } | null
+  previousLesson?: AdjacentLessonLink | null
+  nextLesson?: AdjacentLessonLink | null
 }
 
 export function LessonNavigation({ overviewHref, previousLesson, nextLesson }: LessonNavigationProps) {
@@ -132,31 +132,58 @@ export function LessonNavigation({ overviewHref, previousLesson, nextLesson }: L
           {messages.lessonChrome.backToLearningPath}
         </Link>
 
-        {previousLesson ? (
-          <Link
-            to={previousLesson.href}
-            className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-4 py-3 text-sm font-medium text-slate-100 transition hover:bg-white/5"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            {messages.lessonChrome.previous}: {previousLesson.title}
-          </Link>
-        ) : null}
-
-        {nextLesson ? (
-          <Link
-            to={nextLesson.href}
-            className="inline-flex items-center gap-2 rounded-xl border border-cyan-400/20 bg-cyan-400/10 px-4 py-3 text-sm font-medium text-cyan-50 transition hover:bg-cyan-400/15"
-          >
-            {messages.lessonChrome.next}: {nextLesson.title}
-            {nextLesson.status ? (
-              <span className="rounded-full border border-cyan-300/20 px-2 py-0.5 text-[10px] uppercase tracking-[0.18em] text-cyan-200">
-                {nextLesson.status}
-              </span>
-            ) : null}
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-        ) : null}
+        <LessonNavigationAction direction="previous" lesson={previousLesson} />
+        <LessonNavigationAction direction="next" lesson={nextLesson} />
       </div>
     </LessonCard>
+  )
+}
+
+type LessonNavigationActionProps = {
+  direction: 'previous' | 'next'
+  lesson?: AdjacentLessonLink | null
+}
+
+function LessonNavigationAction({ direction, lesson }: LessonNavigationActionProps) {
+  const { messages } = useI18n()
+
+  if (!lesson) {
+    return null
+  }
+
+  const label = `${messages.lessonChrome[direction]}: ${lesson.title}`
+  const icon = direction === 'previous' ? <ArrowLeft className="h-4 w-4" /> : <ArrowRight className="h-4 w-4" />
+
+  if (lesson.status === 'ready') {
+    return (
+      <Link
+        to={lesson.href}
+        className={
+          direction === 'next'
+            ? 'inline-flex items-center gap-2 rounded-xl border border-cyan-400/20 bg-cyan-400/10 px-4 py-3 text-sm font-medium text-cyan-50 transition hover:bg-cyan-400/15'
+            : 'inline-flex items-center gap-2 rounded-xl border border-white/10 px-4 py-3 text-sm font-medium text-slate-100 transition hover:bg-white/5'
+        }
+      >
+        {direction === 'previous' ? icon : null}
+        <span>{label}</span>
+        {direction === 'next' ? icon : null}
+      </Link>
+    )
+  }
+
+  return (
+    <div
+      aria-disabled="true"
+      className="inline-flex items-center gap-2 rounded-xl border border-dashed border-white/10 bg-slate-950/40 px-4 py-3 text-sm font-medium text-slate-400"
+      title={messages.lessonChrome.unavailableDescription}
+    >
+      {direction === 'previous' ? icon : null}
+      <span>{label}</span>
+      <span className="inline-flex items-center gap-1 rounded-full border border-white/10 px-2 py-0.5 text-[10px] uppercase tracking-[0.18em] text-slate-300">
+        <Lock className="h-3 w-3" />
+        {messages.lessonChrome.unavailableBadge}
+      </span>
+      {direction === 'next' ? icon : null}
+    </div>
   )
 }

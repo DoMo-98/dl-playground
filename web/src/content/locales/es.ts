@@ -33,14 +33,20 @@ export const esMessages: LocalizedMessages = {
     openLesson: 'Abrir lección',
     metaMinutes: 'min',
     metaObjectives: 'objetivos',
-    readyCount: (ready, total) => `${ready}/${total} listas`,
-    totalMinutes: (minutes) => `${minutes} min en total`,
     openAvailableLesson: 'Abrir lección disponible',
     sectionRoadmap: 'Hoja de ruta de la sección',
+    readyCount: (ready, total) => `${ready}/${total} listas`,
+    totalMinutes: (minutes) => `${minutes} min en total`,
     status: {
       ready: 'lista',
       planned: 'planeada',
     },
+    lessonKind: {
+      interactive: 'interactiva',
+      lab: 'laboratorio',
+      reading: 'lectura',
+    },
+    unavailableLabel: 'Aún no disponible',
   },
   lessonChrome: {
     objectiveLabel: 'Objetivo de aprendizaje',
@@ -54,6 +60,15 @@ export const esMessages: LocalizedMessages = {
     backToLearningPath: 'Volver a la ruta de aprendizaje',
     previous: 'Anterior',
     next: 'Siguiente',
+    unavailableBadge: 'Planeada',
+    unavailableDescription: 'Esta lección forma parte de la secuencia, pero todavía no está disponible para abrir.',
+  },
+  notFound: {
+    eyebrow: 'Página no encontrada',
+    title: 'Esta ruta no existe dentro del idioma actual.',
+    description: 'Sigues navegando en español. Puedes volver al inicio o regresar a la ruta de aprendizaje sin salir de este idioma.',
+    primaryCta: 'Ir al inicio',
+    secondaryCta: 'Volver a la ruta de aprendizaje',
   },
   perceptron: {
     neuronDiagram: {
@@ -113,10 +128,10 @@ export const esMessages: LocalizedMessages = {
         'Un perceptrón convierte su suma ponderada en una frontera de decisión recta. Al cambiar los pesos, esa línea rota; al cambiar el sesgo, se desliza por el plano.',
       objective: '¿Cómo cambian los pesos y el sesgo la línea recta que separa una clase de la otra?',
       coreIdeaDescription:
-        'Esta lección se mantiene deliberadamente acotada: un perceptrón, una frontera recta y feedback geométrico inmediato. Todavía no intenta explicar el entrenamiento.',
+        'Esta lección se centra en la geometría que puedes observar al instante: un perceptrón, una frontera recta y feedback visual inmediato mientras ajustas los controles.',
       coreIdeaBullets: [
-        'El contexto histórico sigue apuntando a Rosenblatt (1958), pero esa fuente sigue bloqueada aquí a nivel operativo.',
-        'Para mantener fidelidad de implementación, esta página se vuelve a anclar en la interpretación clásica del separador lineal usada en la literatura sobre perceptrones.',
+        'Los pesos controlan la orientación de la línea que separa las clases.',
+        'El sesgo desplaza esa misma línea para cubrir otra zona del plano.',
         'Un único perceptrón solo puede dibujar una frontera recta en esta vista 2D.',
       ],
       datasetLegend: 'Conjunto preparado',

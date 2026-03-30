@@ -28,6 +28,17 @@ describe('DecisionBoundaryPage', () => {
     expect(screen.getByText(/Región predicha como clase 1/)).toBeInTheDocument()
   })
 
+  it('keeps planned next lessons visible but non-clickable in navigation', () => {
+    renderPage()
+
+    expect(screen.queryByRole('link', { name: /next: mlp · activation functions and non-linearity/i })).not.toBeInTheDocument()
+    const disabledNextLabel = screen
+      .getAllByText(/Next: MLP · activation functions and non-linearity/i)
+      .find((element) => element.closest('[aria-disabled="true"]'))
+    expect(disabledNextLabel).toBeDefined()
+    expect(screen.getAllByText('Planned').length).toBeGreaterThan(0)
+  })
+
   it('updates the boundary summary when a weight change makes the split worse', () => {
     renderPage()
 

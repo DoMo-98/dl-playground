@@ -8,12 +8,13 @@ import {
   getSectionLessons,
   getSectionPath,
   getSectionStats,
+  type LessonStatus,
 } from '../../content/learningPath'
 
-const statusTone = {
+const statusTone: Record<LessonStatus, string> = {
   ready: 'border-emerald-400/30 bg-emerald-400/10 text-emerald-200',
   planned: 'border-slate-500/30 bg-slate-500/10 text-slate-300',
-} as const
+}
 
 export function LearnOverviewPage() {
   const { locale, messages } = useI18n()
@@ -42,7 +43,7 @@ export function LearnOverviewPage() {
               </div>
               <div className="flex flex-wrap gap-2 text-xs uppercase tracking-[0.14em] text-cyan-100">
                 <MetaBadge icon={<Clock3 className="h-3.5 w-3.5" />} label={`${nextReadyLesson.estimatedMinutes} ${messages.learn.metaMinutes}`} />
-                <MetaBadge icon={<BookOpen className="h-3.5 w-3.5" />} label={nextReadyLesson.kind} />
+                <MetaBadge icon={<BookOpen className="h-3.5 w-3.5" />} label={messages.learn.lessonKind[nextReadyLesson.kind]} />
                 <MetaBadge
                   icon={<CheckCircle2 className="h-3.5 w-3.5" />}
                   label={`${nextReadyLesson.objectives.length} ${messages.learn.metaObjectives}`}
@@ -94,9 +95,11 @@ export function LearnOverviewPage() {
                           title={lesson.shortTitle}
                           summary={lesson.summary}
                           estimatedMinutes={lesson.estimatedMinutes}
-                          status={messages.learn.status[lesson.status]}
+                          status={lesson.status}
+                          statusLabel={messages.learn.status[lesson.status]}
                           objectiveCount={lesson.objectives.length}
                           objectiveLabel={messages.learn.metaObjectives}
+                          minutesLabel={messages.learn.metaMinutes}
                         />
                         <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-slate-400" />
                       </Link>
@@ -106,9 +109,11 @@ export function LearnOverviewPage() {
                           title={lesson.shortTitle}
                           summary={lesson.summary}
                           estimatedMinutes={lesson.estimatedMinutes}
-                          status={messages.learn.status[lesson.status]}
+                          status={lesson.status}
+                          statusLabel={`${messages.learn.status[lesson.status]} · ${messages.learn.unavailableLabel}`}
                           objectiveCount={lesson.objectives.length}
                           objectiveLabel={messages.learn.metaObjectives}
+                          minutesLabel={messages.learn.metaMinutes}
                         />
                       </div>
                     )}
@@ -135,25 +140,36 @@ type LessonCardBodyProps = {
   title: string
   summary: string
   estimatedMinutes: number
-  status: string
+  status: LessonStatus
+  statusLabel: string
   objectiveCount: number
   objectiveLabel: string
+  minutesLabel: string
 }
 
-function LessonCardBody({ title, summary, estimatedMinutes, status, objectiveCount, objectiveLabel }: LessonCardBodyProps) {
+function LessonCardBody({
+  title,
+  summary,
+  estimatedMinutes,
+  status,
+  statusLabel,
+  objectiveCount,
+  objectiveLabel,
+  minutesLabel,
+}: LessonCardBodyProps) {
   return (
     <div className="space-y-2">
       <div className="flex flex-wrap items-center gap-2">
         <span className="font-medium text-white">{title}</span>
         <span
-          className={`inline-flex items-center rounded-full border px-2 py-1 text-[11px] font-medium uppercase tracking-[0.14em] ${statusTone[status === 'ready' || status === 'lista' ? 'ready' : 'planned']}`}
+          className={`inline-flex items-center rounded-full border px-2 py-1 text-[11px] font-medium uppercase tracking-[0.14em] ${statusTone[status]}`}
         >
-          {status}
+          {statusLabel}
         </span>
       </div>
       <p className="max-w-md text-sm leading-6 text-slate-400">{summary}</p>
       <div className="flex flex-wrap gap-3 text-xs uppercase tracking-[0.14em] text-slate-500">
-        <span>{estimatedMinutes} min</span>
+        <span>{estimatedMinutes} {minutesLabel}</span>
         <span>{objectiveCount} {objectiveLabel}</span>
       </div>
     </div>

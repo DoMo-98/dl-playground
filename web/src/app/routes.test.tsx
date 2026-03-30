@@ -44,4 +44,16 @@ describe('localized app routing', () => {
     expect(screen.getAllByRole('heading', { name: 'Suma ponderada y sesgo' }).length).toBeGreaterThan(0)
     expect(screen.getAllByRole('link', { name: /volver a la ruta de aprendizaje/i })[0]).toHaveAttribute('href', '/es/learn')
   })
+
+  it('keeps the locale on invalid localized routes and shows a localized 404 page', () => {
+    render(
+      <MemoryRouter initialEntries={['/es/learn/esto-no-existe']}>
+        <AppRoutes />
+      </MemoryRouter>,
+    )
+
+    expect(screen.getByRole('heading', { name: 'Esta ruta no existe dentro del idioma actual.' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Ir al inicio' })).toHaveAttribute('href', '/es')
+    expect(screen.getAllByRole('link', { name: 'Volver a la ruta de aprendizaje' })[0]).toHaveAttribute('href', '/es/learn')
+  })
 })
