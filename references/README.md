@@ -45,3 +45,14 @@ If a source is scanned or awkward to parse, the fallback is to create a concise 
 ## Goal
 
 The repo should act as the structured knowledge layer for lesson creation, not as a heavy binary warehouse.
+
+## How this connects to planning
+
+If you need to know what lesson is actually next, do not infer it from paper order alone.
+Check:
+
+1. `docs/web/roadmap-status.md`
+2. `/root/.openclaw/workspace/memory/2026-03-29-dl-roadmap.md`
+3. `references/operational-paper-set.md`
+
+Use `references/` to understand source readiness and lesson anchors, not as a standalone task queue.

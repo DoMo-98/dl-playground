@@ -1,5 +1,8 @@
 # Initial Web Backlog
 
+> Status note: this file is now a **historical backlog reference**, not the canonical tracker for current execution state.
+> For the current `DONE` / `NEXT` / `QUEUED` order, use `docs/web/roadmap-status.md` and the canonical operational roadmap at `/root/.openclaw/workspace/memory/2026-03-29-dl-roadmap.md`.
+
 ## Objective
 
 Translate the product definition and MVP into an execution-ready backlog.
