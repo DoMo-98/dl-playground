@@ -20,6 +20,15 @@ describe('LearnOverviewPage', () => {
     )
     expect(screen.queryByRole('link', { name: /activations and non-linearity/i })).not.toBeInTheDocument()
     expect(screen.getByText('Activations and non-linearity')).toBeInTheDocument()
+    expect(screen.getAllByText('planned · Not available yet').length).toBeGreaterThan(0)
+  })
+
+  it('localizes visible metadata badges on Spanish routes', () => {
+    renderWithI18n(<LearnOverviewPage />, { locale: 'es', initialEntries: ['/es/learn'] })
+
+    expect(screen.getAllByText('interactiva').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('lista').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('planeada · Aún no disponible').length).toBeGreaterThan(0)
   })
 
   it('renders derived section readiness summaries from the curriculum registry', () => {

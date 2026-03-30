@@ -33,14 +33,20 @@ export const esMessages: LocalizedMessages = {
     openLesson: 'Abrir lección',
     metaMinutes: 'min',
     metaObjectives: 'objetivos',
-    readyCount: (ready, total) => `${ready}/${total} listas`,
-    totalMinutes: (minutes) => `${minutes} min en total`,
     openAvailableLesson: 'Abrir lección disponible',
     sectionRoadmap: 'Hoja de ruta de la sección',
+    readyCount: (ready, total) => `${ready}/${total} listas`,
+    totalMinutes: (minutes) => `${minutes} min en total`,
     status: {
       ready: 'lista',
       planned: 'planeada',
     },
+    lessonKind: {
+      interactive: 'interactiva',
+      lab: 'laboratorio',
+      reading: 'lectura',
+    },
+    unavailableLabel: 'Aún no disponible',
   },
   lessonChrome: {
     objectiveLabel: 'Objetivo de aprendizaje',
@@ -54,6 +60,128 @@ export const esMessages: LocalizedMessages = {
     backToLearningPath: 'Volver a la ruta de aprendizaje',
     previous: 'Anterior',
     next: 'Siguiente',
+    unavailableBadge: 'Planeada',
+    unavailableDescription: 'Esta lección forma parte de la secuencia, pero todavía no está disponible para abrir.',
+  },
+  notFound: {
+    eyebrow: 'Página no encontrada',
+    title: 'Esta ruta no existe dentro del idioma actual.',
+    description: 'Sigues navegando en español. Puedes volver al inicio o regresar a la ruta de aprendizaje sin salir de este idioma.',
+    primaryCta: 'Ir al inicio',
+    secondaryCta: 'Volver a la ruta de aprendizaje',
+  },
+  perceptron: {
+    neuronDiagram: {
+      inputs: 'Entradas',
+      weights: 'Pesos',
+      neuron: 'Neurona',
+      weightedSum: 'Suma ponderada',
+      binaryOutput: 'Salida binaria',
+      thresholdAtZero: 'Umbral en 0',
+    },
+    weightedSumPage: {
+      eyebrow: 'Mecánica arquitectónica · Perceptrón',
+      title: 'Suma ponderada y sesgo',
+      description:
+        'Un perceptrón combina sus entradas usando pesos y luego desplaza el resultado con un sesgo. Este es el paso básico de puntuación antes de que un umbral o una activación decidan la salida final.',
+      objective: '¿Cómo hacen los pesos y el sesgo que las mismas entradas produzcan una puntuación del perceptrón más alta o más baja?',
+      coreIdeaDescription:
+        'El perceptrón no decide de un solo salto. Primero construye una puntuación a partir de entradas ponderadas y después compara esa puntuación con un umbral. Esta página aísla el paso de puntuación para que puedas ver exactamente qué parámetro está empujando el resultado hacia arriba o hacia abajo.',
+      coreIdeaBullets: [
+        'Cada peso controla cuánto contribuye su entrada a la puntuación.',
+        'El sesgo desplaza la puntuación incluso cuando las entradas no cambian.',
+        'Cruzar el cero cambia la salida binaria, así que pequeños cambios numéricos pueden importar.',
+      ],
+      controlsTitle: 'Ajusta los ingredientes del perceptrón',
+      controlsDescription: 'Cuando puedas, mueve un solo control cada vez para que la relación causa-efecto siga siendo fácil de seguir.',
+      controlLabels: {
+        x1: 'Entrada x₁',
+        x2: 'Entrada x₂',
+        w1: 'Peso w₁',
+        w2: 'Peso w₂',
+        bias: 'Sesgo b',
+      },
+      currentComputation: 'Cálculo actual',
+      whatToNotice: 'Qué conviene observar',
+      noticeBullets: [
+        'Los pesos positivos empujan la suma hacia arriba cuando su entrada aumenta.',
+        'Los pesos negativos tiran de la suma hacia abajo cuando su entrada aumenta.',
+        'El sesgo desplaza la puntuación final aunque las entradas no cambien.',
+        'Cuando la suma cruza el cero, la salida binaria cambia de 0 a 1.',
+      ],
+      prompts: [
+        'Aumenta solo un peso positivo. ¿Qué conexión visual se vuelve más influyente y con qué rapidez se mueve la puntuación?',
+        'Mantén las entradas fijas y arrastra el sesgo. ¿Cuándo cruza la puntuación el cero y cambia la salida?',
+        'Haz que ambos pesos sean muy pequeños. ¿Qué parte del cálculo domina ahora la decisión?',
+      ],
+      tryThis: 'Prueba esto',
+      tryThisBullets: [
+        'Pon ambas entradas en positivo y luego cambia uno de los pesos de positivo a negativo.',
+        'Mantén los pesos fijos y mueve solo el sesgo para ver cómo se desplaza el umbral.',
+        'Prueba a dejar ambos pesos cerca de cero y observa cuánto domina el sesgo.',
+      ],
+    },
+    decisionBoundaryPage: {
+      eyebrow: 'Mecánica arquitectónica · Perceptrón',
+      title: 'Intuición de frontera de decisión',
+      description:
+        'Un perceptrón convierte su suma ponderada en una frontera de decisión recta. Al cambiar los pesos, esa línea rota; al cambiar el sesgo, se desliza por el plano.',
+      objective: '¿Cómo cambian los pesos y el sesgo la línea recta que separa una clase de la otra?',
+      coreIdeaDescription:
+        'Esta lección se centra en la geometría que puedes observar al instante: un perceptrón, una frontera recta y feedback visual inmediato mientras ajustas los controles.',
+      coreIdeaBullets: [
+        'Los pesos controlan la orientación de la línea que separa las clases.',
+        'El sesgo desplaza esa misma línea para cubrir otra zona del plano.',
+        'Un único perceptrón solo puede dibujar una frontera recta en esta vista 2D.',
+      ],
+      datasetLegend: 'Conjunto preparado',
+      datasetNames: {
+        'diagonal-separable': 'Separación diagonal',
+        'xor-trap': 'Trampa XOR',
+      },
+      datasetDescriptions: {
+        'diagonal-separable': 'Un pequeño conjunto linealmente separable donde la clase positiva vive hacia la zona superior derecha.',
+        'xor-trap': 'Este preset muestra un límite clásico: una sola línea recta no puede separar limpiamente las esquinas opuestas.',
+      },
+      datasetNotes: {
+        'xor-trap': 'Un solo perceptrón sigue siendo lineal, así que algunos puntos quedarán mal clasificados por mucho que rotes la frontera.',
+      },
+      preparedDataset: 'Conjunto preparado',
+      controlLabels: {
+        w1: 'Peso w₁ (influencia en el eje x)',
+        w2: 'Peso w₂ (influencia en el eje y)',
+        bias: 'Sesgo b (desplazamiento de la frontera)',
+      },
+      stats: {
+        correct: 'Clasificados correctamente',
+        mismatched: 'Puntos mal clasificados',
+        equation: 'Ecuación de la frontera',
+      },
+      movementTitle: 'Cómo leer el movimiento',
+      movementBullets: [
+        'Aumentar w₁ cambia cuánto inclina la frontera la posición horizontal.',
+        'Aumentar w₂ cambia cuánto inclina la frontera la posición vertical.',
+        'Cambiar el sesgo desliza la misma línea sin necesidad de rotarla mucho.',
+        'Los puntos se predicen como clase 1 cuando w₁x + w₂y + b ≥ 0.',
+      ],
+      presetNoteTitle: 'Por qué importa este preset',
+      prompts: [
+        'Usa el preset de separación diagonal e intenta llegar a cero fallos rotando la línea.',
+        'Después cambia a Trampa XOR y fíjate en que algunos puntos seguirán mal porque un solo perceptrón sigue siendo lineal.',
+        'Lleva w₂ hacia cero para ver cómo la frontera se vuelve vertical y luego usa el sesgo para deslizarla a izquierda o derecha.',
+      ],
+      visualization: {
+        eyebrow: 'Plano de clasificación 2D',
+        regionBadge: 'región de clase 1 frente a región de clase 0',
+        ariaLabel: 'Visualización de la frontera de decisión',
+        legend: {
+          positiveRegion: 'Región predicha como clase 1 / relleno del punto',
+          negativeRegion: 'Región predicha como clase 0 / relleno del punto',
+          correctOutline: 'Contorno blanco = la predicción coincide con la etiqueta objetivo',
+          mismatchOutline: 'Contorno rosa = no coincide con la etiqueta objetivo',
+        },
+      },
+    },
   },
   sections: {
     foundations: {

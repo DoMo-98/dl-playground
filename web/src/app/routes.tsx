@@ -7,6 +7,7 @@ import { LearnOverviewPage } from '../pages/learn/LearnOverviewPage'
 import { getLearningLessons } from '../content/learningPath'
 import { WeightedSumPage } from '../pages/lessons/mechanics/perceptron/WeightedSumPage'
 import { DecisionBoundaryPage } from '../pages/lessons/mechanics/perceptron/DecisionBoundaryPage'
+import { NotFoundPage } from '../pages/not-found/NotFoundPage'
 
 const lessonRouteElements = {
   'perceptron-weighted-sum': <WeightedSumPage />,
@@ -53,6 +54,7 @@ export function AppRoutes() {
         <Route index element={<HomePage />} />
         <Route path="learn" element={<LearnOverviewPage />} />
         {locales.flatMap((locale) => createLessonRoutes(locale))}
+        <Route path="*" element={<NotFoundPage />} />
       </Route>
       <Route path="*" element={<Navigate to={`/${detectPreferredLocale()}`} replace />} />
     </Routes>

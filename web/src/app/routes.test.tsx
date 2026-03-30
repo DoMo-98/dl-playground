@@ -19,6 +19,17 @@ describe('localized app routing', () => {
     )
   })
 
+  it('renders Spanish lesson content on locale-prefixed lesson routes', () => {
+    render(
+      <MemoryRouter initialEntries={['/es/learn/mechanics/perceptron/weighted-sum']}>
+        <AppRoutes />
+      </MemoryRouter>,
+    )
+
+    expect(screen.getByRole('heading', { name: 'Suma ponderada y sesgo' })).toBeInTheDocument()
+    expect(screen.getByText('Ajusta los ingredientes del perceptrón')).toBeInTheDocument()
+  })
+
   it('switches locale while preserving the current lesson route', async () => {
     const user = userEvent.setup()
 
@@ -30,7 +41,19 @@ describe('localized app routing', () => {
 
     await user.selectOptions(screen.getAllByLabelText('Language')[0], 'es')
 
-    expect(screen.getByRole('heading', { name: 'Weighted sum and bias' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /volver a la ruta de aprendizaje/i })).toHaveAttribute('href', '/es/learn')
+    expect(screen.getAllByRole('heading', { name: 'Suma ponderada y sesgo' }).length).toBeGreaterThan(0)
+    expect(screen.getAllByRole('link', { name: /volver a la ruta de aprendizaje/i })[0]).toHaveAttribute('href', '/es/learn')
+  })
+
+  it('keeps the locale on invalid localized routes and shows a localized 404 page', () => {
+    render(
+      <MemoryRouter initialEntries={['/es/learn/esto-no-existe']}>
+        <AppRoutes />
+      </MemoryRouter>,
+    )
+
+    expect(screen.getByRole('heading', { name: 'Esta ruta no existe dentro del idioma actual.' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Ir al inicio' })).toHaveAttribute('href', '/es')
+    expect(screen.getAllByRole('link', { name: 'Volver a la ruta de aprendizaje' })[0]).toHaveAttribute('href', '/es/learn')
   })
 })

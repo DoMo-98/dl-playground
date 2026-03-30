@@ -3,8 +3,11 @@ import { describe, expect, it } from 'vitest'
 import { renderWithI18n } from '../../../../test/renderWithI18n'
 import { DecisionBoundaryPage } from './DecisionBoundaryPage'
 
-function renderPage() {
-  renderWithI18n(<DecisionBoundaryPage />, { initialEntries: ['/en/learn/mechanics/perceptron/decision-boundary'] })
+function renderPage(locale: 'en' | 'es' = 'en') {
+  renderWithI18n(<DecisionBoundaryPage />, {
+    locale,
+    initialEntries: [`/${locale}/learn/mechanics/perceptron/decision-boundary`],
+  })
 }
 
 describe('DecisionBoundaryPage', () => {
@@ -14,6 +17,26 @@ describe('DecisionBoundaryPage', () => {
     expect(screen.getByRole('heading', { name: 'Decision boundary intuition' })).toBeInTheDocument()
     expect(screen.getByText('6 / 6')).toBeInTheDocument()
     expect(screen.getByText('1.00·x + 1.00·y + 0 = 0')).toBeInTheDocument()
+  })
+
+  it('renders Spanish dataset and legend copy on localized routes', () => {
+    renderPage('es')
+
+    expect(screen.getByRole('heading', { name: 'Intuición de frontera de decisión' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Separación diagonal' })).toBeInTheDocument()
+    expect(screen.getByText('Plano de clasificación 2D')).toBeInTheDocument()
+    expect(screen.getByText(/Región predicha como clase 1/)).toBeInTheDocument()
+  })
+
+  it('keeps planned next lessons visible but non-clickable in navigation', () => {
+    renderPage()
+
+    expect(screen.queryByRole('link', { name: /next: mlp · activation functions and non-linearity/i })).not.toBeInTheDocument()
+    const disabledNextLabel = screen
+      .getAllByText(/Next: MLP · activation functions and non-linearity/i)
+      .find((element) => element.closest('[aria-disabled="true"]'))
+    expect(disabledNextLabel).toBeDefined()
+    expect(screen.getAllByText('Planned').length).toBeGreaterThan(0)
   })
 
   it('updates the boundary summary when a weight change makes the split worse', () => {
