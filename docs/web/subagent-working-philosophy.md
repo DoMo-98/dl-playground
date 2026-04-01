@@ -171,6 +171,14 @@ Create shared primitives when duplication is becoming real, not pre-emptively.
 
 Daily execution runs should complete **exactly one meaningful roadmap task** whenever feasible.
 
+Delivery rule bound to that task:
+
+- **1 subagent = 1 roadmap task = 1 delivery unit**
+- if the run closes a substantive task, that task must ship on **its own branch and its own PR**
+- substantive work from different subagents in the same daily cycle must **not** be combined into the same branch or PR, even if the runs happened serially on the same day
+- exception: if later changes are still part of the **same delivery unit / same branch scope / same PR scope** rather than a second substantive roadmap task, continuing on that same branch/PR is correct
+- planning-only or research-only runs may stay PR-less or use separate handling, but they must not piggyback onto a product-code PR from another substantive task unless that exception is explicitly justified
+
 Preferred task shape:
 
 - visible user-facing progress
@@ -294,7 +302,19 @@ Expected testing standard:
 
 ---
 
-## 14. Summary style for subagent completions
+## 14. Branch and PR ownership rule
+
+A subagent should treat delivery ownership as part of the task contract, not as an afterthought.
+
+Operationally:
+
+- if you are delivering substantive repo changes, create or use a branch dedicated to your own single roadmap task
+- open or update exactly one PR for that task only
+- do not append a second substantive roadmap task from the same daily cycle to an already-open PR created for another subagent
+- if you discover an already-open PR from the same cycle with different substantive scope, treat it as out of bounds for your delivery
+- if your run is only research/planning, you may finish without a PR, but you must not silently attach that work to another task's code PR
+
+## 15. Summary style for subagent completions
 
 When a subagent reports progress back to the main session, the summary should be:
 
