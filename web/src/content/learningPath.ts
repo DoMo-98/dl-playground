@@ -122,7 +122,7 @@ const sectionBases: LearningSectionBase[] = [
           {
             id: 'mlp-activations',
             slug: 'activations',
-            status: 'planned',
+            status: 'ready',
             kind: 'interactive',
             sectionSlug: 'mechanics',
             unitSlug: 'mlp',

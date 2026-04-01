@@ -183,6 +183,92 @@ export const esMessages: LocalizedMessages = {
       },
     },
   },
+  mlp: {
+    activationsPage: {
+      eyebrow: 'Mecánica arquitectónica · MLP',
+      title: 'Funciones de activación y no linealidad',
+      description:
+        'Una pila de capas lineales sigue comportándose como un único mapa lineal. Esta lección muestra cómo las activaciones doblan ese comportamiento para que una red multicapa pequeña pueda representar respuestas más ricas.',
+      objective: '¿Qué cambia cuando la misma red multicapa pequeña deja su capa oculta lineal frente a cuando pasa por una activación no lineal?',
+      coreIdeaDescription:
+        'Rumelhart et al. volvieron prácticas las capas ocultas, pero la profundidad solo gana interés representacional cuando entre capas ocurre algo no lineal.',
+      coreIdeaBullets: [
+        'Si cada etapa sigue siendo lineal, toda la red todavía puede colapsar en una sola transformación afín.',
+        'ReLU crea quiebros por tramos; tanh y sigmoid comprimen y saturan de maneras distintas.',
+        'Cambiar la activación cambia qué formas pueden expresar las mismas unidades ocultas.',
+      ],
+      activationLabel: 'Activación en la capa oculta',
+      activationOptions: {
+        linear: {
+          label: 'Lineal',
+          description: 'Sin curvatura: la capa oculta deja pasar directamente su preactivación.',
+          interpretationTitle: 'Por qué esto sigue siendo limitado',
+          interpretation:
+            'Incluso con varias capas, una pila puramente lineal sigue comportándose como una sola regla afín. La curva no gana los pliegues necesarios para expresar estructura más rica.',
+        },
+        relu: {
+          label: 'ReLU',
+          description: 'Las respuestas negativas se recortan a cero, produciendo un comportamiento lineal por tramos.',
+          interpretationTitle: 'Por qué esto añade estructura útil',
+          interpretation:
+            'ReLU introduce quiebros cuando las unidades ocultas se encienden o se apagan. La salida ya puede cambiar de pendiente según la zona de entrada en vez de seguir siendo globalmente lineal.',
+        },
+        tanh: {
+          label: 'tanh',
+          description: 'Una activación suave y acotada que satura cerca de -1 y 1.',
+          interpretationTitle: 'Por qué esto se siente más suave',
+          interpretation:
+            'tanh curva las señales ocultas de forma suave y comprime los extremos. La red conserva curvatura expresiva, pero las entradas grandes pueden empezar a saturarse.',
+        },
+        sigmoid: {
+          label: 'Sigmoid',
+          description: 'Una activación acotada que comprime magnitudes grandes hacia 0 o 1.',
+          interpretationTitle: 'Por qué esto comprime con fuerza',
+          interpretation:
+            'Sigmoid también añade no linealidad, pero aplasta con más agresividad. La salida puede aplanarse en los extremos: es expresiva, aunque menos dinámica.',
+        },
+      },
+      controlLabels: {
+        hiddenScale: 'Escala de preactivación oculta',
+        outputScale: 'Escala de mezcla de salida',
+      },
+      stats: {
+        behavior: 'Clase de comportamiento',
+        outputRange: 'Rango de salida',
+        centerValue: 'Valor en x = 0',
+      },
+      shapeLabels: {
+        affine: 'Afín / sigue siendo prácticamente una línea',
+        'piecewise-linear': 'Lineal por tramos / se dobla al activar unidades',
+        'smooth-saturated': 'Suave / se curva y satura',
+        'bounded-squashing': 'Acotada / compresión fuerte en los extremos',
+      },
+      readingGuideTitle: 'Cómo leer la gráfica',
+      readingGuideBullets: [
+        'La línea blanca es la salida final de la red a lo largo del eje de entrada.',
+        'Las líneas ámbar y azul son las dos unidades ocultas antes de recombinarse en la salida final.',
+        'Empieza con lineal y luego compara cómo cambia la misma configuración oculta cuando la activación dobla cada respuesta.',
+      ],
+      xorBridgeTitle: 'Conexión con la lección anterior',
+      xorBridgeDescription:
+        'El preset XOR fallaba porque un perceptrón solo dibujaba una frontera recta. La no linealidad es el ingrediente que permite que las redes multicapa dejen de comportarse como una sola regla recta.',
+      prompts: [
+        'Empieza con lineal y fíjate en que la salida blanca sigue una tendencia prácticamente recta.',
+        'Cambia a ReLU y busca los puntos donde la pendiente cambia porque las unidades ocultas se encienden o apagan.',
+        'Compara tanh y sigmoid con una escala oculta mayor. ¿Cuál satura antes y cómo cambia eso los extremos de la salida?',
+      ],
+      visualization: {
+        eyebrow: 'Respuesta de un MLP 1D pequeño',
+        badge: 'mismos pesos, distinta activación',
+        ariaLabel: 'Visualización de respuesta MLP con activaciones',
+        legend: {
+          output: 'Salida final',
+          hiddenOne: 'Unidad oculta 1',
+          hiddenTwo: 'Unidad oculta 2',
+        },
+      },
+    },
+  },
   sections: {
     foundations: {
       title: 'Fundamentos',

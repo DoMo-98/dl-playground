@@ -18,8 +18,10 @@ describe('LearnOverviewPage', () => {
       'href',
       '/en/learn/mechanics/perceptron/decision-boundary',
     )
-    expect(screen.queryByRole('link', { name: /activations and non-linearity/i })).not.toBeInTheDocument()
-    expect(screen.getByText('Activations and non-linearity')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /activations and non-linearity/i })).toHaveAttribute(
+      'href',
+      '/en/learn/mechanics/mlp/activations',
+    )
     expect(screen.getAllByText('planned · Not available yet').length).toBeGreaterThan(0)
   })
 
@@ -34,7 +36,7 @@ describe('LearnOverviewPage', () => {
   it('renders derived section readiness summaries from the curriculum registry', () => {
     renderWithI18n(<LearnOverviewPage />, { initialEntries: ['/en/learn'] })
 
-    expect(screen.getAllByText('2/3 ready').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('3/3 ready').length).toBeGreaterThan(0)
     expect(screen.getAllByText('30 min total').length).toBeGreaterThan(0)
     expect(screen.getAllByText('0/1 ready').length).toBeGreaterThan(0)
     expect(screen.getAllByText('Section roadmap').length).toBeGreaterThan(0)
