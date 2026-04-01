@@ -144,6 +144,48 @@ type LocalizedMessages = {
       }
     }
   }
+  mlp: {
+    activationsPage: {
+      eyebrow: string
+      title: string
+      description: string
+      objective: string
+      coreIdeaDescription: string
+      coreIdeaBullets: string[]
+      activationLabel: string
+      activationOptions: Record<'linear' | 'relu' | 'tanh' | 'sigmoid', {
+        label: string
+        description: string
+        interpretationTitle: string
+        interpretation: string
+      }>
+      controlLabels: {
+        hiddenScale: string
+        outputScale: string
+      }
+      stats: {
+        behavior: string
+        outputRange: string
+        centerValue: string
+      }
+      shapeLabels: Record<'affine' | 'piecewise-linear' | 'smooth-saturated' | 'bounded-squashing', string>
+      readingGuideTitle: string
+      readingGuideBullets: string[]
+      xorBridgeTitle: string
+      xorBridgeDescription: string
+      prompts: string[]
+      visualization: {
+        eyebrow: string
+        badge: string
+        ariaLabel: string
+        legend: {
+          output: string
+          hiddenOne: string
+          hiddenTwo: string
+        }
+      }
+    }
+  }
   sections: Record<string, LocalizedSectionCopy>
   units: Record<string, LocalizedUnitCopy>
   lessons: Record<string, LocalizedLessonCopy>
@@ -327,6 +369,92 @@ export const enMessages: LocalizedMessages = {
           negativeRegion: 'Predicted class 0 region / point fill',
           correctOutline: 'White outline = prediction matches target label',
           mismatchOutline: 'Pink outline = mismatch against target label',
+        },
+      },
+    },
+  },
+  mlp: {
+    activationsPage: {
+      eyebrow: 'Architectural mechanics · MLP',
+      title: 'Activation functions and non-linearity',
+      description:
+        'A stack of linear layers still behaves like one linear map. This lesson shows how activation functions bend that behavior so a tiny multilayer network can represent richer responses.',
+      objective: 'What changes when the same tiny multilayer network keeps its hidden layer linear versus passing it through a non-linear activation?',
+      coreIdeaDescription:
+        'Rumelhart et al. made hidden layers useful in practice, but hidden depth only becomes representationally interesting when something non-linear happens between layers.',
+      coreIdeaBullets: [
+        'If every stage stays linear, the full network can still collapse into one affine transformation.',
+        'ReLU creates piecewise-linear bends; tanh and sigmoid squash and saturate in different ways.',
+        'Changing the activation changes what shapes the same hidden units can express.',
+      ],
+      activationLabel: 'Activation at the hidden layer',
+      activationOptions: {
+        linear: {
+          label: 'Linear',
+          description: 'No bending: the hidden layer passes its pre-activation straight through.',
+          interpretationTitle: 'Why this stays limited',
+          interpretation:
+            'Even with multiple layers, a purely linear stack still behaves like one affine rule. The curve does not gain the bends needed to express richer structure.',
+        },
+        relu: {
+          label: 'ReLU',
+          description: 'Negative responses clamp to zero, producing piecewise-linear behavior.',
+          interpretationTitle: 'Why this adds useful structure',
+          interpretation:
+            'ReLU introduces kinks where hidden units switch on or off. The output can now change slope across different input regions instead of staying globally linear.',
+        },
+        tanh: {
+          label: 'tanh',
+          description: 'A smooth bounded activation that saturates near -1 and 1.',
+          interpretationTitle: 'Why this feels smoother',
+          interpretation:
+            'tanh bends the hidden signals smoothly and compresses extremes. The network keeps expressive curvature, but large inputs can start saturating.',
+        },
+        sigmoid: {
+          label: 'Sigmoid',
+          description: 'A bounded squashing activation that compresses large magnitudes toward 0 or 1.',
+          interpretationTitle: 'Why this compresses strongly',
+          interpretation:
+            'Sigmoid also adds non-linearity, but it squashes more aggressively. The resulting output can flatten toward the extremes, which is expressive but can be less dynamic.',
+        },
+      },
+      controlLabels: {
+        hiddenScale: 'Hidden pre-activation scale',
+        outputScale: 'Output mixing scale',
+      },
+      stats: {
+        behavior: 'Behavior class',
+        outputRange: 'Output range',
+        centerValue: 'Value at x = 0',
+      },
+      shapeLabels: {
+        affine: 'Affine / still effectively one line',
+        'piecewise-linear': 'Piecewise-linear / bends by switching units on',
+        'smooth-saturated': 'Smooth / bends and saturates',
+        'bounded-squashing': 'Bounded / strong squashing at the extremes',
+      },
+      readingGuideTitle: 'How to read the chart',
+      readingGuideBullets: [
+        'The white line is the final network output across the input axis.',
+        'The amber and blue lines are the two hidden units before they are remixed into the final output.',
+        'Switch to linear first, then compare how the same hidden setup changes once the activation bends each hidden response.',
+      ],
+      xorBridgeTitle: 'Connection to the previous lesson',
+      xorBridgeDescription:
+        'The XOR preset failed because one perceptron only drew one straight boundary. Non-linearity is the ingredient that lets multilayer networks stop behaving like a single straight rule.',
+      prompts: [
+        'Start with linear and notice that the white output remains effectively one straight trend.',
+        'Switch to ReLU and look for the points where the slope changes because hidden units turn on or off.',
+        'Compare tanh and sigmoid with a larger hidden scale. Which one saturates sooner, and how does that change the output extremes?',
+      ],
+      visualization: {
+        eyebrow: 'Tiny 1D MLP response',
+        badge: 'same weights, different activation behavior',
+        ariaLabel: 'MLP activation response visualization',
+        legend: {
+          output: 'Final output',
+          hiddenOne: 'Hidden unit 1',
+          hiddenTwo: 'Hidden unit 2',
         },
       },
     },

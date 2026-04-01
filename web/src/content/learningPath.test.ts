@@ -55,10 +55,10 @@ describe('learningPath registry', () => {
     expect(getSectionLessons(mechanics!)).toHaveLength(3)
     expect(getSectionStats(mechanics!)).toEqual({
       lessonCount: 3,
-      readyCount: 2,
-      plannedCount: 1,
+      readyCount: 3,
+      plannedCount: 0,
       totalMinutes: 30,
-      completionRatio: 2 / 3,
+      completionRatio: 1,
     })
     expect(getSectionPath(mechanics!)).toBe('/en/learn/mechanics/perceptron/weighted-sum')
   })

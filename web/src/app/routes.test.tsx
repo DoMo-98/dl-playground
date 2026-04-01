@@ -30,6 +30,17 @@ describe('localized app routing', () => {
     expect(screen.getByText('Ajusta los ingredientes del perceptrón')).toBeInTheDocument()
   })
 
+  it('opens the new MLP activation lesson on locale-prefixed routes', () => {
+    render(
+      <MemoryRouter initialEntries={['/es/learn/mechanics/mlp/activations']}>
+        <AppRoutes />
+      </MemoryRouter>,
+    )
+
+    expect(screen.getByRole('heading', { name: 'Funciones de activación y no linealidad' })).toBeInTheDocument()
+    expect(screen.getByText('Activación en la capa oculta')).toBeInTheDocument()
+  })
+
   it('switches locale while preserving the current lesson route', async () => {
     const user = userEvent.setup()
 
