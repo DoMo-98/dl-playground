@@ -35,4 +35,5 @@ describe('GradientDescentPage', () => {
     expect(screen.getByText('1/8')).toBeInTheDocument()
     expect(screen.getAllByText('Current update rule').length).toBeGreaterThan(0)
   })
+
 })
