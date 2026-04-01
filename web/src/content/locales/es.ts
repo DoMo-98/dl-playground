@@ -397,7 +397,7 @@ export const esMessages: LocalizedMessages = {
     research: {
       title: 'Investigación',
       description: 'Temas exploratorios que van más allá de la ruta principal de aprendizaje.',
-      goal: 'Reservar espacio para optimización avanzada y meta-learning sin forzarlos dentro de la secuencia inicial.',
+      goal: 'Reservar espacio para temas avanzados exploratorios sin forzarlos dentro de la secuencia inicial.',
     },
   },
   units: {

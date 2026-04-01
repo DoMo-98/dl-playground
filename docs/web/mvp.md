@@ -78,6 +78,7 @@ Core interaction ideas:
 ### 5. Gradient Descent Intuition
 Why early:
 - foundational to most later topics
+- formally belongs to **Foundations → Optimization** even when it appears early in the learner-facing sequence
 - works well visually in 1D/2D loss landscapes
 
 Core interaction ideas:

@@ -645,7 +645,7 @@ export const enMessages: LocalizedMessages = {
     research: {
       title: 'Research',
       description: 'Exploratory topics that extend beyond the core learner path.',
-      goal: 'Reserve space for advanced optimization and meta-learning ideas without forcing them into the beginner sequence.',
+      goal: 'Reserve space for exploratory advanced topics without forcing them into the beginner sequence.',
     },
   },
   units: {
