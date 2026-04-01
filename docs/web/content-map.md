@@ -11,25 +11,25 @@ This map translates the repository learning path into web learning units.
 
 ## 1. Foundations
 
-### 1.1 Perceptron and MLP foundations
-
-#### Perceptron
+### 1.1 Perceptron basics
 - Page: weighted sum and bias
 - Page: decision boundary intuition
 - Page: what a perceptron cannot represent
 
-#### MLP
+### 1.2 MLPs
 - Page: hidden layers as feature composition
 - Page: activation functions and non-linearity
 - Page: depth, width, and expressivity
 - Page: forward pass intuition
 
-#### Optimization
-- Page: gradient descent intuition
+### 1.3 Optimization
 - Page: loss functions and optimization overview
+- Page: gradient descent intuition
 - Page: training vs inference
 
 ## 2. CNNs
+
+### 2.1 Convolutions
 - Page: convolution as local pattern detector
 - Page: kernels and feature maps
 - Page: stride, padding, and receptive field
@@ -38,24 +38,22 @@ This map translates the repository learning path into web learning units.
 
 ## 3. Stable Training
 
-#### Initialization
+### 3.1 Initialization
 - Page: bad initialization vs stable initialization
 - Page: Xavier and He intuition
 
-#### Activations
+### 3.2 Activations
 - Page: sigmoid, tanh, ReLU, GELU comparison
 - Page: saturation, dead neurons, and gradient flow
 
-#### Regularization
+### 3.3 Regularization and normalization
 - Page: dropout behavior
 - Page: weight decay intuition
-
-#### Normalization
 - Page: BatchNorm intuition
 - Page: LayerNorm intuition
 - Page: normalization placement and effect
 
-#### Residual Connections
+### 3.4 Residual connections
 - Page: why skip connections help
 - Page: residual pathways and signal preservation
 
@@ -75,7 +73,7 @@ This map translates the repository learning path into web learning units.
 - Page: positional information
 - Page: layer stacking and representation building
 
-### 4.3 Titans / Long-Term Memory
+### 4.3 Long-term memory directions
 - Page: why long-term memory matters
 - Page: memory storage and retrieval intuition
 - Page: comparison with vanilla transformer behavior
@@ -83,12 +81,12 @@ This map translates the repository learning path into web learning units.
 
 ## 5. Research
 
-### 5.1 Meta-Learning
+### 5.1 Meta-learning
 - Page: learning to learn intuition
 - Page: inner loop vs outer loop
 - Page: bilevel optimization mental model
 
-### 5.2 Nested Learning
+### 5.2 Nested learning
 - Page: nested learning intuition
 - Page: stacked adaptation loops
 - Page: candidate exploratory visual interfaces for research concepts

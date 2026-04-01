@@ -44,6 +44,6 @@ describe('LearnOverviewPage', () => {
     expect(screen.getAllByText('42 min total').length).toBeGreaterThan(0)
     expect(screen.getAllByText('0/1 ready').length).toBeGreaterThan(0)
     expect(screen.getAllByText('Section roadmap').length).toBeGreaterThan(0)
-    expect(screen.getByText(/thematic taxonomy/i)).toBeInTheDocument()
+    expect(screen.queryAllByText(/thematic taxonomy/i).length).toBeGreaterThan(0)
   })
 })
