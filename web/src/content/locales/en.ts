@@ -23,6 +23,7 @@ type LocalizedMessages = {
   nav: {
     learn: string
     firstLesson: string
+    repository: string
     languageSwitcherLabel: string
     mobileMenuLabel: string
   }
@@ -254,6 +255,7 @@ export const enMessages: LocalizedMessages = {
   nav: {
     learn: 'Learn',
     firstLesson: 'First lesson',
+    repository: 'GitHub repo',
     languageSwitcherLabel: 'Language',
     mobileMenuLabel: 'Main navigation',
   },

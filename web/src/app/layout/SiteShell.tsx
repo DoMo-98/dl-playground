@@ -1,8 +1,10 @@
-import { BrainCircuit, Languages, Menu } from 'lucide-react'
+import { ArrowUpRight, BrainCircuit, Languages, Menu } from 'lucide-react'
 import { Link, NavLink, Outlet } from 'react-router-dom'
 import { useState } from 'react'
 import { localeLabels } from '../../i18n'
 import { useI18n } from '../i18n-context'
+
+const repositoryUrl = 'https://github.com/DoMo-98/dl-playground'
 
 export function SiteShell() {
   const { locale, messages, switchLocale, toLocalizedPath } = useI18n()
@@ -45,6 +47,16 @@ export function SiteShell() {
                   </NavLink>
                 ))}
               </nav>
+
+              <a
+                href={repositoryUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-slate-200 transition hover:bg-white/10 hover:text-white"
+              >
+                <ArrowUpRight className="h-4 w-4 text-cyan-300" />
+                <span>{messages.nav.repository}</span>
+              </a>
 
               <label className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-slate-200">
                 <Languages className="h-4 w-4 text-cyan-300" />
@@ -94,6 +106,17 @@ export function SiteShell() {
                   </NavLink>
                 ))}
               </nav>
+
+              <a
+                href={repositoryUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-slate-950/40 px-3 py-3 text-sm text-slate-200 transition hover:bg-white/10 hover:text-white"
+                onClick={() => setMenuOpen(false)}
+              >
+                <ArrowUpRight className="h-4 w-4 text-cyan-300" />
+                <span>{messages.nav.repository}</span>
+              </a>
 
               <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-slate-950/40 px-3 py-3 text-sm text-slate-200">
                 <Languages className="h-4 w-4 text-cyan-300" />
