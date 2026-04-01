@@ -65,19 +65,19 @@ Current policy:
 ### Learning representations by back-propagating errors
 - Authors: David E. Rumelhart, Geoffrey E. Hinton, Ronald J. Williams
 - Year: 1986
-- Status: linked
+- Status: summarized
 - Topic(s): backpropagation, mlp, training
 - Source strategy:
   - official-preferred: Nature
   - backup: author-hosted copy or trusted archive
 - Official source: https://doi.org/10.1038/323533a0
-- Backup source: https://www.nature.com/articles/323533a0
+- Backup source: https://www.cs.toronto.edu/~hinton/absps/naturebp.pdf
 - Format expectation: html-or-pdf
 - Lesson priority: high
 - Teaching fit: foundational
 - Relevance: core source for how multilayer networks became trainable in practice.
-- Notes: `references/notes/1986-backpropagating-errors.md`
-- Access status: abstract-or-metadata-only
+- Notes: `references/notes/t2a-mlp-activation-source-investigation-2026-03-31.md`
+- Access status: full-text-ok
 - Potential lesson use:
   - gradient flow intuition
   - hidden layers become learnable
