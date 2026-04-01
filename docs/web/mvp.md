@@ -129,7 +129,7 @@ The MVP is successful when:
 
 Once the MVP works, the next phase should focus on:
 
-- extending the mechanics section
+- extending the foundations and CNN sections without collapsing them into one taxonomy bucket
 - refining page primitives based on real usage
 - deciding how tightly to couple the web and the experimentation sandbox
 - expanding into sequence models and memory topics

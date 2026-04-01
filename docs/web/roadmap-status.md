@@ -44,12 +44,12 @@ Current top-level taxonomy in the app:
   - **Perceptron**
   - **MLP**
   - **Optimization** *(formal home of `gradient descent intuition`)*
-- **CNNs**
+- **CNNs** *(kept as its own top-level section for product clarity and continuity with the current app structure)*
 - **Stable Training**
 - **Sequence & Memory**
 - **Research**
 
-Rule of thumb: taxonomy groups lessons by theme; the learner-facing sequence may cross section boundaries when that produces a clearer beginner path.
+Rule of thumb: taxonomy groups lessons by theme; the learner-facing sequence may cross section boundaries when that produces a clearer beginner path. In that taxonomy, convolution/CNN work belongs to the dedicated **CNNs** top-level block rather than being nested under the foundations/mechanics grouping.
 
 Not yet implemented in the app:
 

@@ -41,7 +41,7 @@ Current top-level taxonomy:
   - **Perceptron**
   - **MLP**
   - **Optimization** *(this is where gradient descent formally lives)*
-- **CNNs**
+- **CNNs** *(kept as its own top-level section rather than folding convolution topics into foundations/mechanics)*
 - **Stable Training**
 - **Sequence & Memory**
 - **Research**
