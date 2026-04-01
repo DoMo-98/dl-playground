@@ -8,7 +8,7 @@ describe('LearnOverviewPage', () => {
     renderWithI18n(<LearnOverviewPage />, { initialEntries: ['/en/learn'] })
 
     const startLink = screen.getByRole('link', { name: 'Open lesson' })
-    expect(startLink).toHaveAttribute('href', '/en/learn/foundations/optimization/gradient-descent')
+    expect(startLink).toHaveAttribute('href', '/en/learn/mechanics/perceptron/weighted-sum')
 
     expect(screen.getByRole('link', { name: /weighted sum and bias/i })).toHaveAttribute(
       'href',

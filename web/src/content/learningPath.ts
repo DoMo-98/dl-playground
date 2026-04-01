@@ -58,32 +58,8 @@ const messagesByLocale = {
 
 const sectionBases: LearningSectionBase[] = [
   {
-    slug: 'foundations',
-    order: 1,
-    units: [
-      {
-        slug: 'optimization',
-        order: 1,
-        lessons: [
-          {
-            id: 'gradient-descent-intuition',
-            slug: 'gradient-descent',
-            status: 'ready',
-            kind: 'interactive',
-            sectionSlug: 'foundations',
-            unitSlug: 'optimization',
-            order: 1,
-            estimatedMinutes: 12,
-            concepts: ['loss landscape', 'gradient', 'learning rate'],
-            prerequisites: [],
-          },
-        ],
-      },
-    ],
-  },
-  {
     slug: 'mechanics',
-    order: 2,
+    order: 1,
     units: [
       {
         slug: 'perceptron',
@@ -130,6 +106,30 @@ const sectionBases: LearningSectionBase[] = [
             estimatedMinutes: 12,
             concepts: ['activation function', 'non-linearity', 'representation power'],
             prerequisites: ['perceptron-weighted-sum'],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'foundations',
+    order: 2,
+    units: [
+      {
+        slug: 'optimization',
+        order: 1,
+        lessons: [
+          {
+            id: 'gradient-descent-intuition',
+            slug: 'gradient-descent',
+            status: 'ready',
+            kind: 'interactive',
+            sectionSlug: 'foundations',
+            unitSlug: 'optimization',
+            order: 1,
+            estimatedMinutes: 12,
+            concepts: ['loss landscape', 'gradient', 'learning rate'],
+            prerequisites: ['mlp-activations'],
           },
         ],
       },

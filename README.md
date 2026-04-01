@@ -22,16 +22,25 @@ Implemented today:
 - React + TypeScript + Vite frontend scaffold
 - learning-path structure
 - home page and overview flow
-- first interactive lesson: **Perceptron · weighted sum and bias**
+- interactive lesson: **Perceptron · weighted sum and bias**
+- interactive lesson: **Perceptron · decision boundary intuition**
+- interactive lesson: **MLP · activation functions and non-linearity**
+- interactive lesson: **Gradient descent intuition**
+
+Current learner-facing lesson order:
+
+1. **Perceptron · weighted sum and bias**
+2. **Perceptron · decision boundary intuition**
+3. **MLP · activation functions and non-linearity**
+4. **Gradient descent intuition**
+5. **Convolution as local pattern detector** *(planned)*
 
 Immediate next lesson:
 
-- **MLP · activation functions and non-linearity**
+- **Convolution as local pattern detector**
 
 Near-term queue after that:
 
-- gradient descent intuition
-- convolution as local pattern detector
 - stable-training intuition modules
 - deeper sequence and memory topics
 

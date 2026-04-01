@@ -24,10 +24,7 @@ describe('WeightedSumPage', () => {
       'href',
       '/en/learn/mechanics/perceptron/decision-boundary',
     )
-    expect(screen.getByRole('link', { name: /previous: gradient descent intuition/i })).toHaveAttribute(
-      'href',
-      '/en/learn/foundations/optimization/gradient-descent',
-    )
+    expect(screen.queryByRole('link', { name: /previous:/i })).not.toBeInTheDocument()
     expect(getSummaryCard('Weighted sum', 'x₁·w₁ + x₂·w₂ + b')).toHaveTextContent('0.60')
     expect(getSummaryCard('Binary output', 'Threshold at 0')).toHaveTextContent('1')
   })

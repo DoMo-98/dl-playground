@@ -15,7 +15,7 @@ describe('localized app routing', () => {
     expect(screen.getByRole('heading', { name: 'Lecciones interactivas de deep learning' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Abrir lección' })).toHaveAttribute(
       'href',
-      '/es/learn/foundations/optimization/gradient-descent',
+      '/es/learn/mechanics/perceptron/weighted-sum',
     )
   })
 

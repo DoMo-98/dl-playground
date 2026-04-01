@@ -18,7 +18,11 @@ describe('ActivationsPage', () => {
       'href',
       '/en/learn/mechanics/perceptron/decision-boundary',
     )
-    expect(screen.getAllByText('Planned').length).toBeGreaterThan(0)
+    expect(screen.getByRole('link', { name: /next: gradient descent intuition/i })).toHaveAttribute(
+      'href',
+      '/en/learn/foundations/optimization/gradient-descent',
+    )
+    expect(screen.queryByText('Planned')).not.toBeInTheDocument()
     expect(screen.getByText('Affine / still effectively one line')).toBeInTheDocument()
   })
 

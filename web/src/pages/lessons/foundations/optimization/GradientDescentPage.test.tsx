@@ -10,9 +10,9 @@ describe('GradientDescentPage', () => {
     expect(screen.getByRole('heading', { name: 'Gradient descent intuition' })).toBeInTheDocument()
     expect(screen.getByText(/How does the learning rate change whether gradient descent converges smoothly/i)).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Guided observation prompts' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /next: perceptron · weighted sum and bias/i })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /previous: mlp · activation functions and non-linearity/i })).toHaveAttribute(
       'href',
-      '/en/learn/mechanics/perceptron/weighted-sum',
+      '/en/learn/mechanics/mlp/activations',
     )
     expect(screen.getByText('Stable')).toBeInTheDocument()
   })

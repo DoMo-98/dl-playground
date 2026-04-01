@@ -27,23 +27,31 @@ Implemented in the app today:
 - reusable `LearningPageLayout`
 - interactive lesson: **Perceptron · weighted sum and bias**
 - interactive lesson: **Perceptron · decision boundary intuition**
+- interactive lesson: **MLP · activation functions and non-linearity**
+- interactive lesson: **Gradient descent intuition**
+
+Current learner-facing lesson order:
+
+1. **Perceptron · weighted sum and bias**
+2. **Perceptron · decision boundary intuition**
+3. **MLP · activation functions and non-linearity**
+4. **Gradient descent intuition**
+5. **Convolution as local pattern detector** *(planned)*
 
 Not yet implemented in the app:
 
-- **MLP · activation functions and non-linearity**
-- **Gradient descent intuition**
 - **Convolution as local pattern detector**
 - the broader stable-training, autoencoder, sequence/memory, and research lesson blocks
 
 ## Current next lesson
 
-**NEXT:** `T2 — MLP · activation functions and non-linearity`
+**NEXT:** `T4 — Convolution as local pattern detector`
 
 In plain English:
 
-- the next lesson should teach that a perceptron creates a **linear decision boundary**
-- the learner should manipulate **weights and bias**
-- the UI should show the boundary moving in 2D and points changing class immediately
+- the next lesson should teach that a convolution applies a **small shared kernel** across local neighborhoods
+- the learner should manipulate the **input pattern** and **kernel weights**
+- the UI should show the sliding local response and resulting feature-map values immediately
 - this lesson should be treated as the next execution target unless the canonical roadmap changes
 
 ## Why the next lesson is not just “build the next page”
@@ -59,9 +67,9 @@ That means roadmap execution depends on both:
 
 For the current next lesson:
 
-- `T1b` is already closed and the decision-boundary lesson is now part of the shipped app
-- `T2` is next, but its primary source path still requires focused investigation before the lesson can claim paper-grounded fidelity
-- the next implementation run should therefore confirm the strongest usable anchor for non-linearity, then build the smallest coherent interactive lesson around that claim
+- the perceptron, MLP, and gradient-descent lessons are already shipped in the app
+- `T4` is next, and its visible slot in the learning path is now after the optimization lesson to preserve a beginner-friendly intuition flow
+- the next implementation run should confirm the strongest usable convolution anchor, then build the smallest coherent interactive lesson around local pattern detection
 
 ## How to use the rest of the docs in this folder
 

@@ -42,11 +42,6 @@ export function GradientDescentPage() {
   const canStep = trajectory.length - 1 < MAX_STEPS
 
   useEffect(() => {
-    if (isAutoplaying && !canStep) {
-      setIsAutoplaying(false)
-      return undefined
-    }
-
     if (!isAutoplaying || !canStep) {
       return undefined
     }

@@ -34,16 +34,26 @@ describe('learningPath registry', () => {
     const weightedSum = getAdjacentLessons('perceptron-weighted-sum')
     const decisionBoundary = getAdjacentLessons('perceptron-decision-boundary')
 
-    expect(weightedSum.previous?.id).toBe('gradient-descent-intuition')
+    expect(weightedSum.previous).toBeNull()
     expect(weightedSum.next?.id).toBe('perceptron-decision-boundary')
     expect(decisionBoundary.previous?.id).toBe('perceptron-weighted-sum')
     expect(decisionBoundary.next?.id).toBe('mlp-activations')
   })
 
+  it('keeps optimization after model-intuition lessons in the global sequence', () => {
+    const activations = getAdjacentLessons('mlp-activations')
+    const gradientDescent = getAdjacentLessons('gradient-descent-intuition')
+
+    expect(activations.previous?.id).toBe('perceptron-decision-boundary')
+    expect(activations.next?.id).toBe('gradient-descent-intuition')
+    expect(gradientDescent.previous?.id).toBe('mlp-activations')
+    expect(gradientDescent.next?.id).toBe('cnn-local-patterns')
+  })
+
   it('surfaces the first ready lesson for overview CTA scaffolding', () => {
     expect(getNextReadyLesson()).toMatchObject({
-      id: 'gradient-descent-intuition',
-      href: '/en/learn/foundations/optimization/gradient-descent',
+      id: 'perceptron-weighted-sum',
+      href: '/en/learn/mechanics/perceptron/weighted-sum',
       status: 'ready',
     })
   })
