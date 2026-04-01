@@ -56,6 +56,19 @@ describe('localized app routing', () => {
     expect(screen.getAllByRole('link', { name: /volver a la ruta de aprendizaje/i })[0]).toHaveAttribute('href', '/es/learn')
   })
 
+  it('shows a repository link in the site header', () => {
+    render(
+      <MemoryRouter initialEntries={['/en']}>
+        <AppRoutes />
+      </MemoryRouter>,
+    )
+
+    expect(screen.getAllByRole('link', { name: 'GitHub repo' })[0]).toHaveAttribute(
+      'href',
+      'https://github.com/DoMo-98/dl-playground',
+    )
+  })
+
   it('keeps the locale on invalid localized routes and shows a localized 404 page', () => {
     render(
       <MemoryRouter initialEntries={['/es/learn/esto-no-existe']}>

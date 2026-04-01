@@ -6,6 +6,7 @@ export const esMessages: LocalizedMessages = {
   nav: {
     learn: 'Aprender',
     firstLesson: 'Primera lección',
+    repository: 'Repo en GitHub',
     languageSwitcherLabel: 'Idioma',
     mobileMenuLabel: 'Navegación principal',
   },
