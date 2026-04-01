@@ -15,7 +15,7 @@ describe('localized app routing', () => {
     expect(screen.getByRole('heading', { name: 'Lecciones interactivas de deep learning' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Abrir lección' })).toHaveAttribute(
       'href',
-      '/es/learn/mechanics/perceptron/weighted-sum',
+      '/es/learn/foundations/optimization/gradient-descent',
     )
   })
 
@@ -30,15 +30,15 @@ describe('localized app routing', () => {
     expect(screen.getByText('Ajusta los ingredientes del perceptrón')).toBeInTheDocument()
   })
 
-  it('opens the new MLP activation lesson on locale-prefixed routes', () => {
+  it('opens the new gradient descent lesson on locale-prefixed routes', () => {
     render(
-      <MemoryRouter initialEntries={['/es/learn/mechanics/mlp/activations']}>
+      <MemoryRouter initialEntries={['/es/learn/foundations/optimization/gradient-descent']}>
         <AppRoutes />
       </MemoryRouter>,
     )
 
-    expect(screen.getByRole('heading', { name: 'Funciones de activación y no linealidad' })).toBeInTheDocument()
-    expect(screen.getByText('Activación en la capa oculta')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Intuición de descenso por gradiente' })).toBeInTheDocument()
+    expect(screen.getByText('Tasa de aprendizaje')).toBeInTheDocument()
   })
 
   it('switches locale while preserving the current lesson route', async () => {

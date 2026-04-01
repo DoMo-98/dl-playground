@@ -42,8 +42,8 @@ describe('learningPath registry', () => {
 
   it('surfaces the first ready lesson for overview CTA scaffolding', () => {
     expect(getNextReadyLesson()).toMatchObject({
-      id: 'perceptron-weighted-sum',
-      href: '/en/learn/mechanics/perceptron/weighted-sum',
+      id: 'gradient-descent-intuition',
+      href: '/en/learn/foundations/optimization/gradient-descent',
       status: 'ready',
     })
   })

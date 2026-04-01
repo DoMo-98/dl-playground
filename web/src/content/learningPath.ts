@@ -68,7 +68,7 @@ const sectionBases: LearningSectionBase[] = [
           {
             id: 'gradient-descent-intuition',
             slug: 'gradient-descent',
-            status: 'planned',
+            status: 'ready',
             kind: 'interactive',
             sectionSlug: 'foundations',
             unitSlug: 'optimization',
