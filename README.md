@@ -17,6 +17,12 @@ Right now, the repository is primarily a **visual, interactive web for deep lear
 
 ## Current status
 
+Document roles in this repository:
+
+- `web/src/content/learningPath.ts` — learner-facing source of truth used by the app for section structure, lesson metadata, and visible lesson sequencing
+- `docs/web/content-map.md` — expanded curriculum decomposition beyond the currently shipped lessons
+- `README.md` — concise entry-point summary for contributors
+
 Implemented today:
 
 - React + TypeScript + Vite frontend scaffold
@@ -76,8 +82,10 @@ The goal is not just to describe deep learning concepts, but to make them feel m
 
 ## Roadmap
 
+This roadmap is a contributor-facing summary of the current curriculum shape. For the learner-visible sequence in the app, defer to `web/src/content/learningPath.ts`. For the broader curriculum decomposition, defer to `docs/web/content-map.md`.
+
 ### 1. Foundations
-Core learner-facing fundamentals and early intuition building.
+Core thematic foundations and early intuition building.
 - [x] **Perceptron:** weighted sum, bias, and decision boundaries.
 - [x] **MLP:** activation functions and non-linearity.
 - [x] **Optimization:** gradient descent intuition.

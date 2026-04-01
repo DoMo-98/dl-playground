@@ -90,6 +90,7 @@ Core interaction ideas:
 Why early:
 - intuitive visual payoff
 - helps broaden beyond MLPs
+- belongs to the dedicated **CNNs** top-level taxonomy even when introduced early in the pedagogical path
 
 Core interaction ideas:
 - edit kernel values

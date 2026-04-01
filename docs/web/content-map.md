@@ -1,13 +1,22 @@
 # Initial Content Map
 
-This map translates the repository learning path into web learning units.
+This file is the **expanded curriculum map** for the web experience.
+
+Use it together with, but not instead of:
+
+- `web/src/content/learningPath.ts` for the learner-facing sequence and app-visible structure
+- `README.md` for the concise repository entry summary
+
+This map translates the repository learning path into web learning units and broader curriculum coverage.
 
 ## Structure Rule
 
 - A roadmap point may be split into several pages.
 - Every page must include explanation, visualization, and interaction.
 - Splits should follow pedagogical clarity rather than strict taxonomy.
-- **Important:** thematic taxonomy and learner-facing lesson order are related but not identical. `web/src/content/learningPath.ts` is the source of truth for the learner-facing sequence.
+- Section placement describes **thematic taxonomy**.
+- Learner-visible progression follows a **separate pedagogical order**.
+- **Important:** `web/src/content/learningPath.ts` is the source of truth for the learner-facing sequence.
 
 ## 1. Foundations
 
@@ -90,6 +99,18 @@ This map translates the repository learning path into web learning units.
 - Page: nested learning intuition
 - Page: stacked adaptation loops
 - Page: candidate exploratory visual interfaces for research concepts
+
+## Current learner-facing anchor sequence
+
+This is the sequence that the current app should present to learners:
+
+1. Perceptron: weighted sum and bias
+2. Perceptron: decision boundary intuition
+3. MLP: activation functions and non-linearity
+4. Gradient descent intuition
+5. Convolution as local pattern detector *(planned)*
+
+This list is repeated here only as an orientation aid; if drift appears, `web/src/content/learningPath.ts` wins.
 
 ## Navigation / Meta Pages
 - Page: learning path overview

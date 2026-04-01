@@ -27,6 +27,13 @@ Inside the repo, the best orientation entry point is:
 
 When docs in this folder mention the current state or the next lesson, they should align with those sources.
 
+## Document responsibilities
+
+- `roadmap-status.md` — in-repo orientation point for current status and next lesson
+- `content-map.md` — expanded curriculum map
+- `../../web/src/content/learningPath.ts` — learner-facing source of truth for app-visible structure and lesson sequencing
+- `../../README.md` — concise repo-level summary
+
 ## Current intent
 
 Build a visual, interactive learning web for deep learning where each page combines:

@@ -56,6 +56,12 @@ const messagesByLocale = {
   es: esMessages,
 } as const
 
+// Source-of-truth note:
+// - This file defines the learner-facing information architecture used by the app.
+// - Section/unit membership expresses thematic taxonomy.
+// - Lesson `order` expresses the pedagogical sequence shown to learners.
+// - Those two views are intentionally related but not identical.
+// - Extended curriculum decomposition lives in `docs/web/content-map.md`.
 const sectionBases: LearningSectionBase[] = [
   {
     slug: 'foundations',
