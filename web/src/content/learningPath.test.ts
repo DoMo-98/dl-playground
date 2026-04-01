@@ -53,24 +53,24 @@ describe('learningPath registry', () => {
   it('surfaces the first ready lesson for overview CTA scaffolding', () => {
     expect(getNextReadyLesson()).toMatchObject({
       id: 'perceptron-weighted-sum',
-      href: '/en/learn/mechanics/perceptron/weighted-sum',
+      href: '/en/learn/foundations/perceptron/weighted-sum',
       status: 'ready',
     })
   })
 
   it('derives section statistics and first available section path from lesson metadata', () => {
-    const mechanics = learningSections.find((section) => section.slug === 'mechanics')
+    const foundations = learningSections.find((section) => section.slug === 'foundations')
 
-    expect(mechanics).toBeDefined()
-    expect(getSectionLessons(mechanics!)).toHaveLength(3)
-    expect(getSectionStats(mechanics!)).toEqual({
-      lessonCount: 3,
-      readyCount: 3,
+    expect(foundations).toBeDefined()
+    expect(getSectionLessons(foundations!)).toHaveLength(4)
+    expect(getSectionStats(foundations!)).toEqual({
+      lessonCount: 4,
+      readyCount: 4,
       plannedCount: 0,
-      totalMinutes: 30,
+      totalMinutes: 42,
       completionRatio: 1,
     })
-    expect(getSectionPath(mechanics!)).toBe('/en/learn/mechanics/perceptron/weighted-sum')
+    expect(getSectionPath(foundations!)).toBe('/en/learn/foundations/perceptron/weighted-sum')
   })
 
   it('falls back safely when adjacency is requested for an unknown lesson', () => {

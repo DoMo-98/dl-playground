@@ -6,7 +6,7 @@ import { DecisionBoundaryPage } from './DecisionBoundaryPage'
 function renderPage(locale: 'en' | 'es' = 'en') {
   renderWithI18n(<DecisionBoundaryPage />, {
     locale,
-    initialEntries: [`/${locale}/learn/mechanics/perceptron/decision-boundary`],
+    initialEntries: [`/${locale}/learn/foundations/perceptron/decision-boundary`],
   })
 }
 
@@ -33,7 +33,7 @@ describe('DecisionBoundaryPage', () => {
 
     expect(screen.getAllByRole('link', { name: /next: mlp · activation functions and non-linearity/i })[0]).toHaveAttribute(
       'href',
-      '/en/learn/mechanics/mlp/activations',
+      '/en/learn/foundations/mlp/activations',
     )
     expect(screen.queryByText('Planned')).not.toBeInTheDocument()
   })

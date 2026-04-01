@@ -78,6 +78,7 @@ Core interaction ideas:
 ### 5. Gradient Descent Intuition
 Why early:
 - foundational to most later topics
+- formally belongs to **Foundations → Optimization** even when it appears early in the learner-facing sequence
 - works well visually in 1D/2D loss landscapes
 
 Core interaction ideas:
@@ -89,6 +90,7 @@ Core interaction ideas:
 Why early:
 - intuitive visual payoff
 - helps broaden beyond MLPs
+- belongs to the dedicated **CNNs** top-level taxonomy even when introduced early in the pedagogical path
 
 Core interaction ideas:
 - edit kernel values
@@ -128,7 +130,7 @@ The MVP is successful when:
 
 Once the MVP works, the next phase should focus on:
 
-- extending the mechanics section
+- extending the foundations and CNN sections without collapsing them into one taxonomy bucket
 - refining page primitives based on real usage
 - deciding how tightly to couple the web and the experimentation sandbox
 - expanding into sequence models and memory topics

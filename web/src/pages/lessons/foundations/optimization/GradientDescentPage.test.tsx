@@ -12,7 +12,7 @@ describe('GradientDescentPage', () => {
     expect(screen.getByRole('heading', { name: 'Guided observation prompts' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /previous: mlp · activation functions and non-linearity/i })).toHaveAttribute(
       'href',
-      '/en/learn/mechanics/mlp/activations',
+      '/en/learn/foundations/mlp/activations',
     )
     expect(screen.getByText('Stable')).toBeInTheDocument()
   })

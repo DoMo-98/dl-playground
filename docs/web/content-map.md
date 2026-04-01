@@ -1,107 +1,118 @@
 # Initial Content Map
 
-This map translates the repository learning path into web learning units.
+This file is the **expanded curriculum map** for the web experience.
+
+Use it together with, but not instead of:
+
+- `web/src/content/learningPath.ts` for the learner-facing sequence and app-visible structure
+- `README.md` for the concise repository entry summary
+
+This map translates the repository learning path into web learning units and broader curriculum coverage.
 
 ## Structure Rule
 
 - A roadmap point may be split into several pages.
 - Every page must include explanation, visualization, and interaction.
 - Splits should follow pedagogical clarity rather than strict taxonomy.
+- Section placement describes **thematic taxonomy**.
+- Learner-visible progression follows a **separate pedagogical order**.
+- **Important:** `web/src/content/learningPath.ts` is the source of truth for the learner-facing sequence.
 
-## 1. Architectural Mechanics
+## 1. Foundations
 
-### 1.1 Dense Networks
-
-#### Perceptron
+### 1.1 Perceptron basics
 - Page: weighted sum and bias
 - Page: decision boundary intuition
 - Page: what a perceptron cannot represent
 
-#### MLP
+### 1.2 MLPs
 - Page: hidden layers as feature composition
 - Page: activation functions and non-linearity
 - Page: depth, width, and expressivity
 - Page: forward pass intuition
 
-### 1.2 Stable Training
+### 1.3 Optimization
+- Page: loss functions and optimization overview
+- Page: gradient descent intuition
+- Page: training vs inference
 
-#### Initialization
-- Page: bad initialization vs stable initialization
-- Page: Xavier and He intuition
+## 2. CNNs
 
-#### Activations
-- Page: sigmoid, tanh, ReLU, GELU comparison
-- Page: saturation, dead neurons, and gradient flow
-
-#### Regularization
-- Page: dropout behavior
-- Page: weight decay intuition
-
-#### Normalization
-- Page: BatchNorm intuition
-- Page: LayerNorm intuition
-- Page: normalization placement and effect
-
-#### Residual Connections
-- Page: why skip connections help
-- Page: residual pathways and signal preservation
-
-### 1.3 CNNs
+### 2.1 Convolutions
 - Page: convolution as local pattern detector
 - Page: kernels and feature maps
 - Page: stride, padding, and receptive field
 - Page: stacking convolutions into hierarchy
 - Page: ResNet intuition
 
-### 1.4 Autoencoders
-- Page: encode/decode intuition
-- Page: bottlenecks and compression
-- Page: latent space structure
-- Page: manifold visualization and interpolation
+## 3. Stable Training
 
-## 2. Sequence and Memory
+### 3.1 Initialization
+- Page: bad initialization vs stable initialization
+- Page: Xavier and He intuition
 
-### 2.1 RNNs and LSTMs
+### 3.2 Activations
+- Page: sigmoid, tanh, ReLU, GELU comparison
+- Page: saturation, dead neurons, and gradient flow
+
+### 3.3 Regularization and normalization
+- Page: dropout behavior
+- Page: weight decay intuition
+- Page: BatchNorm intuition
+- Page: LayerNorm intuition
+- Page: normalization placement and effect
+
+### 3.4 Residual connections
+- Page: why skip connections help
+- Page: residual pathways and signal preservation
+
+## 4. Sequence & Memory
+
+### 4.1 RNNs and LSTMs
 - Page: sequence processing over time
 - Page: hidden state intuition
 - Page: vanishing gradients and BPTT intuition
 - Page: gates in LSTMs
 - Page: memory retention vs forgetting
 
-### 2.2 Transformers
+### 4.2 Transformers
 - Page: token interactions without recurrence
 - Page: attention scores and weighted mixing
 - Page: multi-head attention intuition
 - Page: positional information
 - Page: layer stacking and representation building
 
-### 2.3 Titans / Long-Term Memory
+### 4.3 Long-term memory directions
 - Page: why long-term memory matters
 - Page: memory storage and retrieval intuition
 - Page: comparison with vanilla transformer behavior
 - Page: exploratory visualizations for long-range dependency handling
 
-## 3. Research: Optimization and Meta-Learning
+## 5. Research
 
-### 3.1 Meta-Learning
+### 5.1 Meta-learning
 - Page: learning to learn intuition
 - Page: inner loop vs outer loop
 - Page: bilevel optimization mental model
 
-### 3.2 Nested Learning
+### 5.2 Nested learning
 - Page: nested learning intuition
 - Page: stacked adaptation loops
 - Page: candidate exploratory visual interfaces for research concepts
 
-## Cross-Cutting Supporting Pages
+## Current learner-facing anchor sequence
 
-### Foundations
-- Page: tensors, shapes, and dimensions
-- Page: loss functions and optimization overview
-- Page: gradient descent intuition
-- Page: training vs inference
+This is the sequence that the current app should present to learners:
 
-### Navigation / Meta Pages
+1. Perceptron: weighted sum and bias
+2. Perceptron: decision boundary intuition
+3. MLP: activation functions and non-linearity
+4. Gradient descent intuition
+5. Convolution as local pattern detector *(planned)*
+
+This list is repeated here only as an orientation aid; if drift appears, `web/src/content/learningPath.ts` wins.
+
+## Navigation / Meta Pages
 - Page: learning path overview
 - Page: glossary
 - Page: visual legend / interaction guide

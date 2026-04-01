@@ -8,19 +8,19 @@ describe('LearnOverviewPage', () => {
     renderWithI18n(<LearnOverviewPage />, { initialEntries: ['/en/learn'] })
 
     const startLink = screen.getByRole('link', { name: 'Open lesson' })
-    expect(startLink).toHaveAttribute('href', '/en/learn/mechanics/perceptron/weighted-sum')
+    expect(startLink).toHaveAttribute('href', '/en/learn/foundations/perceptron/weighted-sum')
 
     expect(screen.getByRole('link', { name: /weighted sum and bias/i })).toHaveAttribute(
       'href',
-      '/en/learn/mechanics/perceptron/weighted-sum',
+      '/en/learn/foundations/perceptron/weighted-sum',
     )
     expect(screen.getByRole('link', { name: /decision boundary intuition/i })).toHaveAttribute(
       'href',
-      '/en/learn/mechanics/perceptron/decision-boundary',
+      '/en/learn/foundations/perceptron/decision-boundary',
     )
     expect(screen.getByRole('link', { name: /activations and non-linearity/i })).toHaveAttribute(
       'href',
-      '/en/learn/mechanics/mlp/activations',
+      '/en/learn/foundations/mlp/activations',
     )
     expect(screen.getAllByText('planned · Not available yet').length).toBeGreaterThan(0)
     expect(screen.getByRole('link', { name: /gradient descent/i })).toHaveAttribute(
@@ -40,9 +40,10 @@ describe('LearnOverviewPage', () => {
   it('renders derived section readiness summaries from the curriculum registry', () => {
     renderWithI18n(<LearnOverviewPage />, { initialEntries: ['/en/learn'] })
 
-    expect(screen.getAllByText('1/1 ready').length).toBeGreaterThan(0)
-    expect(screen.getAllByText('12 min total').length).toBeGreaterThan(0)
-    expect(screen.getAllByText('3/3 ready').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('4/4 ready').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('42 min total').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('0/1 ready').length).toBeGreaterThan(0)
     expect(screen.getAllByText('Section roadmap').length).toBeGreaterThan(0)
+    expect(screen.queryAllByText(/thematic taxonomy/i).length).toBeGreaterThan(0)
   })
 })

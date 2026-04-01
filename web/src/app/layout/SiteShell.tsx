@@ -10,7 +10,7 @@ export function SiteShell() {
 
   const navItems = [
     { to: toLocalizedPath('/learn'), label: messages.nav.learn },
-    { to: toLocalizedPath('/learn/mechanics/perceptron/weighted-sum'), label: messages.nav.firstLesson },
+    { to: toLocalizedPath('/learn/foundations/perceptron/weighted-sum'), label: messages.nav.firstLesson },
   ]
 
   return (

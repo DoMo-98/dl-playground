@@ -17,6 +17,12 @@ Right now, the repository is primarily a **visual, interactive web for deep lear
 
 ## Current status
 
+Document roles in this repository:
+
+- `web/src/content/learningPath.ts` — learner-facing source of truth used by the app for section structure, lesson metadata, and visible lesson sequencing
+- `docs/web/content-map.md` — expanded curriculum decomposition beyond the currently shipped lessons
+- `README.md` — concise entry-point summary for contributors
+
 Implemented today:
 
 - React + TypeScript + Vite frontend scaffold
@@ -34,6 +40,19 @@ Current learner-facing lesson order:
 3. **MLP · activation functions and non-linearity**
 4. **Gradient descent intuition**
 5. **Convolution as local pattern detector** *(planned)*
+
+Current top-level taxonomy:
+
+- **Foundations**
+  - **Perceptron**
+  - **MLP**
+  - **Optimization** *(this is where gradient descent formally lives)*
+- **CNNs** *(kept as its own top-level section rather than folding convolution topics into foundations/mechanics)*
+- **Stable Training**
+- **Sequence & Memory**
+- **Research**
+
+Important rule: section taxonomy groups topics, while the learner-facing lesson order stays pedagogical and is sourced from `web/src/content/learningPath.ts`.
 
 Immediate next lesson:
 
@@ -63,23 +82,36 @@ The goal is not just to describe deep learning concepts, but to make them feel m
 
 ## Roadmap
 
-### 1. Architectural Mechanics (/mechanics)
-Low-level implementations to analyze signal flow and inductive biases.
-- [ ] **Dense Networks:** Perceptron and MLP implementations.
-- [ ] **Stable Training:** Initialization (Xavier/He), activations (ReLU/GELU), regularization (dropout, weight decay), normalization (BatchNorm/LayerNorm), and residual connections.
-- [ ] **CNNs:** ResNet architecture.
-- [ ] **Autoencoders:** Latent space compression and manifold visualization.
+This roadmap is a contributor-facing summary of the current curriculum shape. For the learner-visible sequence in the app, defer to `web/src/content/learningPath.ts`. For the broader curriculum decomposition, defer to `docs/web/content-map.md`.
 
-### 2. Sequence & Memory (/memory)
-Prototyping stateful architectures and sequence modeling.
-- [ ] **RNNs/LSTMs:** State management and Backpropagation Through Time (BPTT).
-- [ ] **Transformers:** Multi-head attention mechanisms.
-- [ ] **Titans:** Long-term memory architectures.
+### 1. Foundations
+Core thematic foundations and early intuition building.
+- [x] **Perceptron:** weighted sum, bias, and decision boundaries.
+- [x] **MLP:** activation functions and non-linearity.
+- [x] **Optimization:** gradient descent intuition.
+- [ ] Additional foundations pages such as tensors, losses, and training-vs-inference.
 
-### 3. Research: Optimization & Meta-Learning (/research)
-Advanced optimization techniques and nested learning loops.
-- [ ] **Meta-Learning:** Bilevel and nested optimization concepts.
-- [ ] **Nested Learning:** Experiments with Hope.
+### 2. CNNs
+Spatial pattern extraction and hierarchical visual feature building.
+- [ ] **Convolutions:** local pattern detector, kernels and feature maps, receptive field intuition.
+- [ ] **Deeper CNN intuition:** stacking convolutions and ResNet-style ideas.
+
+### 3. Stable Training
+Techniques that make optimization and depth behave reliably.
+- [ ] **Initialization:** Xavier/He intuition.
+- [ ] **Normalization and regularization:** BatchNorm/LayerNorm, dropout, weight decay.
+- [ ] **Residual pathways:** why skip connections help.
+
+### 4. Sequence & Memory
+Stateful architectures and ordered-data modeling.
+- [ ] **RNNs/LSTMs:** state management and BPTT intuition.
+- [ ] **Transformers:** attention and representation mixing.
+- [ ] **Long-term memory directions:** exploratory extensions beyond vanilla transformers.
+
+### 5. Research
+Advanced or exploratory topics beyond the core beginner curriculum.
+- [ ] **Meta-learning:** bilevel and nested optimization concepts.
+- [ ] **Nested learning:** experiments with Hope.
 
 ## Repository structure
 

@@ -52,15 +52,15 @@ src/
     learn/
       LearnOverviewPage.tsx
     lessons/
-      mechanics/
+      foundations/
         perceptron/
           WeightedSumPage.tsx
           DecisionBoundaryPage.tsx
         mlp/
           ActivationsPage.tsx
-      foundations/
-        GradientDescentPage.tsx
-      cnn/
+        optimization/
+          GradientDescentPage.tsx
+      cnns/
         LocalPatternsPage.tsx
 
   components/
@@ -134,11 +134,11 @@ Use route paths like:
 
 - `/`
 - `/learn`
-- `/learn/mechanics/perceptron/weighted-sum`
-- `/learn/mechanics/perceptron/decision-boundary`
-- `/learn/mechanics/mlp/activations`
-- `/learn/foundations/gradient-descent`
-- `/learn/cnn/local-patterns`
+- `/learn/foundations/perceptron/weighted-sum`
+- `/learn/foundations/perceptron/decision-boundary`
+- `/learn/foundations/mlp/activations`
+- `/learn/foundations/optimization/gradient-descent`
+- `/learn/cnns/convolutions/local-patterns`
 
 ## Responsibility Split
 
@@ -183,7 +183,7 @@ Learning path metadata, sequencing, and lesson descriptors.
 ### First pages
 - `src/pages/home/HomePage.tsx`
 - `src/pages/learn/LearnOverviewPage.tsx`
-- `src/pages/lessons/mechanics/perceptron/WeightedSumPage.tsx`
+- `src/pages/lessons/foundations/perceptron/WeightedSumPage.tsx`
 
 ### First feature logic
 - `src/features/perceptron/components/NeuronDiagram.tsx`
