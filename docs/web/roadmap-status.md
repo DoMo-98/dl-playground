@@ -54,7 +54,7 @@ Rule of thumb: taxonomy groups lessons by theme; the learner-facing sequence may
 Not yet implemented in the app:
 
 - **Convolution as local pattern detector**
-- the broader stable-training, autoencoder, sequence/memory, and research lesson blocks
+- the broader stable-training, sequence/memory, and research lesson blocks
 
 ## Current next lesson
 

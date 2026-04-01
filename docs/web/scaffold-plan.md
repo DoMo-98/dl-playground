@@ -183,7 +183,7 @@ Learning path metadata, sequencing, and lesson descriptors.
 ### First pages
 - `src/pages/home/HomePage.tsx`
 - `src/pages/learn/LearnOverviewPage.tsx`
-- `src/pages/lessons/mechanics/perceptron/WeightedSumPage.tsx`
+- `src/pages/lessons/foundations/perceptron/WeightedSumPage.tsx`
 
 ### First feature logic
 - `src/features/perceptron/components/NeuronDiagram.tsx`
