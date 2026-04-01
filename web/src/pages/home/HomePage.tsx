@@ -29,7 +29,7 @@ export function HomePage() {
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
-              to={toLocalizedPath('/learn/mechanics/perceptron/weighted-sum')}
+              to={toLocalizedPath('/learn/foundations/perceptron/weighted-sum')}
               className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-5 py-3 font-medium text-slate-100 transition hover:bg-white/5"
             >
               {messages.home.secondaryCta}

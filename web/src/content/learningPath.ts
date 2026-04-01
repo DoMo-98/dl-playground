@@ -58,7 +58,7 @@ const messagesByLocale = {
 
 const sectionBases: LearningSectionBase[] = [
   {
-    slug: 'mechanics',
+    slug: 'foundations',
     order: 1,
     units: [
       {
@@ -70,7 +70,7 @@ const sectionBases: LearningSectionBase[] = [
             slug: 'weighted-sum',
             status: 'ready',
             kind: 'interactive',
-            sectionSlug: 'mechanics',
+            sectionSlug: 'foundations',
             unitSlug: 'perceptron',
             order: 1,
             estimatedMinutes: 8,
@@ -82,7 +82,7 @@ const sectionBases: LearningSectionBase[] = [
             slug: 'decision-boundary',
             status: 'ready',
             kind: 'interactive',
-            sectionSlug: 'mechanics',
+            sectionSlug: 'foundations',
             unitSlug: 'perceptron',
             order: 2,
             estimatedMinutes: 10,
@@ -100,7 +100,7 @@ const sectionBases: LearningSectionBase[] = [
             slug: 'activations',
             status: 'ready',
             kind: 'interactive',
-            sectionSlug: 'mechanics',
+            sectionSlug: 'foundations',
             unitSlug: 'mlp',
             order: 3,
             estimatedMinutes: 12,
@@ -109,15 +109,9 @@ const sectionBases: LearningSectionBase[] = [
           },
         ],
       },
-    ],
-  },
-  {
-    slug: 'foundations',
-    order: 2,
-    units: [
       {
         slug: 'optimization',
-        order: 1,
+        order: 3,
         lessons: [
           {
             id: 'gradient-descent-intuition',
@@ -126,7 +120,7 @@ const sectionBases: LearningSectionBase[] = [
             kind: 'interactive',
             sectionSlug: 'foundations',
             unitSlug: 'optimization',
-            order: 1,
+            order: 4,
             estimatedMinutes: 12,
             concepts: ['loss landscape', 'gradient', 'learning rate'],
             prerequisites: ['mlp-activations'],
@@ -136,8 +130,8 @@ const sectionBases: LearningSectionBase[] = [
     ],
   },
   {
-    slug: 'cnn',
-    order: 3,
+    slug: 'cnns',
+    order: 2,
     units: [
       {
         slug: 'convolutions',
@@ -148,14 +142,62 @@ const sectionBases: LearningSectionBase[] = [
             slug: 'local-patterns',
             status: 'planned',
             kind: 'interactive',
-            sectionSlug: 'cnn',
+            sectionSlug: 'cnns',
             unitSlug: 'convolutions',
-            order: 1,
+            order: 5,
             estimatedMinutes: 12,
             concepts: ['kernel', 'receptive field', 'feature map'],
-            prerequisites: [],
+            prerequisites: ['gradient-descent-intuition'],
           },
         ],
+      },
+    ],
+  },
+  {
+    slug: 'stable-training',
+    order: 3,
+    units: [
+      {
+        slug: 'initialization',
+        order: 1,
+        lessons: [],
+      },
+      {
+        slug: 'normalization-and-regularization',
+        order: 2,
+        lessons: [],
+      },
+    ],
+  },
+  {
+    slug: 'sequence-memory',
+    order: 4,
+    units: [
+      {
+        slug: 'rnns-and-lstms',
+        order: 1,
+        lessons: [],
+      },
+      {
+        slug: 'transformers',
+        order: 2,
+        lessons: [],
+      },
+    ],
+  },
+  {
+    slug: 'research',
+    order: 5,
+    units: [
+      {
+        slug: 'meta-learning',
+        order: 1,
+        lessons: [],
+      },
+      {
+        slug: 'nested-learning',
+        order: 2,
+        lessons: [],
       },
     ],
   },
@@ -208,9 +250,9 @@ export function getLearningLessons(locale: Locale = 'en') {
   return indexedLessons
     .toSorted(
       (left, right) =>
+        left.lesson.order - right.lesson.order ||
         left.sectionOrder - right.sectionOrder ||
         left.unitOrder - right.unitOrder ||
-        left.lesson.order - right.lesson.order ||
         left.lesson.title.localeCompare(right.lesson.title),
     )
     .map(({ lesson }) => lesson)

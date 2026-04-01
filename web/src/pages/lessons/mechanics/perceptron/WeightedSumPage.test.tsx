@@ -13,7 +13,7 @@ function getSummaryCard(title: string, hint: string) {
 
 describe('WeightedSumPage', () => {
   it('renders the pedagogical structure alongside the initial weighted sum and binary output', () => {
-    renderWithI18n(<WeightedSumPage />, { initialEntries: ['/en/learn/mechanics/perceptron/weighted-sum'] })
+    renderWithI18n(<WeightedSumPage />, { initialEntries: ['/en/learn/foundations/perceptron/weighted-sum'] })
 
     expect(screen.getByRole('heading', { name: 'Weighted sum and bias' })).toBeInTheDocument()
     expect(screen.getByText('How do weights and bias turn the same inputs into a higher or lower perceptron score?')).toBeInTheDocument()
@@ -22,7 +22,7 @@ describe('WeightedSumPage', () => {
     expect(screen.getByRole('link', { name: /back to learning path/i })).toHaveAttribute('href', '/en/learn')
     expect(screen.getByRole('link', { name: /next: perceptron · decision boundary intuition/i })).toHaveAttribute(
       'href',
-      '/en/learn/mechanics/perceptron/decision-boundary',
+      '/en/learn/foundations/perceptron/decision-boundary',
     )
     expect(screen.queryByRole('link', { name: /previous:/i })).not.toBeInTheDocument()
     expect(getSummaryCard('Weighted sum', 'x₁·w₁ + x₂·w₂ + b')).toHaveTextContent('0.60')
@@ -30,7 +30,7 @@ describe('WeightedSumPage', () => {
   })
 
   it('renders Spanish lesson copy on locale-aware routes', () => {
-    renderWithI18n(<WeightedSumPage />, { locale: 'es', initialEntries: ['/es/learn/mechanics/perceptron/weighted-sum'] })
+    renderWithI18n(<WeightedSumPage />, { locale: 'es', initialEntries: ['/es/learn/foundations/perceptron/weighted-sum'] })
 
     expect(screen.getByRole('heading', { name: 'Suma ponderada y sesgo' })).toBeInTheDocument()
     expect(screen.getByText(/¿Cómo hacen los pesos y el sesgo/)).toBeInTheDocument()
@@ -40,7 +40,7 @@ describe('WeightedSumPage', () => {
   })
 
   it('updates the computation when controls change', () => {
-    renderWithI18n(<WeightedSumPage />, { initialEntries: ['/en/learn/mechanics/perceptron/weighted-sum'] })
+    renderWithI18n(<WeightedSumPage />, { initialEntries: ['/en/learn/foundations/perceptron/weighted-sum'] })
 
     const weightControl = screen.getAllByRole('slider')[2]
 

@@ -15,13 +15,13 @@ describe('localized app routing', () => {
     expect(screen.getByRole('heading', { name: 'Lecciones interactivas de deep learning' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Abrir lección' })).toHaveAttribute(
       'href',
-      '/es/learn/mechanics/perceptron/weighted-sum',
+      '/es/learn/foundations/perceptron/weighted-sum',
     )
   })
 
   it('renders Spanish lesson content on locale-prefixed lesson routes', () => {
     render(
-      <MemoryRouter initialEntries={['/es/learn/mechanics/perceptron/weighted-sum']}>
+      <MemoryRouter initialEntries={['/es/learn/foundations/perceptron/weighted-sum']}>
         <AppRoutes />
       </MemoryRouter>,
     )
@@ -45,7 +45,7 @@ describe('localized app routing', () => {
     const user = userEvent.setup()
 
     render(
-      <MemoryRouter initialEntries={['/en/learn/mechanics/perceptron/weighted-sum']}>
+      <MemoryRouter initialEntries={['/en/learn/foundations/perceptron/weighted-sum']}>
         <AppRoutes />
       </MemoryRouter>,
     )

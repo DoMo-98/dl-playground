@@ -50,6 +50,8 @@ type LocalizedMessages = {
     status: Record<'ready' | 'planned', string>
     lessonKind: Record<'interactive' | 'lab' | 'reading', string>
     unavailableLabel: string
+    taxonomyNoteTitle: string
+    taxonomyNote: string
   }
   lessonChrome: {
     objectiveLabel: string
@@ -274,7 +276,7 @@ export const enMessages: LocalizedMessages = {
     eyebrow: 'Learning path',
     title: 'Interactive deep learning lessons',
     description:
-      'The learning path is organized into small visual lessons. Each page is designed to explain a concept, show it clearly, and let the learner change something meaningful.',
+      'The learning path is organized into small visual lessons. The section cards reflect thematic taxonomy, while the lesson sequence remains a separate pedagogical order designed for learners.',
     startEyebrow: 'Start with the first live lesson',
     openLesson: 'Open lesson',
     metaMinutes: 'min',
@@ -293,6 +295,9 @@ export const enMessages: LocalizedMessages = {
       reading: 'reading',
     },
     unavailableLabel: 'Not available yet',
+    taxonomyNoteTitle: 'How to read this map',
+    taxonomyNote:
+      'Section taxonomy groups lessons by topic. The global lesson sequence is learner-facing and can cross section boundaries when that makes the pedagogy clearer.',
   },
   lessonChrome: {
     objectiveLabel: 'Learning objective',
@@ -326,7 +331,7 @@ export const enMessages: LocalizedMessages = {
       thresholdAtZero: 'Threshold at 0',
     },
     weightedSumPage: {
-      eyebrow: 'Architectural mechanics · Perceptron',
+      eyebrow: 'Foundations · Perceptron',
       title: 'Weighted sum and bias',
       description:
         'A perceptron combines its inputs using weights, then shifts the result with a bias. This is the basic scoring step before any threshold or activation decides the final output.',
@@ -368,7 +373,7 @@ export const enMessages: LocalizedMessages = {
       ],
     },
     decisionBoundaryPage: {
-      eyebrow: 'Architectural mechanics · Perceptron',
+      eyebrow: 'Foundations · Perceptron',
       title: 'Decision boundary intuition',
       description:
         'A perceptron turns its weighted sum into a straight decision boundary. Changing the weights rotates that line; changing the bias slides it across the plane.',
@@ -431,7 +436,7 @@ export const enMessages: LocalizedMessages = {
   },
   mlp: {
     activationsPage: {
-      eyebrow: 'Architectural mechanics · MLP',
+      eyebrow: 'Foundations · MLP',
       title: 'Activation functions and non-linearity',
       description:
         'A stack of linear layers still behaves like one linear map. This lesson shows how activation functions bend that behavior so a tiny multilayer network can represent richer responses.',
@@ -619,23 +624,33 @@ export const enMessages: LocalizedMessages = {
   sections: {
     foundations: {
       title: 'Foundations',
-      description: 'Core concepts that support later deep learning intuition.',
-      goal: 'Build the optimization and representation intuitions that later models rely on.',
+      description: 'Core concepts that ground basic representation and optimization intuition.',
+      goal: 'Move from perceptrons to optimization without splitting the beginner path across unrelated top-level buckets.',
     },
-    mechanics: {
-      title: 'Architectural mechanics',
-      description: 'Mechanisms that explain how neural network components behave.',
-      goal: 'Move from single-neuron intuition to the building blocks of deeper models.',
-    },
-    cnn: {
+    cnns: {
       title: 'CNNs',
       description: 'Spatial pattern extraction and hierarchical feature building.',
       goal: 'Show how local receptive fields detect useful structure in images and grids.',
     },
+    'stable-training': {
+      title: 'Stable Training',
+      description: 'Techniques that make optimization and deep signal flow behave more reliably.',
+      goal: 'Explain why initialization, normalization, regularization, and residual design help training stay usable.',
+    },
+    'sequence-memory': {
+      title: 'Sequence & Memory',
+      description: 'State, recurrence, attention, and long-range dependency handling.',
+      goal: 'Build intuition for models that process ordered data and preserve useful context over time.',
+    },
+    research: {
+      title: 'Research',
+      description: 'Exploratory topics that extend beyond the core learner path.',
+      goal: 'Reserve space for advanced optimization and meta-learning ideas without forcing them into the beginner sequence.',
+    },
   },
   units: {
     optimization: {
-      title: 'Optimization intuition',
+      title: 'Optimization',
       description: 'How parameters move, why loss changes, and what stable progress feels like.',
     },
     perceptron: {
@@ -649,6 +664,30 @@ export const enMessages: LocalizedMessages = {
     convolutions: {
       title: 'Local pattern detection',
       description: 'Understand kernels as small reusable detectors applied across space.',
+    },
+    initialization: {
+      title: 'Initialization',
+      description: 'Why starting scales can either preserve signal or break training early.',
+    },
+    'normalization-and-regularization': {
+      title: 'Normalization and regularization',
+      description: 'Stability tools that shape activations, gradients, and generalization behavior.',
+    },
+    'rnns-and-lstms': {
+      title: 'RNNs and LSTMs',
+      description: 'Stateful sequence models that reuse hidden state over time.',
+    },
+    transformers: {
+      title: 'Transformers',
+      description: 'Attention-based sequence models without recurrence.',
+    },
+    'meta-learning': {
+      title: 'Meta-learning',
+      description: 'Learning procedures that optimize how learning itself adapts.',
+    },
+    'nested-learning': {
+      title: 'Nested learning',
+      description: 'Stacked or bilevel update loops for experimental research directions.',
     },
   },
   lessons: {

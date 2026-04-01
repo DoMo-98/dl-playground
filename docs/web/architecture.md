@@ -42,15 +42,15 @@ web/
     page.tsx
     learn/
       page.tsx
-      mechanics/
+      foundations/
         perceptron/
           weighted-sum/page.tsx
           decision-boundary/page.tsx
         mlp/
           activations/page.tsx
-      foundations/
-        gradient-descent/page.tsx
-      cnn/
+        optimization/
+          gradient-descent/page.tsx
+      cnns/
         local-patterns/page.tsx
   components/
     layout/
@@ -199,11 +199,11 @@ Use nested routes by learning path hierarchy.
 
 Examples:
 - `/learn`
-- `/learn/foundations/gradient-descent`
-- `/learn/mechanics/perceptron/weighted-sum`
-- `/learn/mechanics/perceptron/decision-boundary`
-- `/learn/mechanics/mlp/activations`
-- `/learn/cnn/local-patterns`
+- `/learn/foundations/optimization/gradient-descent`
+- `/learn/foundations/perceptron/weighted-sum`
+- `/learn/foundations/perceptron/decision-boundary`
+- `/learn/foundations/mlp/activations`
+- `/learn/cnns/convolutions/local-patterns`
 
 Benefits:
 - intuitive URL design

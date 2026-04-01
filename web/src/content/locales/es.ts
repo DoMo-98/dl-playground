@@ -28,7 +28,7 @@ export const esMessages: LocalizedMessages = {
     eyebrow: 'Ruta de aprendizaje',
     title: 'Lecciones interactivas de deep learning',
     description:
-      'La ruta de aprendizaje está organizada en pequeñas lecciones visuales. Cada página está diseñada para explicar un concepto, mostrarlo con claridad y permitir que la persona cambie algo relevante.',
+      'La ruta de aprendizaje está organizada en pequeñas lecciones visuales. Las secciones reflejan una taxonomía temática, mientras que la secuencia global de lecciones sigue un orden pedagógico separado pensado para aprender mejor.',
     startEyebrow: 'Empieza por la primera lección disponible',
     openLesson: 'Abrir lección',
     metaMinutes: 'min',
@@ -47,6 +47,9 @@ export const esMessages: LocalizedMessages = {
       reading: 'lectura',
     },
     unavailableLabel: 'Aún no disponible',
+    taxonomyNoteTitle: 'Cómo leer este mapa',
+    taxonomyNote:
+      'La taxonomía de secciones agrupa las lecciones por tema. La secuencia global de lecciones está orientada al aprendizaje y puede cruzar secciones cuando eso hace la pedagogía más clara.',
   },
   lessonChrome: {
     objectiveLabel: 'Objetivo de aprendizaje',
@@ -80,7 +83,7 @@ export const esMessages: LocalizedMessages = {
       thresholdAtZero: 'Umbral en 0',
     },
     weightedSumPage: {
-      eyebrow: 'Mecánica arquitectónica · Perceptrón',
+      eyebrow: 'Fundamentos · Perceptrón',
       title: 'Suma ponderada y sesgo',
       description:
         'Un perceptrón combina sus entradas usando pesos y luego desplaza el resultado con un sesgo. Este es el paso básico de puntuación antes de que un umbral o una activación decidan la salida final.',
@@ -122,7 +125,7 @@ export const esMessages: LocalizedMessages = {
       ],
     },
     decisionBoundaryPage: {
-      eyebrow: 'Mecánica arquitectónica · Perceptrón',
+      eyebrow: 'Fundamentos · Perceptrón',
       title: 'Intuición de frontera de decisión',
       description:
         'Un perceptrón convierte su suma ponderada en una frontera de decisión recta. Al cambiar los pesos, esa línea rota; al cambiar el sesgo, se desliza por el plano.',
@@ -185,7 +188,7 @@ export const esMessages: LocalizedMessages = {
   },
   mlp: {
     activationsPage: {
-      eyebrow: 'Mecánica arquitectónica · MLP',
+      eyebrow: 'Fundamentos · MLP',
       title: 'Funciones de activación y no linealidad',
       description:
         'Una pila de capas lineales sigue comportándose como un único mapa lineal. Esta lección muestra cómo las activaciones doblan ese comportamiento para que una red multicapa pequeña pueda representar respuestas más ricas.',
@@ -373,23 +376,33 @@ export const esMessages: LocalizedMessages = {
   sections: {
     foundations: {
       title: 'Fundamentos',
-      description: 'Conceptos base que sostienen la intuición posterior sobre deep learning.',
-      goal: 'Construir intuiciones de optimización y representación sobre las que se apoyan los modelos posteriores.',
+      description: 'Conceptos base que sostienen la intuición de representación y optimización.',
+      goal: 'Pasar de los perceptrones a la optimización sin partir el camino inicial en bloques temáticos poco naturales para aprender.',
     },
-    mechanics: {
-      title: 'Mecánica arquitectónica',
-      description: 'Mecanismos que explican cómo se comportan los componentes de una red neuronal.',
-      goal: 'Pasar de la intuición de una sola neurona a los bloques con los que se construyen modelos más profundos.',
-    },
-    cnn: {
+    cnns: {
       title: 'CNNs',
       description: 'Extracción de patrones espaciales y construcción jerárquica de características.',
       goal: 'Mostrar cómo los campos receptivos locales detectan estructura útil en imágenes y rejillas.',
     },
+    'stable-training': {
+      title: 'Entrenamiento estable',
+      description: 'Técnicas que hacen más fiable la optimización y el flujo de señal en redes profundas.',
+      goal: 'Explicar por qué la inicialización, la normalización, la regularización y los residuos ayudan a que entrenar siga siendo viable.',
+    },
+    'sequence-memory': {
+      title: 'Secuencia y memoria',
+      description: 'Estado, recurrencia, atención y manejo de dependencias de largo alcance.',
+      goal: 'Construir intuición para modelos que procesan datos ordenados y conservan contexto útil a lo largo del tiempo.',
+    },
+    research: {
+      title: 'Investigación',
+      description: 'Temas exploratorios que van más allá de la ruta principal de aprendizaje.',
+      goal: 'Reservar espacio para optimización avanzada y meta-learning sin forzarlos dentro de la secuencia inicial.',
+    },
   },
   units: {
     optimization: {
-      title: 'Intuición de optimización',
+      title: 'Optimización',
       description: 'Cómo se mueven los parámetros, por qué cambia la pérdida y qué se siente como progreso estable.',
     },
     perceptron: {
@@ -403,6 +416,30 @@ export const esMessages: LocalizedMessages = {
     convolutions: {
       title: 'Detección de patrones locales',
       description: 'Entender los kernels como pequeños detectores reutilizables aplicados a lo largo del espacio.',
+    },
+    initialization: {
+      title: 'Inicialización',
+      description: 'Por qué las escalas iniciales pueden preservar la señal o romper el entrenamiento desde el principio.',
+    },
+    'normalization-and-regularization': {
+      title: 'Normalización y regularización',
+      description: 'Herramientas de estabilidad que moldean activaciones, gradientes y generalización.',
+    },
+    'rnns-and-lstms': {
+      title: 'RNNs y LSTMs',
+      description: 'Modelos secuenciales con estado que reutilizan memoria oculta en el tiempo.',
+    },
+    transformers: {
+      title: 'Transformers',
+      description: 'Modelos secuenciales basados en atención sin recurrencia.',
+    },
+    'meta-learning': {
+      title: 'Meta-learning',
+      description: 'Procedimientos de aprendizaje que optimizan cómo aprende el propio sistema.',
+    },
+    'nested-learning': {
+      title: 'Nested learning',
+      description: 'Bucles de actualización apilados o bilevel para direcciones de investigación experimentales.',
     },
   },
   lessons: {

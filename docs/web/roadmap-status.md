@@ -38,6 +38,19 @@ Current learner-facing lesson order:
 4. **Gradient descent intuition**
 5. **Convolution as local pattern detector** *(planned)*
 
+Current top-level taxonomy in the app:
+
+- **Foundations**
+  - **Perceptron**
+  - **MLP**
+  - **Optimization** *(formal home of `gradient descent intuition`)*
+- **CNNs**
+- **Stable Training**
+- **Sequence & Memory**
+- **Research**
+
+Rule of thumb: taxonomy groups lessons by theme; the learner-facing sequence may cross section boundaries when that produces a clearer beginner path.
+
 Not yet implemented in the app:
 
 - **Convolution as local pattern detector**
