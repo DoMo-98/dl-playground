@@ -269,6 +269,107 @@ export const esMessages: LocalizedMessages = {
       },
     },
   },
+  optimization: {
+    gradientDescentPage: {
+      eyebrow: 'Fundamentos · Optimización',
+      title: 'Intuición de descenso por gradiente',
+      description:
+        'El descenso por gradiente sigue la pendiente local de la pérdida. Esta lección te deja cambiar la tasa de aprendizaje y observar cómo el mismo punto inicial converge, rebota o se vuelve inestable.',
+      objective: '¿Cómo cambia la tasa de aprendizaje si el descenso por gradiente converge con suavidad, oscila alrededor del valle o sobrepasa hasta volverse inestable?',
+      coreIdeaDescription:
+        'Backprop da la dirección, pero la tasa de aprendizaje decide con cuánta decisión se mueve la actualización. Sobre el mismo paisaje de pérdida, pasos pequeños pueden arrastrarse, pasos moderados pueden asentarse y pasos demasiado grandes pueden rebotar de un lado a otro del valle.',
+      coreIdeaBullets: [
+        'El gradiente apunta cuesta arriba, así que la actualización se mueve en la dirección contraria.',
+        'Una tasa de aprendizaje moderada suele bajar la pérdida manteniendo la trayectoria bajo control.',
+        'Si la tasa de aprendizaje es demasiado grande, la actualización puede sobrepasar el valle y empezar a oscilar o divergir.',
+      ],
+      presetLabel: 'Presets sugeridos de tasa de aprendizaje',
+      presets: [
+        {
+          id: 'stable',
+          learningRate: 0.15,
+          label: 'Descenso estable',
+          description: 'Una tasa moderada que mantiene la trayectoria bajando hacia la cuenca sin saltos dramáticos.',
+        },
+        {
+          id: 'oscillating',
+          learningRate: 0.35,
+          label: 'Oscilación amortiguada',
+          description: 'Lo bastante grande como para rebotar un poco alrededor del valle antes de volver a asentarse.',
+        },
+        {
+          id: 'unstable',
+          learningRate: 0.7,
+          label: 'Sobrepaso inestable',
+          description: 'Tan agresiva que las actualizaciones saltan por el paisaje de pérdida y dejan de progresar de forma fiable.',
+        },
+      ],
+      controlLabels: {
+        learningRate: 'Tasa de aprendizaje',
+        startParameter: 'Parámetro inicial',
+      },
+      actions: {
+        step: 'Dar un paso',
+        autoplay: 'Autoplay',
+        pause: 'Pausar',
+        reset: 'Reiniciar trayectoria',
+      },
+      updateTitle: 'Regla de actualización actual',
+      updateDescription:
+        'El número después del signo menos es la pendiente local. Una tasa de aprendizaje mayor multiplica esa pendiente y la convierte en un salto más grande sobre el eje del parámetro.',
+      stats: {
+        step: 'Número de paso',
+        loss: 'Pérdida actual',
+        gradient: 'Gradiente actual',
+        regime: 'Régimen observado',
+      },
+      regimes: {
+        stable: {
+          label: 'Estable',
+          title: 'La pérdida sigue bajando de forma controlada',
+          description:
+            'La mayoría de los pasos recientes mejoraron la pérdida sin grandes cambios de dirección. Este es el régimen que normalmente quieres cuando enseñas la idea básica del descenso por gradiente.',
+        },
+        oscillating: {
+          label: 'Oscilante',
+          title: 'La trayectoria cruza el valle y cambia de dirección',
+          description:
+            'Las actualizaciones aún progresan en conjunto, pero el tamaño del paso ya es lo bastante grande como para rebotar de un lado de la cuenca al otro en lugar de asentarse enseguida.',
+        },
+        unstable: {
+          label: 'Inestable',
+          title: 'El sobrepaso deja de comportarse como un descenso fiable',
+          description:
+            'La pérdida sube con demasiada frecuencia o la trayectoria salta demasiado lejos. Es la señal de que la tasa de aprendizaje está empujando la actualización más allá de lo que soporta la pendiente local.',
+        },
+      },
+      readingGuideTitle: 'Cómo leer la gráfica',
+      readingGuideBullets: [
+        'La curva blanca es el paisaje de pérdida: más abajo es mejor.',
+        'Los puntos ámbar marcan los parámetros ya visitados y la línea cian discontinua conecta la trayectoria de actualización.',
+        'Prueba primero unos pocos pasos manuales y luego usa autoplay para notar cómo se comporta la misma regla con el tiempo.',
+      ],
+      bridgeTitle: 'Conexión con la lección anterior',
+      bridgeDescription:
+        'La lección de MLP mostraba que las capas ocultas necesitan no linealidad para ganar expresividad. Esta cambia al lado de la optimización: una vez que la red tiene parámetros expresivos, el descenso por gradiente es el mecanismo que los mueve por el paisaje de pérdida.',
+      prompts: [
+        'Empieza con el preset estable y avanza paso a paso. ¿Cada nuevo punto se acerca a una zona más baja del valle?',
+        'Cambia al preset oscilante y observa el momento en que la trayectoria cruza el mínimo y cambia de dirección.',
+        'Usa el preset inestable. ¿Qué pasos dejan de ayudar y qué te sugiere eso sobre elegir la tasa de aprendizaje?',
+      ],
+      visualization: {
+        eyebrow: 'Paisaje de pérdida 1D',
+        title: 'Trayectoria del parámetro sobre la curva de pérdida',
+        badge: 'mismo paisaje, distinto comportamiento de actualización',
+        ariaLabel: 'Visualización del descenso por gradiente sobre un paisaje de pérdida unidimensional',
+        legend: {
+          loss: 'Curva de pérdida',
+          trajectory: 'Trayectoria de actualización',
+          visitedStep: 'Pasos visitados',
+        },
+      },
+    },
+  },
   sections: {
     foundations: {
       title: 'Fundamentos',

@@ -8,9 +8,11 @@ import { getLearningLessons } from '../content/learningPath'
 import { WeightedSumPage } from '../pages/lessons/mechanics/perceptron/WeightedSumPage'
 import { DecisionBoundaryPage } from '../pages/lessons/mechanics/perceptron/DecisionBoundaryPage'
 import { ActivationsPage } from '../pages/lessons/mechanics/mlp/ActivationsPage'
+import { GradientDescentPage } from '../pages/lessons/foundations/optimization/GradientDescentPage'
 import { NotFoundPage } from '../pages/not-found/NotFoundPage'
 
 const lessonRouteElements = {
+  'gradient-descent-intuition': <GradientDescentPage />,
   'perceptron-weighted-sum': <WeightedSumPage />,
   'perceptron-decision-boundary': <DecisionBoundaryPage />,
   'mlp-activations': <ActivationsPage />,

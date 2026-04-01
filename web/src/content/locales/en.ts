@@ -186,6 +186,62 @@ type LocalizedMessages = {
       }
     }
   }
+  optimization: {
+    gradientDescentPage: {
+      eyebrow: string
+      title: string
+      description: string
+      objective: string
+      coreIdeaDescription: string
+      coreIdeaBullets: string[]
+      presetLabel: string
+      presets: Array<{
+        id: string
+        learningRate: number
+        label: string
+        description: string
+      }>
+      controlLabels: {
+        learningRate: string
+        startParameter: string
+      }
+      actions: {
+        step: string
+        autoplay: string
+        pause: string
+        reset: string
+      }
+      updateTitle: string
+      updateDescription: string
+      stats: {
+        step: string
+        loss: string
+        gradient: string
+        regime: string
+      }
+      regimes: Record<'stable' | 'oscillating' | 'unstable', {
+        label: string
+        title: string
+        description: string
+      }>
+      readingGuideTitle: string
+      readingGuideBullets: string[]
+      bridgeTitle: string
+      bridgeDescription: string
+      prompts: string[]
+      visualization: {
+        eyebrow: string
+        title: string
+        badge: string
+        ariaLabel: string
+        legend: {
+          loss: string
+          trajectory: string
+          visitedStep: string
+        }
+      }
+    }
+  }
   sections: Record<string, LocalizedSectionCopy>
   units: Record<string, LocalizedUnitCopy>
   lessons: Record<string, LocalizedLessonCopy>
@@ -455,6 +511,107 @@ export const enMessages: LocalizedMessages = {
           output: 'Final output',
           hiddenOne: 'Hidden unit 1',
           hiddenTwo: 'Hidden unit 2',
+        },
+      },
+    },
+  },
+  optimization: {
+    gradientDescentPage: {
+      eyebrow: 'Foundations · Optimization',
+      title: 'Gradient descent intuition',
+      description:
+        'Gradient descent follows the local slope of the loss. This lesson lets you change the learning rate and watch the same starting point settle, bounce, or become unstable.',
+      objective: 'How does the learning rate change whether gradient descent converges smoothly, oscillates around the valley, or overshoots into unstable behavior?',
+      coreIdeaDescription:
+        'Backprop gives the direction, but the learning rate decides how boldly the update moves. On the same loss landscape, small steps can crawl, moderate steps can settle, and overly large steps can bounce across the valley.',
+      coreIdeaBullets: [
+        'The gradient points uphill, so the update moves in the opposite direction.',
+        'A moderate learning rate usually lowers the loss while keeping the trajectory controlled.',
+        'If the learning rate is too large, the update can overshoot the valley and start oscillating or diverging.',
+      ],
+      presetLabel: 'Suggested learning-rate presets',
+      presets: [
+        {
+          id: 'stable',
+          learningRate: 0.15,
+          label: 'Stable descent',
+          description: 'A moderate rate that keeps the path descending into the basin without dramatic jumps.',
+        },
+        {
+          id: 'oscillating',
+          learningRate: 0.35,
+          label: 'Damped oscillation',
+          description: 'Large enough to bounce across the valley a little before settling back down.',
+        },
+        {
+          id: 'unstable',
+          learningRate: 0.7,
+          label: 'Unstable overshoot',
+          description: 'So aggressive that the updates leap across the loss landscape and stop making reliable progress.',
+        },
+      ],
+      controlLabels: {
+        learningRate: 'Learning rate',
+        startParameter: 'Starting parameter',
+      },
+      actions: {
+        step: 'Take one step',
+        autoplay: 'Autoplay',
+        pause: 'Pause',
+        reset: 'Reset path',
+      },
+      updateTitle: 'Current update rule',
+      updateDescription:
+        'The number after the minus sign is the local slope. A larger learning rate multiplies that slope into a bigger jump across the parameter axis.',
+      stats: {
+        step: 'Step count',
+        loss: 'Current loss',
+        gradient: 'Current gradient',
+        regime: 'Observed regime',
+      },
+      regimes: {
+        stable: {
+          label: 'Stable',
+          title: 'Loss keeps moving downhill in a controlled way',
+          description:
+            'Most recent steps improved the loss without strong back-and-forth reversals. This is the regime you usually want when teaching the basic idea of gradient descent.',
+        },
+        oscillating: {
+          label: 'Oscillating',
+          title: 'The path crosses the valley and changes direction',
+          description:
+            'The updates are still making progress overall, but the step size is big enough to bounce from one side of the basin to the other instead of settling immediately.',
+        },
+        unstable: {
+          label: 'Unstable',
+          title: 'Overshoot stops behaving like reliable descent',
+          description:
+            'The loss is rising too often or the trajectory is leaping too far. This is the warning sign that the learning rate is pushing the update beyond what the local slope can support.',
+        },
+      },
+      readingGuideTitle: 'How to read the chart',
+      readingGuideBullets: [
+        'The white curve is the loss landscape: lower is better.',
+        'Amber dots mark the parameters already visited, and the dashed cyan line connects the update trajectory.',
+        'Try a few single steps first, then use autoplay to feel how the same rule behaves over time.',
+      ],
+      bridgeTitle: 'Connection to the previous lesson',
+      bridgeDescription:
+        'The MLP lesson showed that hidden layers need non-linearity to become expressive. This lesson shifts to the optimization side: once a network has expressive parameters, gradient descent is the mechanism that moves them through the loss landscape.',
+      prompts: [
+        'Start with the stable preset and step forward. Does each new dot move toward a lower part of the valley?',
+        'Switch to the oscillating preset and watch for the moment the path crosses the minimum and flips direction.',
+        'Use the unstable preset. Which steps stop helping, and what does that suggest about choosing a learning rate?',
+      ],
+      visualization: {
+        eyebrow: '1D loss landscape',
+        title: 'Parameter path over the loss curve',
+        badge: 'same landscape, different update behavior',
+        ariaLabel: 'Gradient descent visualization over a one-dimensional loss landscape',
+        legend: {
+          loss: 'Loss curve',
+          trajectory: 'Update trajectory',
+          visitedStep: 'Visited steps',
         },
       },
     },
