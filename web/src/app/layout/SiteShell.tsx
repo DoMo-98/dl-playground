@@ -170,11 +170,7 @@ export function SiteShell() {
           <Dialog.Content
             className="fixed inset-x-4 top-[calc(env(safe-area-inset-top)+var(--header-h,5.5rem)+0.75rem)] z-40 space-y-4 rounded-2xl border border-white/10 bg-slate-900/95 p-4 shadow-2xl outline-none md:hidden"
             aria-label={messages.nav.mobileMenuPanelLabel}
-            onOpenAutoFocus={(e) => {
-              e.preventDefault()
-              const firstLink = e.currentTarget.querySelector<HTMLElement>('nav a')
-              firstLink?.focus()
-            }}
+            onOpenAutoFocus={(e) => e.preventDefault()}
           >
             <Dialog.Title className="sr-only">{messages.nav.mobileMenuPanelLabel}</Dialog.Title>
             <Dialog.Description className="sr-only">{messages.nav.mobileMenuCloseLabel}</Dialog.Description>

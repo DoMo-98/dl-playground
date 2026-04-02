@@ -47,7 +47,6 @@ describe('SiteShell', () => {
 
     const dialog = screen.getByRole('dialog', { name: 'Mobile navigation menu' })
     expect(dialog).toBeInTheDocument()
-    await waitFor(() => expect(dialog.contains(document.activeElement)).toBe(true))
 
     await user.keyboard('{Escape}')
     expect(screen.queryByRole('dialog', { name: 'Mobile navigation menu' })).not.toBeInTheDocument()
