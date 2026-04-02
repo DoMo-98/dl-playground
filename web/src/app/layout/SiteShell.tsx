@@ -1,50 +1,15 @@
 import * as Dialog from '@radix-ui/react-dialog'
-import { ArrowRight, ArrowUpRight, BookOpen, BrainCircuit, ChevronDown, Languages, Menu, X } from 'lucide-react'
+import { ArrowUpRight, BrainCircuit, ChevronDown, Languages, Menu, X } from 'lucide-react'
 import { Link, NavLink, Outlet } from 'react-router-dom'
 import { useState } from 'react'
 import { localeLabels } from '../../i18n'
 import { useI18n } from '../i18n-context'
+import { HeaderFeatureLink, HeaderUtilityItem, HeaderUtilityLink } from './headerPrimitives'
+
+type HeaderLocaleVariant = 'compact' | 'panel'
 
 const repositoryUrl = 'https://github.com/DoMo-98/dl-playground'
 const firstLessonPath = '/learn/foundations/perceptron/weighted-sum'
-
-function FirstLessonLink({
-  href,
-  eyebrow,
-  label,
-  onClick,
-  compact = false,
-}: {
-  href: string
-  eyebrow: string
-  label: string
-  onClick?: () => void
-  compact?: boolean
-}) {
-  return (
-    <div
-      className={[
-        'min-w-0 rounded-xl transition',
-        compact
-          ? 'border border-white/10 bg-slate-950/40 px-3 py-3 hover:border-white/15 hover:bg-slate-950/55'
-          : 'border border-transparent px-3 py-2 hover:bg-white/5',
-      ].join(' ')}
-    >
-      <span className="mb-1 flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.18em] text-cyan-300/75">
-        <BookOpen className="h-3.5 w-3.5" />
-        {eyebrow}
-      </span>
-      <Link
-        to={href}
-        onClick={onClick}
-        className="inline-flex items-center gap-2 text-sm font-medium text-slate-100 transition hover:text-white"
-      >
-        <span className="truncate">{label}</span>
-        <ArrowRight className="h-4 w-4 text-cyan-300/90" />
-      </Link>
-    </div>
-  )
-}
 
 function LocaleSwitcher({
   locale,
@@ -57,40 +22,34 @@ function LocaleSwitcher({
   label: string
   onChange: (nextLocale: keyof typeof localeLabels) => void
   className?: string
-  variant?: 'compact' | 'panel'
+  variant?: HeaderLocaleVariant
 }) {
   const isPanel = variant === 'panel'
 
   return (
-    <label
-      className={[
-        'group inline-flex items-center text-sm text-slate-200 transition',
-        isPanel
-          ? 'gap-3 rounded-xl border border-white/10 bg-slate-950/40 px-3 py-3 hover:border-white/15 hover:bg-slate-950/55 focus-within:border-cyan-300/40 focus-within:bg-slate-950/55 focus-within:ring-1 focus-within:ring-cyan-300/20'
-          : 'gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 hover:border-white/20 hover:bg-white/8 focus-within:border-cyan-300/40 focus-within:bg-white/10 focus-within:ring-1 focus-within:ring-cyan-300/20',
-        className ?? '',
-      ].join(' ')}
-    >
-      <Languages className="h-4 w-4 shrink-0 text-cyan-300 transition group-hover:text-cyan-200 group-focus-within:text-cyan-200" />
-      {isPanel ? <span className="min-w-0 flex-1 text-slate-300">{label}</span> : <span className="sr-only">{label}</span>}
-      <span className={['relative', isPanel ? 'min-w-0' : 'w-[5.75rem]'].join(' ')}>
-        <select
-          value={locale}
-          onChange={(event) => onChange(event.target.value as keyof typeof localeLabels)}
-          className={[
-            'w-full cursor-pointer appearance-none bg-transparent text-sm text-slate-100 outline-none',
-            isPanel ? 'min-w-0 pr-6 text-right' : 'pr-6',
-          ].join(' ')}
-          aria-label={label}
-        >
-          {Object.entries(localeLabels).map(([value, optionLabel]) => (
-            <option key={value} value={value} className="bg-slate-900 text-slate-100">
-              {optionLabel}
-            </option>
-          ))}
-        </select>
-        <ChevronDown className="pointer-events-none absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500 transition group-hover:text-slate-300 group-focus-within:text-slate-200" />
-      </span>
+    <label className="block">
+      <HeaderUtilityItem variant={isPanel ? 'panel' : 'inline'} className={className}>
+        <Languages className="h-4 w-4 shrink-0 text-cyan-300 transition group-hover:text-cyan-200 group-focus-within:text-cyan-200" />
+        {isPanel ? <span className="min-w-0 flex-1 text-slate-300">{label}</span> : <span className="sr-only">{label}</span>}
+        <span className={['relative', isPanel ? 'min-w-0' : 'w-[5.75rem]'].join(' ')}>
+          <select
+            value={locale}
+            onChange={(event) => onChange(event.target.value as keyof typeof localeLabels)}
+            className={[
+              'w-full cursor-pointer appearance-none bg-transparent text-sm text-slate-100 outline-none',
+              isPanel ? 'min-w-0 pr-6 text-right' : 'pr-6',
+            ].join(' ')}
+            aria-label={label}
+          >
+            {Object.entries(localeLabels).map(([value, optionLabel]) => (
+              <option key={value} value={value} className="bg-slate-900 text-slate-100">
+                {optionLabel}
+              </option>
+            ))}
+          </select>
+          <ChevronDown className="pointer-events-none absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500 transition group-hover:text-slate-300 group-focus-within:text-slate-200" />
+        </span>
+      </HeaderUtilityItem>
     </label>
   )
 }
@@ -138,22 +97,20 @@ export function SiteShell() {
 
                 <div className="h-6 w-px bg-white/10" aria-hidden="true" />
 
-                <FirstLessonLink
+                <HeaderFeatureLink
                   href={firstLessonHref}
                   eyebrow={messages.nav.firstLessonEyebrow}
                   label={messages.nav.firstLesson}
                 />
 
                 <div className="flex items-center gap-1 rounded-xl border border-white/10 bg-white/[0.03] px-1.5 py-1">
-                  <a
+                  <HeaderUtilityLink
                     href={repositoryUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white"
-                  >
-                    <ArrowUpRight className="h-4 w-4 text-cyan-300" />
-                    <span>{messages.nav.repository}</span>
-                  </a>
+                    label={messages.nav.repository}
+                    icon={<ArrowUpRight className="h-4 w-4" />}
+                  />
 
                   <LocaleSwitcher
                     locale={locale}
@@ -228,7 +185,7 @@ export function SiteShell() {
 
             <div className="h-px bg-white/10" aria-hidden="true" />
 
-            <FirstLessonLink
+            <HeaderFeatureLink
               href={firstLessonHref}
               eyebrow={messages.nav.firstLessonEyebrow}
               label={messages.nav.firstLesson}
@@ -237,16 +194,15 @@ export function SiteShell() {
             />
 
             <div className="grid gap-3 sm:grid-cols-2">
-              <a
+              <HeaderUtilityLink
                 href={repositoryUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-slate-950/40 px-3 py-3 text-sm text-slate-200 transition hover:bg-white/10 hover:text-white"
+                label={messages.nav.repository}
+                icon={<ArrowUpRight className="h-4 w-4" />}
                 onClick={() => setMenuOpen(false)}
-              >
-                <ArrowUpRight className="h-4 w-4 text-cyan-300" />
-                <span>{messages.nav.repository}</span>
-              </a>
+                variant="panel"
+              />
 
               <LocaleSwitcher
                 locale={locale}
