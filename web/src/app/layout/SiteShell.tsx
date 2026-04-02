@@ -173,20 +173,6 @@ export function SiteShell() {
           >
             <Dialog.Title className="sr-only">{messages.nav.mobileMenuPanelLabel}</Dialog.Title>
             <Dialog.Description className="sr-only">{messages.nav.mobileMenuCloseLabel}</Dialog.Description>
-            <div className="flex items-center justify-between gap-3">
-              <p className="text-xs font-medium uppercase tracking-[0.18em] text-slate-400">
-                {messages.nav.mobileMenuPanelLabel}
-              </p>
-              <Dialog.Close asChild>
-                <button
-                  type="button"
-                  className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 p-2 text-slate-200 transition hover:bg-white/10 hover:text-white"
-                  aria-label={messages.nav.mobileMenuCloseLabel}
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              </Dialog.Close>
-            </div>
 
             <nav className="grid gap-2 text-sm text-slate-300" aria-label={messages.nav.mobileMenuPanelLabel}>
               {navItems.map((item) => (

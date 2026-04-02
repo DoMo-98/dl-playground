@@ -45,9 +45,9 @@ describe('SiteShell', () => {
     const openButton = screen.getByRole('button', { name: 'Open main menu' })
     await user.click(openButton)
 
-    const closeButton = screen.getByRole('button', { name: 'Close main menu' })
-    expect(screen.getByRole('dialog', { name: 'Mobile navigation menu' })).toBeInTheDocument()
-    await waitFor(() => expect(closeButton).toHaveFocus())
+    const dialog = screen.getByRole('dialog', { name: 'Mobile navigation menu' })
+    expect(dialog).toBeInTheDocument()
+    await waitFor(() => expect(dialog.contains(document.activeElement)).toBe(true))
 
     await user.keyboard('{Escape}')
     expect(screen.queryByRole('dialog', { name: 'Mobile navigation menu' })).not.toBeInTheDocument()
