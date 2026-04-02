@@ -194,6 +194,60 @@ type LocalizedMessages = {
       }
     }
   }
+  cnn: {
+    localPatternPage: {
+      eyebrow: string
+      title: string
+      description: string
+      objective: string
+      coreIdeaDescription: string
+      coreIdeaBullets: string[]
+      presetTitle: string
+      presetOptions: Record<'vertical-edge' | 'horizontal-edge' | 'center-focus', {
+        label: string
+        description: string
+        interpretation: string
+      }>
+      actions: {
+        resetPreset: string
+        clearKernel: string
+      }
+      controlsHintTitle: string
+      controlsHintBullets: string[]
+      stats: {
+        strongestCell: string
+        strongestValue: string
+        polarity: string
+      }
+      polarity: {
+        positive: string
+        negative: string
+        neutral: string
+      }
+      interpretationTitle: string
+      readingGuideTitle: string
+      readingGuideBullets: string[]
+      bridgeTitle: string
+      bridgeDescription: (positiveCount: number, negativeCount: number) => string
+      prompts: string[]
+      visualization: {
+        eyebrow: string
+        badge: string
+        ariaLabel: string
+        inputTitle: string
+        inputHint: string
+        kernelTitle: string
+        kernelHint: string
+        featureMapTitle: string
+        featureMapHint: string
+        selectedPatchTitle: string
+        selectedPatchDescription: string
+        inputCellLabel: string
+        kernelCellLabel: string
+        featureCellLabel: string
+      }
+    }
+  }
   optimization: {
     gradientDescentPage: {
       eyebrow: string
@@ -532,6 +586,92 @@ export const enMessages: LocalizedMessages = {
       },
     },
   },
+  cnn: {
+    localPatternPage: {
+      eyebrow: 'CNNs · Convolutions',
+      title: 'Convolution as local pattern detector',
+      description:
+        'A convolution reuses the same kernel weights over local neighborhoods. This lesson lets you edit both the grid and the kernel so you can see how local matches create a feature map.',
+      objective: 'How does one small kernel turn repeated local comparisons into a feature map that highlights the places where a pattern appears?',
+      coreIdeaDescription:
+        'In the narrow, source-safe framing from LeCun et al. (1998), the key behavior is local: a small receptive field slides over the input, multiplies local values by shared weights, and writes one response per position into a feature map.',
+      coreIdeaBullets: [
+        'The same kernel is reused at every position, so the detector looks for one pattern everywhere.',
+        'Each feature-map cell only sees a local patch of the input, not the full grid at once.',
+        'Strong positive or negative responses mean the local patch aligns with the detector in different ways.',
+      ],
+      presetTitle: 'Suggested pattern presets',
+      presetOptions: {
+        'vertical-edge': {
+          label: 'Vertical edge detector',
+          description: 'A bright band on the right meets a left-to-right edge kernel.',
+          interpretation: 'The strongest cells appear where the sliding window sees the left side dark and the right side bright, so the shared kernel keeps firing on the same local transition.',
+        },
+        'horizontal-edge': {
+          label: 'Horizontal edge detector',
+          description: 'A top-to-bottom transition meets a horizontal edge kernel.',
+          interpretation: 'Responses light up where the local patch changes from dark to bright across rows. The mechanism is the same; only the kernel orientation changed.',
+        },
+        'center-focus': {
+          label: 'Center-weighted detector',
+          description: 'A kernel with extra center weight rewards dense local clusters.',
+          interpretation: 'Now the strongest cells appear where the local patch contains many active neighbors near the center, showing that convolutions can detect more than just edges.',
+        },
+      },
+      actions: {
+        resetPreset: 'Reset to preset',
+        clearKernel: 'Clear kernel',
+      },
+      controlsHintTitle: 'How to interact with the grids',
+      controlsHintBullets: [
+        'Click any input cell to toggle local evidence on or off.',
+        'Click kernel cells to cycle through -1, 0, and 1 so you can change what the detector rewards or suppresses.',
+        'Click a feature-map cell to highlight the exact receptive field that produced that response.',
+      ],
+      stats: {
+        strongestCell: 'Strongest position',
+        strongestValue: 'Strongest response',
+        polarity: 'Response polarity',
+      },
+      polarity: {
+        positive: 'Positive match',
+        negative: 'Negative match',
+        neutral: 'Neutral / no match',
+      },
+      interpretationTitle: 'What the highlighted response means',
+      readingGuideTitle: 'How to read this lesson',
+      readingGuideBullets: [
+        'The input grid is the original signal the kernel scans.',
+        'The kernel grid is the shared detector: the exact same weights are reused at every valid position.',
+        'The feature map stores one score per receptive field, so it becomes a spatial map of local evidence.',
+      ],
+      bridgeTitle: 'Why this matters after gradient descent',
+      bridgeDescription: (positiveCount: number, negativeCount: number) =>
+        `This detector currently produces ${positiveCount} positive cells and ${negativeCount} negative cells. Gradient descent would later learn kernels like this by rewarding filters whose local responses help the task, but the mechanism you are seeing already exists before any training details are added.`,
+      prompts: [
+        'Start with the vertical-edge preset and click through the feature map. Which windows contain the full dark-to-bright transition?',
+        'Flip a few input cells near the edge. Which feature-map responses change immediately, and which stay untouched because their receptive field never saw that edit?',
+        'Cycle kernel values until the detector becomes mostly zeros. What happens to the feature map when weight sharing keeps applying a weak detector everywhere?',
+      ],
+      visualization: {
+        eyebrow: 'Local receptive field scan',
+        badge: 'same kernel, many local comparisons',
+        ariaLabel: 'Convolution lesson visualization with input grid, kernel, and feature map',
+        inputTitle: 'Input grid',
+        inputHint: 'click cells to toggle 0/1',
+        kernelTitle: 'Shared kernel',
+        kernelHint: 'click cells to cycle -1 / 0 / 1',
+        featureMapTitle: 'Feature map',
+        featureMapHint: 'click a response to inspect its receptive field',
+        selectedPatchTitle: 'Selected local computation',
+        selectedPatchDescription: 'For the highlighted receptive field, the convolution sums:',
+        inputCellLabel: 'Input cell',
+        kernelCellLabel: 'Kernel cell',
+        featureCellLabel: 'Feature map cell',
+      },
+    },
+  },
+
   optimization: {
     gradientDescentPage: {
       eyebrow: 'Foundations · Optimization',

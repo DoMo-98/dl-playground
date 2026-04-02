@@ -32,6 +32,7 @@ Implemented today:
 - interactive lesson: **Perceptron · decision boundary intuition**
 - interactive lesson: **MLP · activation functions and non-linearity**
 - interactive lesson: **Gradient descent intuition**
+- interactive lesson: **Convolution as local pattern detector**
 
 Current learner-facing lesson order:
 
@@ -39,7 +40,7 @@ Current learner-facing lesson order:
 2. **Perceptron · decision boundary intuition**
 3. **MLP · activation functions and non-linearity**
 4. **Gradient descent intuition**
-5. **Convolution as local pattern detector** *(planned)*
+5. **Convolution as local pattern detector**
 
 Current top-level taxonomy:
 
@@ -56,7 +57,7 @@ Important rule: section taxonomy groups topics, while the learner-facing lesson 
 
 Immediate next lesson:
 
-- **Convolution as local pattern detector**
+- **Initialization · bad init vs stable init**
 
 Near-term queue after that:
 
@@ -93,7 +94,7 @@ Core thematic foundations and early intuition building.
 
 ### 2. CNNs
 Spatial pattern extraction and hierarchical visual feature building.
-- [ ] **Convolutions:** local pattern detector, kernels and feature maps, receptive field intuition.
+- [x] **Convolutions:** local pattern detector, kernels and feature maps, receptive field intuition.
 - [ ] **Deeper CNN intuition:** stacking convolutions and ResNet-style ideas.
 
 ### 3. Stable Training

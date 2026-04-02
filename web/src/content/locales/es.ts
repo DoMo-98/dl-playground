@@ -278,6 +278,92 @@ export const esMessages: LocalizedMessages = {
       },
     },
   },
+  cnn: {
+    localPatternPage: {
+      eyebrow: 'CNNs · Convoluciones',
+      title: 'Convolución como detector local de patrones',
+      description:
+        'Una convolución reutiliza los mismos pesos del kernel sobre vecindarios locales. Esta lección te deja editar tanto la rejilla como el kernel para ver cómo las coincidencias locales construyen un mapa de características.',
+      objective: '¿Cómo convierte un kernel pequeño comparaciones locales repetidas en un mapa de características que resalta dónde aparece un patrón?',
+      coreIdeaDescription:
+        'En el encuadre estrecho y seguro respecto a la fuente de LeCun et al. (1998), el comportamiento clave es local: un campo receptivo pequeño recorre la entrada, multiplica valores locales por pesos compartidos y escribe una respuesta por posición en un mapa de características.',
+      coreIdeaBullets: [
+        'El mismo kernel se reutiliza en cada posición, así que el detector busca un mismo patrón en todas partes.',
+        'Cada celda del mapa de características solo ve un parche local de la entrada, no toda la rejilla a la vez.',
+        'Respuestas positivas o negativas fuertes significan que el parche local se alinea con el detector de formas distintas.',
+      ],
+      presetTitle: 'Presets sugeridos de patrones',
+      presetOptions: {
+        'vertical-edge': {
+          label: 'Detector de borde vertical',
+          description: 'Una banda brillante a la derecha se encuentra con un kernel de borde de izquierda a derecha.',
+          interpretation: 'Las celdas más fuertes aparecen donde la ventana deslizante ve el lado izquierdo oscuro y el derecho brillante, así que el kernel compartido sigue activándose sobre la misma transición local.',
+        },
+        'horizontal-edge': {
+          label: 'Detector de borde horizontal',
+          description: 'Una transición de arriba a abajo se encuentra con un kernel de borde horizontal.',
+          interpretation: 'Las respuestas se iluminan donde el parche local cambia de oscuro a brillante entre filas. El mecanismo es el mismo; solo cambió la orientación del kernel.',
+        },
+        'center-focus': {
+          label: 'Detector centrado',
+          description: 'Un kernel con más peso en el centro recompensa agrupaciones locales densas.',
+          interpretation: 'Ahora las celdas más fuertes aparecen donde el parche local contiene muchos vecinos activos cerca del centro, mostrando que las convoluciones pueden detectar algo más que bordes.',
+        },
+      },
+      actions: {
+        resetPreset: 'Reiniciar preset',
+        clearKernel: 'Vaciar kernel',
+      },
+      controlsHintTitle: 'Cómo interactuar con las rejillas',
+      controlsHintBullets: [
+        'Haz clic en cualquier celda de entrada para activar o desactivar evidencia local.',
+        'Haz clic en las celdas del kernel para rotar entre -1, 0 y 1 y cambiar qué recompensa o suprime el detector.',
+        'Haz clic en una celda del mapa de características para resaltar el campo receptivo exacto que produjo esa respuesta.',
+      ],
+      stats: {
+        strongestCell: 'Posición más fuerte',
+        strongestValue: 'Respuesta más fuerte',
+        polarity: 'Polaridad de la respuesta',
+      },
+      polarity: {
+        positive: 'Coincidencia positiva',
+        negative: 'Coincidencia negativa',
+        neutral: 'Neutral / sin coincidencia',
+      },
+      interpretationTitle: 'Qué significa la respuesta resaltada',
+      readingGuideTitle: 'Cómo leer esta lección',
+      readingGuideBullets: [
+        'La rejilla de entrada es la señal original que recorre el kernel.',
+        'La rejilla del kernel es el detector compartido: exactamente los mismos pesos se reutilizan en cada posición válida.',
+        'El mapa de características guarda una puntuación por campo receptivo, así que se vuelve un mapa espacial de evidencia local.',
+      ],
+      bridgeTitle: 'Por qué importa después del descenso por gradiente',
+      bridgeDescription: (positiveCount: number, negativeCount: number) =>
+        `Este detector produce ahora ${positiveCount} celdas positivas y ${negativeCount} negativas. Más adelante, el descenso por gradiente aprendería kernels así recompensando filtros cuyas respuestas locales ayudan a la tarea, pero el mecanismo que ves ya existe antes de añadir detalles de entrenamiento.`,
+      prompts: [
+        'Empieza con el preset de borde vertical y recorre el mapa de características. ¿Qué ventanas contienen la transición completa de oscuro a brillante?',
+        'Cambia unas pocas celdas de entrada cerca del borde. ¿Qué respuestas del mapa cambian al instante y cuáles no porque su campo receptivo nunca vio esa edición?',
+        'Rota los valores del kernel hasta que el detector quede casi en ceros. ¿Qué pasa con el mapa cuando el weight sharing sigue aplicando un detector débil en todas partes?',
+      ],
+      visualization: {
+        eyebrow: 'Barrido por campo receptivo local',
+        badge: 'mismo kernel, muchas comparaciones locales',
+        ariaLabel: 'Visualización de la lección de convolución con rejilla de entrada, kernel y mapa de características',
+        inputTitle: 'Rejilla de entrada',
+        inputHint: 'haz clic para alternar 0/1',
+        kernelTitle: 'Kernel compartido',
+        kernelHint: 'haz clic para rotar -1 / 0 / 1',
+        featureMapTitle: 'Mapa de características',
+        featureMapHint: 'haz clic en una respuesta para inspeccionar su campo receptivo',
+        selectedPatchTitle: 'Cálculo local seleccionado',
+        selectedPatchDescription: 'Para el campo receptivo resaltado, la convolución suma:',
+        inputCellLabel: 'Celda de entrada',
+        kernelCellLabel: 'Celda del kernel',
+        featureCellLabel: 'Celda del mapa de características',
+      },
+    },
+  },
+
   optimization: {
     gradientDescentPage: {
       eyebrow: 'Fundamentos · Optimización',

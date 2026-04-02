@@ -100,7 +100,7 @@ const sectionBases: LearningSectionBase[] = [
           {
             id: 'cnn-local-patterns',
             slug: 'local-patterns',
-            status: 'planned',
+            status: 'ready',
             kind: 'interactive',
             sectionSlug: 'cnns',
             unitSlug: 'convolutions',
