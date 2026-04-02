@@ -85,7 +85,7 @@ export function SiteShell() {
                       to={item.to}
                       className={({ isActive }) =>
                         [
-                          'rounded-lg px-3 py-2 transition',
+                          'rounded-xl px-3 py-2 transition',
                           isActive ? 'bg-white/10 text-white' : 'hover:bg-white/5 hover:text-white',
                         ].join(' ')
                       }
@@ -103,21 +103,21 @@ export function SiteShell() {
                   label={messages.nav.firstLesson}
                 />
 
-                <div className="flex items-center gap-1 rounded-xl border border-white/10 bg-white/[0.03] px-1.5 py-1">
-                  <HeaderUtilityLink
-                    href={repositoryUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    label={messages.nav.repository}
-                    icon={<ArrowUpRight className="h-4 w-4" />}
-                  />
+                <a
+                  href={repositoryUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-slate-200 transition hover:bg-white/10 hover:text-white"
+                >
+                  <ArrowUpRight className="h-4 w-4 text-cyan-300" />
+                  <span>{messages.nav.repository}</span>
+                </a>
 
-                  <LocaleSwitcher
-                    locale={locale}
-                    label={messages.nav.languageSwitcherLabel}
-                    onChange={(nextLocale) => switchLocale(nextLocale as typeof locale)}
-                  />
-                </div>
+                <LocaleSwitcher
+                  locale={locale}
+                  label={messages.nav.languageSwitcherLabel}
+                  onChange={(nextLocale) => switchLocale(nextLocale as typeof locale)}
+                />
               </div>
 
               <Dialog.Trigger asChild>

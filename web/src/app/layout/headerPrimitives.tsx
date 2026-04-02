@@ -79,9 +79,11 @@ type HeaderFeatureLinkProps = {
 
 export function HeaderFeatureLink({ href, eyebrow, label, onClick, compact = false }: HeaderFeatureLinkProps) {
   return (
-    <div
+    <Link
+      to={href}
+      onClick={onClick}
       className={[
-        'min-w-0 rounded-xl transition',
+        'block min-w-0 rounded-xl transition hover:text-white',
         compact
           ? 'border border-white/10 bg-slate-950/40 px-3 py-3 hover:border-white/15 hover:bg-slate-950/55'
           : 'border border-transparent px-3 py-2 hover:bg-white/5',
@@ -91,14 +93,10 @@ export function HeaderFeatureLink({ href, eyebrow, label, onClick, compact = fal
         <BookOpen className="h-3.5 w-3.5" />
         {eyebrow}
       </span>
-      <Link
-        to={href}
-        onClick={onClick}
-        className="inline-flex items-center gap-2 text-sm font-medium text-slate-100 transition hover:text-white"
-      >
+      <span className="inline-flex items-center gap-2 text-sm font-medium text-slate-100 transition">
         <span className="truncate">{label}</span>
         <ArrowRight className="h-4 w-4 text-cyan-300/90" />
-      </Link>
-    </div>
+      </span>
+    </Link>
   )
 }
