@@ -86,7 +86,7 @@ export function HeaderFeatureLink({ href, eyebrow, label, onClick, compact = fal
         'block min-w-0 rounded-xl outline-none transition hover:text-white focus-visible:ring-1 focus-visible:ring-cyan-300/50',
         compact
           ? 'border border-white/10 bg-slate-950/40 px-3 py-3 hover:border-white/15 hover:bg-slate-950/55'
-          : 'border border-white/10 bg-white/5 px-3 py-2 hover:bg-white/10',
+          : 'border border-transparent px-3 py-2 hover:bg-white/5',
       ].join(' ')}
     >
       <span className="mb-1 flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.18em] text-cyan-300/75">
