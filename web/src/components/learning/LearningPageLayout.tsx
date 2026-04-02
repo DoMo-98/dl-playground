@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { Card } from '../Card'
 import { useI18n } from '../../app/i18n-context'
+import { ROUTES } from '../../config/routes'
 import { getLessonBreadcrumb } from '../../content/learningPath'
 
 type LearningPageLayoutProps = {
@@ -34,7 +35,7 @@ function ChevronSeparator() {
 }
 
 function Breadcrumb({ lessonId }: { lessonId: string }) {
-  const { locale, messages } = useI18n()
+  const { locale, messages, toLocalizedPath } = useI18n()
   const breadcrumb = getLessonBreadcrumb(lessonId, locale)
 
   if (!breadcrumb) return null
@@ -44,7 +45,7 @@ function Breadcrumb({ lessonId }: { lessonId: string }) {
       <ol className="flex items-center gap-2 text-sm">
         <li>
           <Link
-            to={`/${locale}/learn`}
+            to={toLocalizedPath(ROUTES.LEARN)}
             className="text-slate-400 transition-colors hover:text-slate-200"
           >
             {messages.nav.learn}

@@ -1,10 +1,10 @@
-import type { ComponentProps, ElementType } from 'react'
+import type { ComponentPropsWithoutRef, ElementType } from 'react'
 import clsx from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
 type CardProps<T extends ElementType = 'div'> = {
   as?: T
-} & ComponentProps<T>
+} & ComponentPropsWithoutRef<T>
 
 export function Card<T extends ElementType = 'div'>({ as, className, ...rest }: CardProps<T>) {
   const Component = as ?? 'div'
