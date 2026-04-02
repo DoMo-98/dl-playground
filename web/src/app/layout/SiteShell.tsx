@@ -25,35 +25,46 @@ function LocaleSwitcher({
   label,
   onChange,
   className,
+  variant = 'compact',
 }: {
   locale: keyof typeof localeLabels
   label: string
   onChange: (nextLocale: keyof typeof localeLabels) => void
   className?: string
+  variant?: 'compact' | 'panel'
 }) {
+  const isPanel = variant === 'panel'
+
   return (
     <label
       className={[
-        'group inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-slate-200 transition hover:border-white/20 hover:bg-white/10',
+        'group inline-flex items-center text-sm text-slate-200 transition',
+        isPanel
+          ? 'gap-3 rounded-xl border border-white/10 bg-slate-950/40 px-3 py-3 hover:border-white/15 hover:bg-slate-950/55 focus-within:border-cyan-300/40 focus-within:bg-slate-950/55 focus-within:ring-1 focus-within:ring-cyan-300/20'
+          : 'gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 hover:border-white/20 hover:bg-white/8 focus-within:border-cyan-300/40 focus-within:bg-white/10 focus-within:ring-1 focus-within:ring-cyan-300/20',
         className ?? '',
       ].join(' ')}
     >
-      <Languages className="h-4 w-4 text-cyan-300" />
-      <span className="sr-only">{label}</span>
-      <span className="text-sm text-slate-300">{localeLabels[locale]}</span>
-      <ChevronDown className="h-4 w-4 text-slate-400 transition group-focus-within:text-slate-200 group-hover:text-slate-200" />
-      <select
-        value={locale}
-        onChange={(event) => onChange(event.target.value as keyof typeof localeLabels)}
-        className="cursor-pointer appearance-none bg-transparent pr-1 text-sm text-slate-100 outline-none"
-        aria-label={label}
-      >
-        {Object.entries(localeLabels).map(([value, optionLabel]) => (
-          <option key={value} value={value} className="bg-slate-900 text-slate-100">
-            {optionLabel}
-          </option>
-        ))}
-      </select>
+      <Languages className="h-4 w-4 shrink-0 text-cyan-300 transition group-hover:text-cyan-200 group-focus-within:text-cyan-200" />
+      {isPanel ? <span className="min-w-0 flex-1 text-slate-300">{label}</span> : <span className="sr-only">{label}</span>}
+      <span className={['relative', isPanel ? 'min-w-0' : 'w-[5.75rem]'].join(' ')}>
+        <select
+          value={locale}
+          onChange={(event) => onChange(event.target.value as keyof typeof localeLabels)}
+          className={[
+            'w-full cursor-pointer appearance-none bg-transparent text-sm text-slate-100 outline-none',
+            isPanel ? 'min-w-0 pr-6 text-right' : 'pr-6',
+          ].join(' ')}
+          aria-label={label}
+        >
+          {Object.entries(localeLabels).map(([value, optionLabel]) => (
+            <option key={value} value={value} className="bg-slate-900 text-slate-100">
+              {optionLabel}
+            </option>
+          ))}
+        </select>
+        <ChevronDown className="pointer-events-none absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500 transition group-hover:text-slate-300 group-focus-within:text-slate-200" />
+      </span>
     </label>
   )
 }
@@ -209,7 +220,8 @@ export function SiteShell() {
                     setMenuOpen(false)
                     switchLocale(nextLocale as typeof locale)
                   }}
-                  className="justify-between bg-slate-950/40"
+                  variant="panel"
+                  className="justify-between"
                 />
               </div>
             </div>
