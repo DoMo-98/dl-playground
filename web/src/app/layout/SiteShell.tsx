@@ -23,21 +23,23 @@ function FirstLessonLink({
   return (
     <div
       className={[
-        'min-w-0',
-        compact ? 'rounded-xl border border-white/10 bg-slate-950/40 px-3 py-3' : 'px-1',
+        'min-w-0 rounded-xl transition',
+        compact
+          ? 'border border-white/10 bg-slate-950/40 px-3 py-3 hover:border-white/15 hover:bg-slate-950/55'
+          : 'border border-transparent px-3 py-2 hover:bg-white/5',
       ].join(' ')}
     >
-      <span className="mb-1 flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.18em] text-cyan-300/80">
+      <span className="mb-1 flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.18em] text-cyan-300/75">
         <BookOpen className="h-3.5 w-3.5" />
         {eyebrow}
       </span>
       <Link
         to={href}
         onClick={onClick}
-        className="inline-flex items-center gap-2 text-sm font-medium text-slate-200 transition hover:text-white"
+        className="inline-flex items-center gap-2 text-sm font-medium text-slate-100 transition hover:text-white"
       >
         <span className="truncate">{label}</span>
-        <ArrowRight className="h-4 w-4" />
+        <ArrowRight className="h-4 w-4 text-cyan-300/90" />
       </Link>
     </div>
   )
@@ -142,7 +144,7 @@ export function SiteShell() {
               </span>
             </Link>
 
-            <div className="hidden items-center gap-3 md:flex">
+            <div className="hidden flex-1 items-center justify-end gap-3 md:flex">
               <nav className="flex items-center gap-2 text-sm text-slate-300" aria-label={messages.nav.primaryNavigationLabel}>
                 {navItems.map((item) => (
                   <NavLink
@@ -160,27 +162,31 @@ export function SiteShell() {
                 ))}
               </nav>
 
+              <div className="h-6 w-px bg-white/10" aria-hidden="true" />
+
               <FirstLessonLink
                 href={firstLessonHref}
                 eyebrow={messages.nav.firstLessonEyebrow}
                 label={messages.nav.firstLesson}
               />
 
-              <a
-                href={repositoryUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-slate-200 transition hover:bg-white/10 hover:text-white"
-              >
-                <ArrowUpRight className="h-4 w-4 text-cyan-300" />
-                <span>{messages.nav.repository}</span>
-              </a>
+              <div className="flex items-center gap-1 rounded-xl border border-white/10 bg-white/[0.03] px-1.5 py-1">
+                <a
+                  href={repositoryUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white"
+                >
+                  <ArrowUpRight className="h-4 w-4 text-cyan-300" />
+                  <span>{messages.nav.repository}</span>
+                </a>
 
-              <LocaleSwitcher
-                locale={locale}
-                label={messages.nav.languageSwitcherLabel}
-                onChange={(nextLocale) => switchLocale(nextLocale as typeof locale)}
-              />
+                <LocaleSwitcher
+                  locale={locale}
+                  label={messages.nav.languageSwitcherLabel}
+                  onChange={(nextLocale) => switchLocale(nextLocale as typeof locale)}
+                />
+              </div>
             </div>
 
             <button
@@ -204,7 +210,7 @@ export function SiteShell() {
             <div
               id={mobilePanelId}
               ref={mobileMenuRef}
-              className="mt-4 space-y-3 rounded-2xl border border-white/10 bg-white/5 p-4 md:hidden"
+              className="mt-4 space-y-4 rounded-2xl border border-white/10 bg-white/5 p-4 md:hidden"
               role="dialog"
               aria-label={messages.nav.mobileMenuPanelLabel}
             >
@@ -226,15 +232,17 @@ export function SiteShell() {
                 ))}
               </nav>
 
-              <div className="grid gap-3 sm:grid-cols-3">
-                <FirstLessonLink
-                  href={firstLessonHref}
-                  eyebrow={messages.nav.firstLessonEyebrow}
-                  label={messages.nav.firstLesson}
-                  onClick={() => setMenuOpen(false)}
-                  compact
-                />
+              <div className="h-px bg-white/10" aria-hidden="true" />
 
+              <FirstLessonLink
+                href={firstLessonHref}
+                eyebrow={messages.nav.firstLessonEyebrow}
+                label={messages.nav.firstLesson}
+                onClick={() => setMenuOpen(false)}
+                compact
+              />
+
+              <div className="grid gap-3 sm:grid-cols-2">
                 <a
                   href={repositoryUrl}
                   target="_blank"
