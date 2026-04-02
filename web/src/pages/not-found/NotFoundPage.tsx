@@ -1,12 +1,13 @@
 import { ArrowRight, Home } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useI18n } from '../../app/i18n-context'
+import { Card } from '../../components/Card'
 
 export function NotFoundPage() {
   const { messages, toLocalizedPath } = useI18n()
 
   return (
-    <section className="rounded-3xl border border-white/10 bg-white/5 p-8">
+    <Card as="section" className="rounded-3xl p-8">
       <div className="space-y-4">
         <p className="text-sm font-medium uppercase tracking-[0.18em] text-cyan-300">{messages.notFound.eyebrow}</p>
         <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">{messages.notFound.title}</h1>
@@ -29,6 +30,6 @@ export function NotFoundPage() {
           <ArrowRight className="h-4 w-4" />
         </Link>
       </div>
-    </section>
+    </Card>
   )
 }

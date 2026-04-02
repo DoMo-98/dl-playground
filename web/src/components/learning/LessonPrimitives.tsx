@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import { ArrowLeft, ArrowRight, BookOpen, Lightbulb, Lock, NotebookPen, Target } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useI18n } from '../../app/i18n-context'
-import type { LessonStatus } from '../../content/learningPath'
+import type { LessonStatus } from '../../types/learning'
 
 type LessonCardProps = {
   icon: ReactNode

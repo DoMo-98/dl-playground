@@ -2,14 +2,13 @@ import * as Dialog from '@radix-ui/react-dialog'
 import { ArrowUpRight, BrainCircuit, Languages, Menu, X } from 'lucide-react'
 import { Link, NavLink, Outlet } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
-import { localeLabels } from '../../i18n'
+import { localeLabels } from '../../lib/i18n'
+import { REPOSITORY_URL } from '../../config/constants'
+import { ROUTES } from '../../config/routes'
 import { useI18n } from '../i18n-context'
-import { HeaderFeatureLink, HeaderUtilityItem, HeaderUtilityLink } from './headerPrimitives'
+import { HeaderFeatureLink, HeaderUtilityLink } from '../../components/header/headerPrimitives'
 
 type HeaderLocaleVariant = 'compact' | 'panel'
-
-const repositoryUrl = 'https://github.com/DoMo-98/dl-playground'
-const firstLessonPath = '/learn/foundations/perceptron/weighted-sum'
 
 function LocaleSwitcher({
   locale,
@@ -25,37 +24,24 @@ function LocaleSwitcher({
   variant?: HeaderLocaleVariant
 }) {
   const isPanel = variant === 'panel'
-
-  if (isPanel) {
-    return (
-      <HeaderUtilityItem variant="panel" className={['relative', className ?? ''].join(' ')}>
-        <Languages className="h-4 w-4 shrink-0 text-cyan-300" />
-        <span className="min-w-0 flex-1 text-slate-300">{label}</span>
-        <span className="text-sm text-slate-100">{localeLabels[locale]}</span>
-        <select
-          value={locale}
-          onChange={(event) => onChange(event.target.value as keyof typeof localeLabels)}
-          className="absolute inset-0 cursor-pointer opacity-0"
-          aria-label={label}
-        >
-          {Object.entries(localeLabels).map(([value, optionLabel]) => (
-            <option key={value} value={value}>
-              {optionLabel}
-            </option>
-          ))}
-        </select>
-      </HeaderUtilityItem>
-    )
-  }
+  const py = isPanel ? 'py-3' : 'py-2'
 
   return (
-    <HeaderUtilityItem variant="inline" className={['relative', className ?? ''].join(' ')}>
-      <Languages className="h-4 w-4 text-cyan-300" />
-      <span className="text-sm text-slate-100">{localeLabels[locale]}</span>
+    <label
+      className={[
+        'group inline-flex cursor-pointer items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 text-sm text-slate-200 outline-none transition',
+        py,
+        'hover:bg-white/10 hover:text-white',
+        'focus-within:ring-1 focus-within:ring-cyan-300/50',
+        className ?? '',
+      ].join(' ')}
+    >
+      <Languages className="h-4 w-4 shrink-0 text-cyan-300" aria-hidden="true" />
+      {isPanel && <span className="min-w-0 flex-1 text-slate-300">{label}</span>}
       <select
         value={locale}
         onChange={(event) => onChange(event.target.value as keyof typeof localeLabels)}
-        className="absolute inset-0 cursor-pointer opacity-0"
+        className="cursor-pointer appearance-none bg-transparent text-sm text-slate-100 outline-none"
         aria-label={label}
       >
         {Object.entries(localeLabels).map(([value, optionLabel]) => (
@@ -64,7 +50,7 @@ function LocaleSwitcher({
           </option>
         ))}
       </select>
-    </HeaderUtilityItem>
+    </label>
   )
 }
 
@@ -83,8 +69,8 @@ export function SiteShell() {
     return () => observer.disconnect()
   }, [])
 
-  const navItems = [{ to: toLocalizedPath('/learn'), label: messages.nav.learn }]
-  const firstLessonHref = toLocalizedPath(firstLessonPath)
+  const navItems = [{ to: toLocalizedPath(ROUTES.LEARN), label: messages.nav.learn }]
+  const firstLessonHref = toLocalizedPath(ROUTES.FIRST_LESSON)
 
   return (
     <Dialog.Root open={menuOpen} onOpenChange={setMenuOpen}>
@@ -129,7 +115,7 @@ export function SiteShell() {
                 />
 
                 <HeaderUtilityLink
-                  href={repositoryUrl}
+                  href={REPOSITORY_URL}
                   target="_blank"
                   rel="noreferrer"
                   label={messages.nav.repository}
@@ -205,7 +191,7 @@ export function SiteShell() {
 
             <div className="grid gap-3 sm:grid-cols-2">
               <HeaderUtilityLink
-                href={repositoryUrl}
+                href={REPOSITORY_URL}
                 target="_blank"
                 rel="noreferrer"
                 label={messages.nav.repository}

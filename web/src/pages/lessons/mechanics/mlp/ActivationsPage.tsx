@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { Control } from '../../../../components/form/Control'
 import { LearningPageLayout } from '../../../../components/learning/LearningPageLayout'
 import {
   CoreIdeaCard,
@@ -36,6 +37,7 @@ export function ActivationsPage() {
 
   return (
     <LearningPageLayout
+      lessonId="mlp-activations"
       eyebrow={copy.eyebrow}
       title={copy.title}
       description={copy.description}
@@ -115,35 +117,6 @@ export function ActivationsPage() {
   )
 }
 
-type ControlProps = {
-  label: string
-  value: number
-  onChange: (value: number) => void
-  min: number
-  max: number
-  step: number
-}
-
-function Control({ label, value, onChange, min, max, step }: ControlProps) {
-  return (
-    <label className="block space-y-2">
-      <div className="flex items-center justify-between gap-3 text-sm text-slate-200">
-        <span>{label}</span>
-        <span className="rounded-md bg-slate-900 px-2 py-1 font-mono text-cyan-300">{value.toFixed(2)}</span>
-      </div>
-      <input
-        type="range"
-        min={min}
-        max={max}
-        step={step}
-        value={value}
-        onChange={(event) => onChange(Number(event.target.value))}
-        className="w-full accent-cyan-400"
-      />
-    </label>
-  )
-}
-
 function ActivationVisualization({
   samples,
   activationLabel,
@@ -170,6 +143,7 @@ function ActivationVisualization({
       </div>
 
       <svg viewBox={`0 0 ${SVG_WIDTH} ${SVG_HEIGHT}`} className="w-full rounded-2xl border border-white/10 bg-slate-950" role="img" aria-label={copy.ariaLabel}>
+        <title>{copy.ariaLabel}</title>
         <rect x="0" y="0" width={SVG_WIDTH} height={SVG_HEIGHT} fill="#020617" />
         <line x1="0" y1={projectY(0)} x2={SVG_WIDTH} y2={projectY(0)} stroke="rgba(148, 163, 184, 0.35)" strokeDasharray="4 6" />
         <line x1={projectX(0)} y1="0" x2={projectX(0)} y2={SVG_HEIGHT} stroke="rgba(148, 163, 184, 0.35)" strokeDasharray="4 6" />

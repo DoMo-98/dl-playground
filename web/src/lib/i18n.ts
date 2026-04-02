@@ -1,6 +1,5 @@
-export const locales = ['en', 'es'] as const
-
-export type Locale = (typeof locales)[number]
+export { locales, type Locale } from '../types/i18n'
+import type { Locale } from '../types/i18n'
 
 export const defaultLocale: Locale = 'en'
 export const localeStorageKey = 'dl-playground-locale'

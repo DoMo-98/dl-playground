@@ -1,5 +1,5 @@
 import type { LocalizedMessages } from './en'
-import type { Locale } from '../../i18n'
+import type { Locale } from '../../types/i18n'
 
 export const esMessages: LocalizedMessages = {
   languageName: 'Español',
@@ -86,6 +86,7 @@ export const esMessages: LocalizedMessages = {
       weightedSum: 'Suma ponderada',
       binaryOutput: 'Salida binaria',
       thresholdAtZero: 'Umbral en 0',
+      ariaLabel: 'Diagrama de neurona del perceptrón mostrando entradas, pesos, suma ponderada y salida binaria',
     },
     weightedSumPage: {
       eyebrow: 'Fundamentos · Perceptrón',

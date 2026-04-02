@@ -1,55 +1,9 @@
 import { enMessages } from './locales/en'
 import { esMessages } from './locales/es'
-import type { Locale } from '../i18n'
+import type { Locale } from '../types/i18n'
+import type { LearningLesson, LearningLessonBase, LearningSection, LearningSectionBase, LearningUnit, LearningUnitBase } from '../types/learning'
 
-export type LessonStatus = 'ready' | 'planned'
-export type LessonKind = 'interactive' | 'lab' | 'reading'
-
-type LearningLessonBase = {
-  id: string
-  slug: string
-  status: LessonStatus
-  kind: LessonKind
-  sectionSlug: string
-  unitSlug: string
-  order: number
-  estimatedMinutes: number
-  concepts: string[]
-  prerequisites: string[]
-}
-
-export type LearningLesson = LearningLessonBase & {
-  title: string
-  shortTitle: string
-  summary: string
-  href: string
-  objectives: string[]
-}
-
-type LearningUnitBase = {
-  slug: string
-  order: number
-  lessons: LearningLessonBase[]
-}
-
-export type LearningUnit = Omit<LearningUnitBase, 'lessons'> & {
-  title: string
-  description: string
-  lessons: LearningLesson[]
-}
-
-type LearningSectionBase = {
-  slug: string
-  order: number
-  units: LearningUnitBase[]
-}
-
-export type LearningSection = Omit<LearningSectionBase, 'units'> & {
-  title: string
-  description: string
-  goal: string
-  units: LearningUnit[]
-}
+export type { LessonStatus, LessonKind, LearningLesson, LearningUnit, LearningSection } from '../types/learning'
 
 const messagesByLocale = {
   en: enMessages,
@@ -309,6 +263,25 @@ export function getAdjacentLessons(lessonId: string, locale: Locale = 'en') {
     current: learningLessons[lessonIndex] ?? null,
     next: learningLessons[lessonIndex + 1] ?? null,
   }
+}
+
+export function getLessonBreadcrumb(lessonId: string, locale: Locale = 'en') {
+  const sections = getLearningSections(locale)
+
+  for (const section of sections) {
+    for (const unit of section.units) {
+      for (const lesson of unit.lessons) {
+        if (lesson.id === lessonId) {
+          return {
+            sectionTitle: section.title,
+            lessonTitle: lesson.shortTitle,
+          }
+        }
+      }
+    }
+  }
+
+  return null
 }
 
 export function getNextReadyLesson(locale: Locale = 'en') {
