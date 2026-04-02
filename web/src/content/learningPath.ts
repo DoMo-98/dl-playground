@@ -1,7 +1,7 @@
 import { enMessages } from './locales/en'
 import { esMessages } from './locales/es'
 import type { Locale } from '../types/i18n'
-import type { LearningLesson, LearningLessonBase, LearningSection, LearningSectionBase, LearningUnit, LearningUnitBase } from '../types/learning'
+import type { LearningLesson, LearningLessonBase, LearningSection, LearningSectionBase, LearningUnit } from '../types/learning'
 
 export type { LessonStatus, LessonKind, LearningLesson, LearningUnit, LearningSection } from '../types/learning'
 

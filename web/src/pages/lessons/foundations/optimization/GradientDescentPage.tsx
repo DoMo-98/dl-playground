@@ -36,6 +36,7 @@ export function GradientDescentPage() {
   const [learningRate, setLearningRate] = useState(DEFAULT_LEARNING_RATE)
   const [startParameter, setStartParameter] = useState(DEFAULT_PARAMETER)
   const [trajectory, setTrajectory] = useState<GradientDescentState[]>([describeState(DEFAULT_PARAMETER)])
+  const prefersReducedMotion = useMemo(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches, [])
   const [isAutoplaying, setIsAutoplaying] = useState(false)
 
   const current = trajectory[trajectory.length - 1]
@@ -44,12 +45,7 @@ export function GradientDescentPage() {
   const canStep = trajectory.length - 1 < MAX_STEPS
 
   useEffect(() => {
-    if (!isAutoplaying || !canStep) {
-      return undefined
-    }
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setIsAutoplaying(false)
+    if (!isAutoplaying || !canStep || prefersReducedMotion) {
       return undefined
     }
 
@@ -66,7 +62,7 @@ export function GradientDescentPage() {
     }, AUTOPLAY_DELAY_MS)
 
     return () => window.clearTimeout(timeout)
-  }, [canStep, isAutoplaying, nextStep.nextParameter])
+  }, [canStep, isAutoplaying, nextStep.nextParameter, prefersReducedMotion])
 
   const regimeCopy = copy.regimes[trajectorySummary.regime]
 
