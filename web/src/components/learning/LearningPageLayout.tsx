@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useLayoutEffect, useRef, type ReactNode } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { Card } from '../Card'
 import { useI18n } from '../../app/i18n-context'
 import { ROUTES } from '../../config/routes'
@@ -83,6 +83,18 @@ export function LearningPageLayout({
   exploration,
   navigation,
 }: LearningPageLayoutProps) {
+  const headingRef = useRef<HTMLHeadingElement>(null)
+  const { pathname } = useLocation()
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+
+  useEffect(() => {
+    headingRef.current?.focus({ preventScroll: true })
+    document.title = `${title} — DL Playground`
+  }, [pathname, title])
+
   return (
     <div className="space-y-8">
       <section className="space-y-4">
@@ -91,7 +103,7 @@ export function LearningPageLayout({
           <p className="text-sm font-medium uppercase tracking-[0.18em] text-cyan-300">{eyebrow}</p>
         ) : null}
         <div className="space-y-3">
-          <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">{title}</h1>
+          <h1 ref={headingRef} tabIndex={-1} className="text-3xl font-semibold tracking-tight text-white outline-none sm:text-4xl">{title}</h1>
           <p className="max-w-3xl text-lg leading-8 text-slate-300">{description}</p>
         </div>
       </section>
