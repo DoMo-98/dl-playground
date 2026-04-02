@@ -53,26 +53,23 @@ function LocaleSwitcher({
   }
 
   return (
-    <label
-      className={[
-        'group inline-flex cursor-pointer items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-slate-200 transition hover:bg-white/10 hover:text-white',
-        className ?? '',
-      ].join(' ')}
-    >
-      <Languages className="h-4 w-4 text-cyan-300" />
-      <span className="sr-only">{label}</span>
-      <select
-        value={locale}
-        onChange={(event) => onChange(event.target.value as keyof typeof localeLabels)}
-        className="cursor-pointer appearance-none bg-transparent text-sm text-slate-100 outline-none"
-        aria-label={label}
-      >
-        {Object.entries(localeLabels).map(([value, optionLabel]) => (
-          <option key={value} value={value} className="bg-slate-900 text-slate-100">
-            {optionLabel}
-          </option>
-        ))}
-      </select>
+    <label className="block">
+      <HeaderUtilityItem variant="inline" className={className}>
+        <Languages className="h-4 w-4 text-cyan-300" />
+        <span className="sr-only">{label}</span>
+        <select
+          value={locale}
+          onChange={(event) => onChange(event.target.value as keyof typeof localeLabels)}
+          className="cursor-pointer appearance-none bg-transparent text-sm text-slate-100 outline-none"
+          aria-label={label}
+        >
+          {Object.entries(localeLabels).map(([value, optionLabel]) => (
+            <option key={value} value={value} className="bg-slate-900 text-slate-100">
+              {optionLabel}
+            </option>
+          ))}
+        </select>
+      </HeaderUtilityItem>
     </label>
   )
 }
@@ -137,15 +134,13 @@ export function SiteShell() {
                   label={messages.nav.firstLesson}
                 />
 
-                <a
+                <HeaderUtilityLink
                   href={repositoryUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-slate-200 outline-none transition hover:bg-white/10 hover:text-white focus-visible:ring-1 focus-visible:ring-cyan-300/50"
-                >
-                  <ArrowUpRight className="h-4 w-4 text-cyan-300" />
-                  <span>{messages.nav.repository}</span>
-                </a>
+                  label={messages.nav.repository}
+                  icon={<ArrowUpRight className="h-4 w-4" />}
+                />
 
                 <LocaleSwitcher
                   locale={locale}
