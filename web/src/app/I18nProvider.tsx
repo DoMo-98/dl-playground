@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import type { Locale } from '../i18n'
-import { localizePath, persistLocale, stripLocalePrefix } from '../i18n'
+import type { Locale } from '../types/i18n'
+import { localizePath, persistLocale, stripLocalePrefix } from '../lib/i18n'
 import { I18nContext, messagesByLocale, type I18nContextValue } from './i18n-context'
 
 type I18nProviderProps = {

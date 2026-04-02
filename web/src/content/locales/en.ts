@@ -1,4 +1,4 @@
-import type { Locale } from '../../i18n'
+import type { Locale } from '../../types/i18n'
 
 type LocalizedSectionCopy = {
   title: string
@@ -88,6 +88,7 @@ type LocalizedMessages = {
       weightedSum: string
       binaryOutput: string
       thresholdAtZero: string
+      ariaLabel: string
     }
     weightedSumPage: {
       eyebrow: string
@@ -339,6 +340,7 @@ export const enMessages: LocalizedMessages = {
       weightedSum: 'Weighted sum',
       binaryOutput: 'Binary output',
       thresholdAtZero: 'Threshold at 0',
+      ariaLabel: 'Perceptron neuron diagram showing inputs, weights, weighted sum, and binary output',
     },
     weightedSumPage: {
       eyebrow: 'Foundations · Perceptron',

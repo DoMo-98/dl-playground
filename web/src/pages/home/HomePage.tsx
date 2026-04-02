@@ -1,6 +1,8 @@
 import { ArrowRight, Orbit } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { ROUTES } from '../../config/routes'
 import { useI18n } from '../../app/i18n-context'
+import { Card } from '../../components/Card'
 
 export function HomePage() {
   const { messages, toLocalizedPath } = useI18n()
@@ -22,14 +24,14 @@ export function HomePage() {
 
           <div className="flex flex-wrap gap-3">
             <Link
-              to={toLocalizedPath('/learn')}
+              to={toLocalizedPath(ROUTES.LEARN)}
               className="inline-flex items-center gap-2 rounded-xl bg-cyan-400 px-5 py-3 font-medium text-slate-950 transition hover:bg-cyan-300"
             >
               {messages.home.primaryCta}
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
-              to={toLocalizedPath('/learn/foundations/perceptron/weighted-sum')}
+              to={toLocalizedPath(ROUTES.FIRST_LESSON)}
               className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-5 py-3 font-medium text-slate-100 transition hover:bg-white/5"
             >
               {messages.home.secondaryCta}
@@ -37,7 +39,7 @@ export function HomePage() {
           </div>
         </div>
 
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-2xl shadow-cyan-950/20">
+        <Card className="rounded-3xl p-6 shadow-2xl shadow-cyan-950/20">
           <div className="mb-5 flex items-center gap-3 text-cyan-200">
             <Orbit className="h-5 w-5" />
             <span className="text-sm font-medium uppercase tracking-[0.18em]">{messages.home.pillarsEyebrow}</span>
@@ -50,7 +52,7 @@ export function HomePage() {
               </li>
             ))}
           </ul>
-        </div>
+        </Card>
       </section>
     </div>
   )

@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react'
-import type { Locale } from '../i18n'
+import type { Locale } from '../types/i18n'
 import { esMessages } from '../content/locales/es'
 import { enMessages } from '../content/locales/en'
 

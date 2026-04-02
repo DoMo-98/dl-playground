@@ -2,13 +2,14 @@ import type { ReactNode } from 'react'
 import { ArrowRight, BookOpen, CheckCircle2, Clock3, Sparkles } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useI18n } from '../../app/i18n-context'
+import { Card } from '../../components/Card'
+import type { LessonStatus } from '../../types/learning'
 import {
   getNextReadyLesson,
   getLearningSections,
   getSectionLessons,
   getSectionPath,
   getSectionStats,
-  type LessonStatus,
 } from '../../content/learningPath'
 
 const statusTone: Record<LessonStatus, string> = {
@@ -62,12 +63,12 @@ export function LearnOverviewPage() {
         </section>
       ) : null}
 
-      <section className="rounded-2xl border border-white/10 bg-white/5 p-5">
+      <Card as="section">
         <div className="space-y-2">
           <p className="text-sm font-medium uppercase tracking-[0.16em] text-cyan-200">{messages.learn.taxonomyNoteTitle}</p>
           <p className="max-w-4xl text-sm leading-7 text-slate-300">{messages.learn.taxonomyNote}</p>
         </div>
-      </section>
+      </Card>
 
       <section className="grid gap-5 lg:grid-cols-3">
         {learningSections.map((section) => {
@@ -75,7 +76,7 @@ export function LearnOverviewPage() {
           const stats = getSectionStats(section)
 
           return (
-            <article key={section.slug} className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <Card as="article" key={section.slug}>
               <div className="space-y-3">
                 <div className="space-y-2">
                   <h2 className="text-xl font-semibold text-white">{section.title}</h2>
@@ -135,7 +136,7 @@ export function LearnOverviewPage() {
                 {stats.readyCount > 0 ? messages.learn.openAvailableLesson : messages.learn.sectionRoadmap}
                 <ArrowRight className="h-4 w-4" />
               </Link>
-            </article>
+            </Card>
           )
         })}
       </section>

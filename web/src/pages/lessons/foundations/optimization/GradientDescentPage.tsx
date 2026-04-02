@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
+import { ActionButton } from '../../../../components/form/ActionButton'
+import { Control } from '../../../../components/form/Control'
 import { LearningPageLayout } from '../../../../components/learning/LearningPageLayout'
 import {
   CoreIdeaCard,
@@ -34,6 +36,10 @@ export function GradientDescentPage() {
   const [learningRate, setLearningRate] = useState(DEFAULT_LEARNING_RATE)
   const [startParameter, setStartParameter] = useState(DEFAULT_PARAMETER)
   const [trajectory, setTrajectory] = useState<GradientDescentState[]>([describeState(DEFAULT_PARAMETER)])
+  const prefersReducedMotion = useMemo(
+    () => typeof window !== 'undefined' && typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    [],
+  )
   const [isAutoplaying, setIsAutoplaying] = useState(false)
 
   const current = trajectory[trajectory.length - 1]
@@ -42,7 +48,7 @@ export function GradientDescentPage() {
   const canStep = trajectory.length - 1 < MAX_STEPS
 
   useEffect(() => {
-    if (!isAutoplaying || !canStep) {
+    if (!isAutoplaying || !canStep || prefersReducedMotion) {
       return undefined
     }
 
@@ -59,7 +65,7 @@ export function GradientDescentPage() {
     }, AUTOPLAY_DELAY_MS)
 
     return () => window.clearTimeout(timeout)
-  }, [canStep, isAutoplaying, nextStep.nextParameter])
+  }, [canStep, isAutoplaying, nextStep.nextParameter, prefersReducedMotion])
 
   const regimeCopy = copy.regimes[trajectorySummary.regime]
 
@@ -83,6 +89,7 @@ export function GradientDescentPage() {
 
   return (
     <LearningPageLayout
+      lessonId="gradient-descent-intuition"
       eyebrow={copy.eyebrow}
       title={copy.title}
       description={copy.description}
@@ -189,69 +196,6 @@ export function GradientDescentPage() {
   )
 }
 
-function Control({
-  label,
-  value,
-  min,
-  max,
-  step,
-  onChange,
-}: {
-  label: string
-  value: number
-  min: number
-  max: number
-  step: number
-  onChange: (value: number) => void
-}) {
-  return (
-    <label className="block space-y-2">
-      <div className="flex items-center justify-between gap-3 text-sm text-slate-200">
-        <span>{label}</span>
-        <span className="rounded-md bg-slate-900 px-2 py-1 font-mono text-cyan-300">{value.toFixed(2)}</span>
-      </div>
-      <input
-        type="range"
-        min={min}
-        max={max}
-        step={step}
-        value={value}
-        onChange={(event) => onChange(Number(event.target.value))}
-        className="w-full accent-cyan-400"
-      />
-    </label>
-  )
-}
-
-function ActionButton({
-  label,
-  onClick,
-  disabled = false,
-  accent = false,
-}: {
-  label: string
-  onClick: () => void
-  disabled?: boolean
-  accent?: boolean
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={disabled}
-      className={`rounded-xl border px-3 py-3 text-sm font-medium transition ${
-        disabled
-          ? 'cursor-not-allowed border-white/10 bg-slate-950/40 text-slate-500'
-          : accent
-            ? 'border-cyan-400/20 bg-cyan-400/10 text-cyan-50 hover:bg-cyan-400/15'
-            : 'border-white/10 bg-slate-950/30 text-slate-100 hover:bg-white/5'
-      }`}
-    >
-      {label}
-    </button>
-  )
-}
-
 function GradientVisualization({ trajectory, currentParameter }: { trajectory: GradientDescentState[]; currentParameter: number }) {
   const { messages } = useI18n()
   const copy = messages.optimization.gradientDescentPage.visualization
@@ -272,6 +216,7 @@ function GradientVisualization({ trajectory, currentParameter }: { trajectory: G
       </div>
 
       <svg viewBox={`0 0 ${SVG_WIDTH} ${SVG_HEIGHT}`} className="w-full rounded-2xl border border-white/10 bg-slate-950" role="img" aria-label={copy.ariaLabel}>
+        <title>{copy.ariaLabel}</title>
         <rect x="0" y="0" width={SVG_WIDTH} height={SVG_HEIGHT} fill="#020617" />
         <line x1="0" y1={projectY(1.8)} x2={SVG_WIDTH} y2={projectY(1.8)} stroke="rgba(148, 163, 184, 0.22)" strokeDasharray="4 6" />
         <line x1={projectX(0)} y1="0" x2={projectX(0)} y2={SVG_HEIGHT} stroke="rgba(148, 163, 184, 0.22)" strokeDasharray="4 6" />

@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes, useParams } from 'react-router-dom'
-import { detectPreferredLocale, isLocale, locales, type Locale } from '../i18n'
+import type { Locale } from '../types/i18n'
+import { detectPreferredLocale, isLocale, locales } from '../lib/i18n'
 import { SiteShell } from './layout/SiteShell'
 import { I18nProvider } from './I18nProvider'
 import { HomePage } from '../pages/home/HomePage'
