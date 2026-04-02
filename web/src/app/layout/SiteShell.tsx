@@ -1,4 +1,4 @@
-import { ArrowUpRight, BrainCircuit, ChevronDown, Languages, Menu, X } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, BookOpen, BrainCircuit, ChevronDown, Languages, Menu, X } from 'lucide-react'
 import { Link, NavLink, Outlet } from 'react-router-dom'
 import { useEffect, useId, useRef, useState } from 'react'
 import { localeLabels } from '../../i18n'
@@ -7,16 +7,39 @@ import { useI18n } from '../i18n-context'
 const repositoryUrl = 'https://github.com/DoMo-98/dl-playground'
 const firstLessonPath = '/learn/foundations/perceptron/weighted-sum'
 
-function HeaderActionLink({ href, label, onClick }: { href: string; label: string; onClick?: () => void }) {
+function FirstLessonLink({
+  href,
+  eyebrow,
+  label,
+  onClick,
+  compact = false,
+}: {
+  href: string
+  eyebrow: string
+  label: string
+  onClick?: () => void
+  compact?: boolean
+}) {
   return (
-    <Link
-      to={href}
-      onClick={onClick}
-      className="inline-flex items-center gap-2 rounded-xl border border-cyan-400/30 bg-cyan-400/10 px-3 py-2 text-sm font-medium text-cyan-100 transition hover:border-cyan-300/40 hover:bg-cyan-400/15 hover:text-white"
+    <div
+      className={[
+        'min-w-0',
+        compact ? 'rounded-xl border border-white/10 bg-slate-950/40 px-3 py-3' : 'px-1',
+      ].join(' ')}
     >
-      <span>{label}</span>
-      <ArrowUpRight className="h-4 w-4" />
-    </Link>
+      <span className="mb-1 flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.18em] text-cyan-300/80">
+        <BookOpen className="h-3.5 w-3.5" />
+        {eyebrow}
+      </span>
+      <Link
+        to={href}
+        onClick={onClick}
+        className="inline-flex items-center gap-2 text-sm font-medium text-slate-200 transition hover:text-white"
+      >
+        <span className="truncate">{label}</span>
+        <ArrowRight className="h-4 w-4" />
+      </Link>
+    </div>
   )
 }
 
@@ -137,7 +160,11 @@ export function SiteShell() {
                 ))}
               </nav>
 
-              <HeaderActionLink href={firstLessonHref} label={messages.nav.firstLesson} />
+              <FirstLessonLink
+                href={firstLessonHref}
+                eyebrow={messages.nav.firstLessonEyebrow}
+                label={messages.nav.firstLesson}
+              />
 
               <a
                 href={repositoryUrl}
@@ -200,7 +227,13 @@ export function SiteShell() {
               </nav>
 
               <div className="grid gap-3 sm:grid-cols-3">
-                <HeaderActionLink href={firstLessonHref} label={messages.nav.firstLesson} onClick={() => setMenuOpen(false)} />
+                <FirstLessonLink
+                  href={firstLessonHref}
+                  eyebrow={messages.nav.firstLessonEyebrow}
+                  label={messages.nav.firstLesson}
+                  onClick={() => setMenuOpen(false)}
+                  compact
+                />
 
                 <a
                   href={repositoryUrl}

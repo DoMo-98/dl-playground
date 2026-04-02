@@ -5,6 +5,7 @@ export const esMessages: LocalizedMessages = {
   languageName: 'Español',
   nav: {
     learn: 'Aprender',
+    firstLessonEyebrow: 'Empieza aquí',
     firstLesson: 'Primera lección',
     repository: 'Repo en GitHub',
     languageSwitcherLabel: 'Idioma',

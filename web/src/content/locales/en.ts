@@ -22,6 +22,7 @@ type LocalizedMessages = {
   languageName: string
   nav: {
     learn: string
+    firstLessonEyebrow: string
     firstLesson: string
     repository: string
     languageSwitcherLabel: string
@@ -257,6 +258,7 @@ export const enMessages: LocalizedMessages = {
   languageName: 'English',
   nav: {
     learn: 'Learn',
+    firstLessonEyebrow: 'Start here',
     firstLesson: 'First lesson',
     repository: 'GitHub repo',
     languageSwitcherLabel: 'Language',
