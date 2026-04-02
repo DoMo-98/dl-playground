@@ -1,7 +1,7 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import { ArrowUpRight, BrainCircuit, ChevronDown, Languages, Menu, X } from 'lucide-react'
 import { Link, NavLink, Outlet } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { localeLabels } from '../../i18n'
 import { useI18n } from '../i18n-context'
 import { HeaderFeatureLink, HeaderUtilityItem, HeaderUtilityLink } from './headerPrimitives'
@@ -59,23 +59,20 @@ function LocaleSwitcher({
         className ?? '',
       ].join(' ')}
     >
-      <Languages className="h-4 w-4 shrink-0 text-cyan-300" />
+      <Languages className="h-4 w-4 text-cyan-300" />
       <span className="sr-only">{label}</span>
-      <span className="relative w-[5.75rem]">
-        <select
-          value={locale}
-          onChange={(event) => onChange(event.target.value as keyof typeof localeLabels)}
-          className="w-full cursor-pointer appearance-none bg-transparent text-sm text-slate-100 outline-none pr-6"
-          aria-label={label}
-        >
-          {Object.entries(localeLabels).map(([value, optionLabel]) => (
-            <option key={value} value={value} className="bg-slate-900 text-slate-100">
-              {optionLabel}
-            </option>
-          ))}
-        </select>
-        <ChevronDown className="pointer-events-none absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500 transition group-hover:text-slate-300 group-focus-within:text-slate-200" />
-      </span>
+      <select
+        value={locale}
+        onChange={(event) => onChange(event.target.value as keyof typeof localeLabels)}
+        className="cursor-pointer appearance-none bg-transparent text-sm text-slate-100 outline-none"
+        aria-label={label}
+      >
+        {Object.entries(localeLabels).map(([value, optionLabel]) => (
+          <option key={value} value={value} className="bg-slate-900 text-slate-100">
+            {optionLabel}
+          </option>
+        ))}
+      </select>
     </label>
   )
 }
@@ -83,6 +80,17 @@ function LocaleSwitcher({
 export function SiteShell() {
   const { locale, messages, switchLocale, toLocalizedPath } = useI18n()
   const [menuOpen, setMenuOpen] = useState(false)
+  const headerRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    const header = headerRef.current
+    if (!header || typeof ResizeObserver === 'undefined') return
+    const update = () => document.documentElement.style.setProperty('--header-h', `${header.offsetHeight}px`)
+    update()
+    const observer = new ResizeObserver(update)
+    observer.observe(header)
+    return () => observer.disconnect()
+  }, [])
 
   const navItems = [{ to: toLocalizedPath('/learn'), label: messages.nav.learn }]
   const firstLessonHref = toLocalizedPath(firstLessonPath)
@@ -90,7 +98,7 @@ export function SiteShell() {
   return (
     <Dialog.Root open={menuOpen} onOpenChange={setMenuOpen}>
       <div className="min-h-screen bg-slate-950 text-slate-100">
-        <header className="sticky top-0 z-20 border-b border-white/10 bg-slate-950/90 backdrop-blur">
+        <header ref={headerRef} className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/90 backdrop-blur">
           <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6">
             <div className="flex items-center justify-between gap-4">
               <Link to={toLocalizedPath('/')} className="flex min-w-0 items-center gap-3 font-semibold tracking-tight">
@@ -111,7 +119,7 @@ export function SiteShell() {
                       to={item.to}
                       className={({ isActive }) =>
                         [
-                          'rounded-xl px-3 py-2 transition',
+                          'rounded-xl px-3 py-2 outline-none transition focus-visible:ring-1 focus-visible:ring-cyan-300/50',
                           isActive ? 'bg-white/10 text-white' : 'hover:bg-white/5 hover:text-white',
                         ].join(' ')
                       }
@@ -133,7 +141,7 @@ export function SiteShell() {
                   href={repositoryUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-slate-200 transition hover:bg-white/10 hover:text-white"
+                  className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-slate-200 outline-none transition hover:bg-white/10 hover:text-white focus-visible:ring-1 focus-visible:ring-cyan-300/50"
                 >
                   <ArrowUpRight className="h-4 w-4 text-cyan-300" />
                   <span>{messages.nav.repository}</span>
@@ -171,7 +179,7 @@ export function SiteShell() {
             className="fixed inset-0 z-30 bg-slate-950/70 backdrop-blur-sm md:hidden"
           />
           <Dialog.Content
-            className="fixed inset-x-4 top-[calc(env(safe-area-inset-top)+5.5rem)] z-40 space-y-4 rounded-2xl border border-white/10 bg-slate-900/95 p-4 shadow-2xl outline-none md:hidden"
+            className="fixed inset-x-4 top-[calc(env(safe-area-inset-top)+var(--header-h,5.5rem)+0.75rem)] z-40 space-y-4 rounded-2xl border border-white/10 bg-slate-900/95 p-4 shadow-2xl outline-none md:hidden"
             aria-label={messages.nav.mobileMenuPanelLabel}
           >
             <Dialog.Title className="sr-only">{messages.nav.mobileMenuPanelLabel}</Dialog.Title>
@@ -199,7 +207,7 @@ export function SiteShell() {
                   onClick={() => setMenuOpen(false)}
                   className={({ isActive }) =>
                     [
-                      'rounded-xl px-3 py-3 transition',
+                      'rounded-xl px-3 py-3 outline-none transition focus-visible:ring-1 focus-visible:ring-cyan-300/50',
                       isActive ? 'bg-white/10 text-white' : 'hover:bg-white/5 hover:text-white',
                     ].join(' ')
                   }

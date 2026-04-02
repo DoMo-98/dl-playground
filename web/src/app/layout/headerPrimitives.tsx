@@ -51,21 +51,21 @@ export function HeaderUtilityLink({
   rel,
 }: HeaderUtilityLinkProps) {
   return (
-    <HeaderUtilityItem variant={variant} className={className}>
-      <a
-        href={href}
-        target={target}
-        rel={rel}
-        onClick={onClick}
-        className={[
-          'inline-flex w-full items-center gap-2 rounded-lg text-sm transition hover:text-white',
-          variant === 'panel' ? 'text-slate-200' : 'px-2.5 py-2 text-slate-300 hover:bg-white/5',
-        ].join(' ')}
-      >
-        <span className="text-cyan-300">{icon}</span>
-        <span>{label}</span>
-      </a>
-    </HeaderUtilityItem>
+    <a
+      href={href}
+      target={target}
+      rel={rel}
+      onClick={onClick}
+      className={[
+        'group inline-flex items-center text-sm transition hover:text-white',
+        variant === 'panel' ? 'gap-3' : 'gap-2',
+        getHeaderSurfaceClasses(variant),
+        className ?? '',
+      ].join(' ')}
+    >
+      <span className="text-cyan-300">{icon}</span>
+      <span>{label}</span>
+    </a>
   )
 }
 
@@ -83,10 +83,10 @@ export function HeaderFeatureLink({ href, eyebrow, label, onClick, compact = fal
       to={href}
       onClick={onClick}
       className={[
-        'block min-w-0 rounded-xl transition hover:text-white',
+        'block min-w-0 rounded-xl outline-none transition hover:text-white focus-visible:ring-1 focus-visible:ring-cyan-300/50',
         compact
           ? 'border border-white/10 bg-slate-950/40 px-3 py-3 hover:border-white/15 hover:bg-slate-950/55'
-          : 'border border-transparent px-3 py-2 hover:bg-white/5',
+          : 'border border-white/10 bg-white/5 px-3 py-2 hover:bg-white/10',
       ].join(' ')}
     >
       <span className="mb-1 flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.18em] text-cyan-300/75">

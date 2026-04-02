@@ -17,7 +17,7 @@ describe('SiteShell', () => {
     expect(within(primaryNav).queryByRole('link', { name: 'First lesson' })).not.toBeInTheDocument()
 
     expect(screen.getByText('Start here')).toBeInTheDocument()
-    expect(screen.getAllByRole('link', { name: 'First lesson' })[0]).toHaveAttribute(
+    expect(screen.getAllByRole('link', { name: /First lesson/ })[0]).toHaveAttribute(
       'href',
       '/en/learn/foundations/perceptron/weighted-sum',
     )
