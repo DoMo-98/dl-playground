@@ -15,13 +15,8 @@ import {
   summarizeCurveBehavior,
   type ActivationKind,
 } from '../../../../features/mlp/lib/nonlinearity'
-
-const SVG_WIDTH = 640
-const SVG_HEIGHT = 320
-const X_MIN = -2
-const X_MAX = 2
-const Y_MIN = -2.5
-const Y_MAX = 2.5
+import { StatCard } from '../../../../components/visualization'
+import { ActivationVisualization } from '../../../../features/mlp/components/ActivationVisualization'
 
 export function ActivationsPage() {
   const { locale, messages } = useI18n()
@@ -114,81 +109,5 @@ export function ActivationsPage() {
       exploration={<ObservationPromptsCard prompts={copy.prompts} />}
       navigation={<LessonNavigation previousLesson={lessonSequence.previous} nextLesson={lessonSequence.next} />}
     />
-  )
-}
-
-function ActivationVisualization({
-  samples,
-  activationLabel,
-}: {
-  samples: ReturnType<typeof createCurveSamples>
-  activationLabel: string
-}) {
-  const { messages } = useI18n()
-  const copy = messages.mlp.activationsPage.visualization
-  const outputPath = toPath(samples.map((sample) => ({ x: sample.x, y: sample.output })))
-  const hiddenOnePath = toPath(samples.map((sample) => ({ x: sample.x, y: sample.hidden[0] })))
-  const hiddenTwoPath = toPath(samples.map((sample) => ({ x: sample.x, y: sample.hidden[1] })))
-
-  return (
-    <div className="space-y-4">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <p className="text-sm font-medium uppercase tracking-[0.18em] text-cyan-300">{copy.eyebrow}</p>
-          <h2 className="text-xl font-semibold text-white">{activationLabel}</h2>
-        </div>
-        <div className="rounded-full border border-white/10 px-3 py-1 text-xs uppercase tracking-[0.18em] text-slate-300">
-          {copy.badge}
-        </div>
-      </div>
-
-      <svg viewBox={`0 0 ${SVG_WIDTH} ${SVG_HEIGHT}`} className="w-full rounded-2xl border border-white/10 bg-slate-950" role="img" aria-label={copy.ariaLabel}>
-        <title>{copy.ariaLabel}</title>
-        <rect x="0" y="0" width={SVG_WIDTH} height={SVG_HEIGHT} fill="#020617" />
-        <line x1="0" y1={projectY(0)} x2={SVG_WIDTH} y2={projectY(0)} stroke="rgba(148, 163, 184, 0.35)" strokeDasharray="4 6" />
-        <line x1={projectX(0)} y1="0" x2={projectX(0)} y2={SVG_HEIGHT} stroke="rgba(148, 163, 184, 0.35)" strokeDasharray="4 6" />
-        <path d={hiddenOnePath} fill="none" stroke="#f59e0b" strokeWidth="3" />
-        <path d={hiddenTwoPath} fill="none" stroke="#38bdf8" strokeWidth="3" />
-        <path d={outputPath} fill="none" stroke="#f8fafc" strokeWidth="4" />
-      </svg>
-
-      <div className="grid gap-3 sm:grid-cols-3">
-        <LegendItem color="bg-white" label={copy.legend.output} />
-        <LegendItem color="bg-amber-400" label={copy.legend.hiddenOne} />
-        <LegendItem color="bg-sky-400" label={copy.legend.hiddenTwo} />
-      </div>
-    </div>
-  )
-}
-
-function projectX(value: number) {
-  return ((value - X_MIN) / (X_MAX - X_MIN)) * SVG_WIDTH
-}
-
-function projectY(value: number) {
-  return SVG_HEIGHT - ((value - Y_MIN) / (Y_MAX - Y_MIN)) * SVG_HEIGHT
-}
-
-function toPath(points: Array<{ x: number; y: number }>) {
-  return points
-    .map((point, index) => `${index === 0 ? 'M' : 'L'} ${projectX(point.x).toFixed(2)} ${projectY(point.y).toFixed(2)}`)
-    .join(' ')
-}
-
-function LegendItem({ color, label }: { color: string; label: string }) {
-  return (
-    <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-slate-300">
-      <span className={`h-3 w-3 rounded-full ${color}`} />
-      <span>{label}</span>
-    </div>
-  )
-}
-
-function StatCard({ label, value, accent = false }: { label: string; value: string; accent?: boolean }) {
-  return (
-    <div className={`rounded-2xl border p-4 ${accent ? 'border-cyan-400/20 bg-cyan-400/10' : 'border-white/10 bg-slate-950/40'}`}>
-      <p className="text-xs uppercase tracking-[0.18em] text-slate-400">{label}</p>
-      <p className="mt-2 text-lg font-semibold text-white">{value}</p>
-    </div>
   )
 }

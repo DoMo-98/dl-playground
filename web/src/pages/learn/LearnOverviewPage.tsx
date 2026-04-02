@@ -1,9 +1,9 @@
-import type { ReactNode } from 'react'
 import { ArrowRight, BookOpen, CheckCircle2, Clock3, Sparkles } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useI18n } from '../../app/i18n-context'
 import { Card } from '../../components/Card'
-import type { LessonStatus } from '../../types/learning'
+import { LessonCardBody } from '../../components/learning/LessonCardBody'
+import { MetaBadge } from '../../components/learning/MetaBadge'
 import {
   getNextReadyLesson,
   getLearningSections,
@@ -11,11 +11,6 @@ import {
   getSectionPath,
   getSectionStats,
 } from '../../content/learningPath'
-
-const statusTone: Record<LessonStatus, string> = {
-  ready: 'border-emerald-400/30 bg-emerald-400/10 text-emerald-200',
-  planned: 'border-slate-500/30 bg-slate-500/10 text-slate-300',
-}
 
 export function LearnOverviewPage() {
   const { locale, messages } = useI18n()
@@ -141,59 +136,5 @@ export function LearnOverviewPage() {
         })}
       </section>
     </div>
-  )
-}
-
-type LessonCardBodyProps = {
-  title: string
-  summary: string
-  estimatedMinutes: number
-  status: LessonStatus
-  statusLabel: string
-  objectiveCount: number
-  objectiveLabel: string
-  minutesLabel: string
-}
-
-function LessonCardBody({
-  title,
-  summary,
-  estimatedMinutes,
-  status,
-  statusLabel,
-  objectiveCount,
-  objectiveLabel,
-  minutesLabel,
-}: LessonCardBodyProps) {
-  return (
-    <div className="space-y-2">
-      <div className="flex flex-wrap items-center gap-2">
-        <span className="font-medium text-white">{title}</span>
-        <span
-          className={`inline-flex items-center rounded-full border px-2 py-1 text-[11px] font-medium uppercase tracking-[0.14em] ${statusTone[status]}`}
-        >
-          {statusLabel}
-        </span>
-      </div>
-      <p className="max-w-md text-sm leading-6 text-slate-400">{summary}</p>
-      <div className="flex flex-wrap gap-3 text-xs uppercase tracking-[0.14em] text-slate-500">
-        <span>{estimatedMinutes} {minutesLabel}</span>
-        <span>{objectiveCount} {objectiveLabel}</span>
-      </div>
-    </div>
-  )
-}
-
-type MetaBadgeProps = {
-  icon: ReactNode
-  label: string
-}
-
-function MetaBadge({ icon, label }: MetaBadgeProps) {
-  return (
-    <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1">
-      {icon}
-      {label}
-    </span>
   )
 }
