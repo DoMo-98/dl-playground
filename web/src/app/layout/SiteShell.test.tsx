@@ -1,8 +1,12 @@
-import { screen, within } from '@testing-library/react'
+import { cleanup, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it } from 'vitest'
 import { SiteShell } from './SiteShell'
 import { renderWithI18n } from '../../test/renderWithI18n'
+
+afterEach(() => {
+  cleanup()
+})
 
 describe('SiteShell', () => {
   it('keeps Learn as the only structural top-level navigation item', () => {
@@ -28,27 +32,32 @@ describe('SiteShell', () => {
     const menuButton = screen.getByRole('button', { name: 'Abrir menú principal' })
     await user.click(menuButton)
 
-    expect(screen.getByRole('button', { name: 'Cerrar menú principal' })).toHaveAttribute('aria-expanded', 'true')
+    expect(menuButton).toHaveAttribute('aria-expanded', 'true')
+    expect(menuButton).toHaveAccessibleName('Cerrar menú principal')
     expect(screen.getByRole('dialog', { name: 'Menú de navegación móvil' })).toBeInTheDocument()
+    await user.keyboard('{Escape}')
   })
 
-  it('closes the mobile menu on Escape and outside click', async () => {
+  it('closes the mobile menu on Escape and outside click while restoring focus to the trigger', async () => {
     const user = userEvent.setup()
-    const { unmount } = renderWithI18n(<SiteShell />, { initialEntries: ['/en'] })
+    renderWithI18n(<SiteShell />, { initialEntries: ['/en'] })
 
-    await user.click(screen.getAllByRole('button', { name: 'Open main menu' })[0])
+    const openButton = screen.getByRole('button', { name: 'Open main menu' })
+    await user.click(openButton)
+
+    const closeButton = screen.getByRole('button', { name: 'Close main menu' })
     expect(screen.getByRole('dialog', { name: 'Mobile navigation menu' })).toBeInTheDocument()
+    await waitFor(() => expect(closeButton).toHaveFocus())
 
     await user.keyboard('{Escape}')
     expect(screen.queryByRole('dialog', { name: 'Mobile navigation menu' })).not.toBeInTheDocument()
+    await waitFor(() => expect(openButton).toHaveFocus())
 
-    unmount()
-    renderWithI18n(<SiteShell />, { initialEntries: ['/en'] })
-
-    await user.click(screen.getAllByRole('button', { name: 'Open main menu' })[0])
+    await user.click(openButton)
     expect(screen.getByRole('dialog', { name: 'Mobile navigation menu' })).toBeInTheDocument()
 
-    await user.pointer([{ keys: '[MouseLeft]', target: document.body }])
+    await user.click(screen.getByTestId('mobile-menu-overlay'))
     expect(screen.queryByRole('dialog', { name: 'Mobile navigation menu' })).not.toBeInTheDocument()
+    await waitFor(() => expect(openButton).toHaveFocus())
   })
 })
