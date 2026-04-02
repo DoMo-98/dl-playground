@@ -5,10 +5,14 @@ export const esMessages: LocalizedMessages = {
   languageName: 'Español',
   nav: {
     learn: 'Aprender',
+    firstLessonEyebrow: 'Empieza aquí',
     firstLesson: 'Primera lección',
     repository: 'Repo en GitHub',
     languageSwitcherLabel: 'Idioma',
-    mobileMenuLabel: 'Navegación principal',
+    primaryNavigationLabel: 'Navegación principal',
+    mobileMenuOpenLabel: 'Abrir menú principal',
+    mobileMenuCloseLabel: 'Cerrar menú principal',
+    mobileMenuPanelLabel: 'Menú de navegación móvil',
   },
   home: {
     badge: 'Intuición de deep learning visual e interactiva',

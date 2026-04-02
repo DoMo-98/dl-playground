@@ -22,10 +22,14 @@ type LocalizedMessages = {
   languageName: string
   nav: {
     learn: string
+    firstLessonEyebrow: string
     firstLesson: string
     repository: string
     languageSwitcherLabel: string
-    mobileMenuLabel: string
+    primaryNavigationLabel: string
+    mobileMenuOpenLabel: string
+    mobileMenuCloseLabel: string
+    mobileMenuPanelLabel: string
   }
   home: {
     badge: string
@@ -254,10 +258,14 @@ export const enMessages: LocalizedMessages = {
   languageName: 'English',
   nav: {
     learn: 'Learn',
+    firstLessonEyebrow: 'Start here',
     firstLesson: 'First lesson',
     repository: 'GitHub repo',
     languageSwitcherLabel: 'Language',
-    mobileMenuLabel: 'Main navigation',
+    primaryNavigationLabel: 'Primary navigation',
+    mobileMenuOpenLabel: 'Open main menu',
+    mobileMenuCloseLabel: 'Close main menu',
+    mobileMenuPanelLabel: 'Mobile navigation menu',
   },
   home: {
     badge: 'Visual, interactive deep learning intuition',

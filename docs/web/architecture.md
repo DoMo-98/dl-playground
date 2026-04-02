@@ -74,6 +74,17 @@ The main unit of implementation should be the **interactive learning page**.
 
 Each page should be assembled from reusable primitives rather than hardcoded from scratch.
 
+## UI Component Policy
+
+When deciding whether to build or buy a UI behavior, follow `ui-component-policy.md`.
+
+Short version:
+
+- keep visual composition, pedagogy, branding, and product language custom
+- rely on robust primitives/libraries for complex interaction and accessibility behavior
+
+This keeps the web flexible without re-implementing behavior-heavy UI from scratch.
+
 ## Recommended Page Composition Model
 
 A page should be composed from these layers:
