@@ -41,6 +41,18 @@ describe('localized app routing', () => {
     expect(screen.getByText('Tasa de aprendizaje')).toBeInTheDocument()
   })
 
+
+  it('opens the convolution lesson on localized routes once it is ready', () => {
+    render(
+      <MemoryRouter initialEntries={['/es/learn/cnns/convolutions/local-patterns']}>
+        <AppRoutes />
+      </MemoryRouter>,
+    )
+
+    expect(screen.getByRole('heading', { name: 'Convolución como detector local de patrones' })).toBeInTheDocument()
+    expect(screen.getAllByText('Detector local de patrones').length).toBeGreaterThan(0)
+  })
+
   it('switches locale while preserving the current lesson route', async () => {
     const user = userEvent.setup()
 

@@ -22,10 +22,13 @@ describe('LearnOverviewPage', () => {
       'href',
       '/en/learn/foundations/mlp/activations',
     )
-    expect(screen.getAllByText('planned · Not available yet').length).toBeGreaterThan(0)
     expect(screen.getByRole('link', { name: /gradient descent/i })).toHaveAttribute(
       'href',
       '/en/learn/foundations/optimization/gradient-descent',
+    )
+    expect(screen.getByRole('link', { name: /local pattern detector/i })).toHaveAttribute(
+      'href',
+      '/en/learn/cnns/convolutions/local-patterns',
     )
   })
 
@@ -34,7 +37,6 @@ describe('LearnOverviewPage', () => {
 
     expect(screen.getAllByText('interactiva').length).toBeGreaterThan(0)
     expect(screen.getAllByText('lista').length).toBeGreaterThan(0)
-    expect(screen.getAllByText('planeada · Aún no disponible').length).toBeGreaterThan(0)
   })
 
   it('renders derived section readiness summaries from the curriculum registry', () => {
@@ -42,7 +44,7 @@ describe('LearnOverviewPage', () => {
 
     expect(screen.getAllByText('4/4 ready').length).toBeGreaterThan(0)
     expect(screen.getAllByText('42 min total').length).toBeGreaterThan(0)
-    expect(screen.getAllByText('0/1 ready').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('1/1 ready').length).toBeGreaterThan(0)
     expect(screen.getAllByText('Section roadmap').length).toBeGreaterThan(0)
     expect(screen.queryAllByText(/thematic taxonomy/i).length).toBeGreaterThan(0)
   })

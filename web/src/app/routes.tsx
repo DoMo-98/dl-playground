@@ -10,6 +10,7 @@ import { WeightedSumPage } from '../pages/lessons/mechanics/perceptron/WeightedS
 import { DecisionBoundaryPage } from '../pages/lessons/mechanics/perceptron/DecisionBoundaryPage'
 import { ActivationsPage } from '../pages/lessons/mechanics/mlp/ActivationsPage'
 import { GradientDescentPage } from '../pages/lessons/foundations/optimization/GradientDescentPage'
+import { LocalPatternPage } from '../pages/lessons/cnns/convolutions/LocalPatternPage'
 import { NotFoundPage } from '../pages/not-found/NotFoundPage'
 
 const lessonRouteElements = {
@@ -17,6 +18,7 @@ const lessonRouteElements = {
   'perceptron-weighted-sum': <WeightedSumPage />,
   'perceptron-decision-boundary': <DecisionBoundaryPage />,
   'mlp-activations': <ActivationsPage />,
+  'cnn-local-patterns': <LocalPatternPage />,
 } as const
 
 function LocaleLayout() {
