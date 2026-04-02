@@ -1,5 +1,5 @@
 import * as Dialog from '@radix-ui/react-dialog'
-import { ArrowUpRight, BrainCircuit, ChevronDown, Languages, Menu, X } from 'lucide-react'
+import { ArrowUpRight, BrainCircuit, Languages, Menu, X } from 'lucide-react'
 import { Link, NavLink, Outlet } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { localeLabels } from '../../i18n'
@@ -28,49 +28,43 @@ function LocaleSwitcher({
 
   if (isPanel) {
     return (
-      <label className="block">
-        <HeaderUtilityItem variant="panel" className={className}>
-          <Languages className="h-4 w-4 shrink-0 text-cyan-300 transition group-hover:text-cyan-200 group-focus-within:text-cyan-200" />
-          <span className="min-w-0 flex-1 text-slate-300">{label}</span>
-          <span className="relative min-w-0">
-            <select
-              value={locale}
-              onChange={(event) => onChange(event.target.value as keyof typeof localeLabels)}
-              className="w-full cursor-pointer appearance-none bg-transparent text-sm text-slate-100 outline-none min-w-0 pr-6 text-right"
-              aria-label={label}
-            >
-              {Object.entries(localeLabels).map(([value, optionLabel]) => (
-                <option key={value} value={value} className="bg-slate-900 text-slate-100">
-                  {optionLabel}
-                </option>
-              ))}
-            </select>
-            <ChevronDown className="pointer-events-none absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500 transition group-hover:text-slate-300 group-focus-within:text-slate-200" />
-          </span>
-        </HeaderUtilityItem>
-      </label>
-    )
-  }
-
-  return (
-    <label className="block">
-      <HeaderUtilityItem variant="inline" className={className}>
-        <Languages className="h-4 w-4 text-cyan-300" />
-        <span className="sr-only">{label}</span>
+      <HeaderUtilityItem variant="panel" className={['relative', className ?? ''].join(' ')}>
+        <Languages className="h-4 w-4 shrink-0 text-cyan-300" />
+        <span className="min-w-0 flex-1 text-slate-300">{label}</span>
+        <span className="text-sm text-slate-100">{localeLabels[locale]}</span>
         <select
           value={locale}
           onChange={(event) => onChange(event.target.value as keyof typeof localeLabels)}
-          className="cursor-pointer appearance-none bg-transparent text-sm text-slate-100 outline-none"
+          className="absolute inset-0 cursor-pointer opacity-0"
           aria-label={label}
         >
           {Object.entries(localeLabels).map(([value, optionLabel]) => (
-            <option key={value} value={value} className="bg-slate-900 text-slate-100">
+            <option key={value} value={value}>
               {optionLabel}
             </option>
           ))}
         </select>
       </HeaderUtilityItem>
-    </label>
+    )
+  }
+
+  return (
+    <HeaderUtilityItem variant="inline" className={['relative', className ?? ''].join(' ')}>
+      <Languages className="h-4 w-4 text-cyan-300" />
+      <span className="text-sm text-slate-100">{localeLabels[locale]}</span>
+      <select
+        value={locale}
+        onChange={(event) => onChange(event.target.value as keyof typeof localeLabels)}
+        className="absolute inset-0 cursor-pointer opacity-0"
+        aria-label={label}
+      >
+        {Object.entries(localeLabels).map(([value, optionLabel]) => (
+          <option key={value} value={value}>
+            {optionLabel}
+          </option>
+        ))}
+      </select>
+    </HeaderUtilityItem>
   )
 }
 
