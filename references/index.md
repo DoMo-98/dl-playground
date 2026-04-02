@@ -212,7 +212,7 @@ Current policy:
 ### Gradient-Based Learning Applied to Document Recognition
 - Authors: Yann LeCun, Léon Bottou, Yoshua Bengio, Patrick Haffner
 - Year: 1998
-- Status: linked
+- Status: summarized
 - Topic(s): cnn, convolution, feature-maps, pooling
 - Source strategy:
   - official-preferred: IEEE / canonical journal page
@@ -223,7 +223,7 @@ Current policy:
 - Lesson priority: high
 - Teaching fit: foundational
 - Relevance: strongest classic anchor for introducing convolution as a local pattern detector with shared kernels and feature maps.
-- Notes: to-add
+- Notes: `references/notes/t4-convolution-source-investigation-2026-04-02.md`
 - Access status: abstract-or-metadata-only
 - Potential lesson use:
   - local receptive field intuition
