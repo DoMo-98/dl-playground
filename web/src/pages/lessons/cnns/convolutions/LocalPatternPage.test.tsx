@@ -30,9 +30,22 @@ describe('LocalPatternPage', () => {
     expect(screen.getAllByText('3')[0]).toBeInTheDocument()
 
     fireEvent.click(screen.getAllByLabelText('Input cell (1, 3)')[0])
-    fireEvent.click(screen.getAllByLabelText('Kernel cell (1, 2)')[0])
+    fireEvent.click(screen.getAllByLabelText(/^Kernel cell \(1, 2\)/)[0])
 
     expect(screen.getByText((content) => content.includes('0×-1 + 0×1 + 0×1'))).toBeInTheDocument()
     expect(screen.getAllByText('4').length).toBeGreaterThan(0)
+  })
+
+  it('clears the kernel when the clear button is clicked', () => {
+    renderWithI18n(<LocalPatternPage />, { initialEntries: ['/en/learn/cnns/convolutions/local-patterns'] })
+
+    fireEvent.click(screen.getAllByRole('button', { name: /clear kernel/i })[0])
+
+    // The layout renders the visualization in multiple responsive slots;
+    // assert on the first 9 feature-map cells (one full 3×3 grid).
+    const featureCells = screen.getAllByLabelText(/Feature map cell/).slice(0, 9)
+    featureCells.forEach((cell) => {
+      expect(cell.textContent).toMatch(/^0/)
+    })
   })
 })

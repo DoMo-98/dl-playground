@@ -4,6 +4,8 @@ import {
   convolutionPresets,
   cycleKernelCell,
   getFeatureSummary,
+  GRID_SIZE,
+  KERNEL_SIZE,
   toggleBinaryCell,
 } from './convolution'
 
@@ -52,5 +54,14 @@ describe('convolution helpers', () => {
     expect(cycledOnce[0][0]).toBe(0)
     expect(cycledTwice[0][0]).toBe(1)
     expect(cycledThrice[0][0]).toBe(-1)
+  })
+
+  it('every preset has input of GRID_SIZE×GRID_SIZE and kernel of KERNEL_SIZE×KERNEL_SIZE', () => {
+    for (const preset of convolutionPresets) {
+      expect(preset.input).toHaveLength(GRID_SIZE)
+      preset.input.forEach((row) => expect(row).toHaveLength(GRID_SIZE))
+      expect(preset.kernel).toHaveLength(KERNEL_SIZE)
+      preset.kernel.forEach((row) => expect(row).toHaveLength(KERNEL_SIZE))
+    }
   })
 })

@@ -17,11 +17,13 @@ function GridCellButton({
   label,
   tone,
   onClick,
+  pressed,
 }: {
   value: number
   label: string
   tone: 'input' | 'kernel' | 'feature'
   onClick?: () => void
+  pressed?: boolean
 }) {
   const baseTone =
     tone === 'kernel'
@@ -36,19 +38,26 @@ function GridCellButton({
           ? 'bg-rose-400/15 text-rose-50 border-rose-400/20'
           : 'bg-slate-950/40 text-slate-300 border-white/10'
 
-  const Element = onClick ? 'button' : 'div'
+  const baseClassName = `flex aspect-square min-h-12 items-center justify-center rounded-xl border text-sm font-semibold transition ${baseTone}`
+
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        aria-label={label}
+        aria-pressed={pressed}
+        onClick={onClick}
+        className={`${baseClassName} hover:bg-white/10`}
+      >
+        {value}
+      </button>
+    )
+  }
 
   return (
-    <Element
-      type={onClick ? 'button' : undefined}
-      aria-label={label}
-      onClick={onClick}
-      className={`flex aspect-square min-h-12 items-center justify-center rounded-xl border text-sm font-semibold transition ${baseTone} ${
-        onClick ? 'hover:bg-white/10' : ''
-      }`}
-    >
+    <div aria-label={label} className={baseClassName}>
       {value}
-    </Element>
+    </div>
   )
 }
 
@@ -111,15 +120,18 @@ export function ConvolutionVisualization({
           </div>
           <div className="grid grid-cols-3 gap-2">
             {kernel.map((row, rowIndex) =>
-              row.map((value, colIndex) => (
-                <GridCellButton
-                  key={`kernel-${rowIndex}-${colIndex}`}
-                  value={value}
-                  tone="kernel"
-                  label={`${copy.kernelCellLabel} (${rowIndex + 1}, ${colIndex + 1})`}
-                  onClick={() => onCycleKernel(rowIndex, colIndex)}
-                />
-              )),
+              row.map((value, colIndex) => {
+                const nextValue = value === -1 ? 0 : value === 0 ? 1 : -1
+                return (
+                  <GridCellButton
+                    key={`kernel-${rowIndex}-${colIndex}`}
+                    value={value}
+                    tone="kernel"
+                    label={`${copy.kernelCellLabel} (${rowIndex + 1}, ${colIndex + 1}), current: ${value}, click to set ${nextValue}`}
+                    onClick={() => onCycleKernel(rowIndex, colIndex)}
+                  />
+                )
+              }),
             )}
           </div>
         </section>

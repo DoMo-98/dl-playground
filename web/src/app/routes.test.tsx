@@ -51,6 +51,10 @@ describe('localized app routing', () => {
 
     expect(screen.getByRole('heading', { name: 'Convolución como detector local de patrones' })).toBeInTheDocument()
     expect(screen.getAllByText('Detector local de patrones').length).toBeGreaterThan(0)
+    expect(screen.getByRole('link', { name: /anterior.*descenso por gradiente/i })).toHaveAttribute(
+      'href',
+      '/es/learn/foundations/optimization/gradient-descent',
+    )
   })
 
   it('switches locale while preserving the current lesson route', async () => {

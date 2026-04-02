@@ -1,6 +1,13 @@
 export type GridSize = 5
 export type KernelSize = 3
 
+export const GRID_SIZE = 5
+export const KERNEL_SIZE = 3
+
+export function makeFeatureId(row: number, col: number): string {
+  return `${row}-${col}`
+}
+
 export type ConvolutionPresetId = 'vertical-edge' | 'horizontal-edge' | 'center-focus'
 
 export type InputCell = {
@@ -15,6 +22,7 @@ export type FeatureCell = {
   row: number
   col: number
   value: number
+  /** Value divided by the maximum absolute value across the feature map. Range: [-1, 1]. Zero when all cells are zero. */
   normalizedValue: number
   patch: InputCell[]
   contributionTerms: string[]
@@ -110,7 +118,7 @@ export function applyValidConvolution(input: number[][], kernel: number[][]): Fe
           const kernelValue = kernel[kernelRow][kernelCol]
           value += inputValue * kernelValue
           patch.push({
-            id: `${row + kernelRow}-${col + kernelCol}`,
+            id: makeFeatureId(row + kernelRow, col + kernelCol),
             row: row + kernelRow,
             col: col + kernelCol,
             value: inputValue,
@@ -120,7 +128,7 @@ export function applyValidConvolution(input: number[][], kernel: number[][]): Fe
       }
 
       rawCells.push({
-        id: `${row}-${col}`,
+        id: makeFeatureId(row, col),
         row,
         col,
         value,
@@ -139,6 +147,10 @@ export function applyValidConvolution(input: number[][], kernel: number[][]): Fe
 }
 
 export function getFeatureSummary(featureMap: FeatureCell[]) {
+  if (featureMap.length === 0) {
+    return { strongest: { id: '', row: 0, col: 0, value: 0, normalizedValue: 0, patch: [], contributionTerms: [] }, positiveCount: 0, negativeCount: 0 }
+  }
+
   const strongest = featureMap.reduce((best, cell) => (Math.abs(cell.value) > Math.abs(best.value) ? cell : best), featureMap[0])
   const positiveCount = featureMap.filter((cell) => cell.value > 0).length
   const negativeCount = featureMap.filter((cell) => cell.value < 0).length
