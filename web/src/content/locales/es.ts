@@ -8,7 +8,10 @@ export const esMessages: LocalizedMessages = {
     firstLesson: 'Primera lección',
     repository: 'Repo en GitHub',
     languageSwitcherLabel: 'Idioma',
-    mobileMenuLabel: 'Navegación principal',
+    primaryNavigationLabel: 'Navegación principal',
+    mobileMenuOpenLabel: 'Abrir menú principal',
+    mobileMenuCloseLabel: 'Cerrar menú principal',
+    mobileMenuPanelLabel: 'Menú de navegación móvil',
   },
   home: {
     badge: 'Intuición de deep learning visual e interactiva',
