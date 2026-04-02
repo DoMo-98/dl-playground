@@ -36,7 +36,10 @@ export function GradientDescentPage() {
   const [learningRate, setLearningRate] = useState(DEFAULT_LEARNING_RATE)
   const [startParameter, setStartParameter] = useState(DEFAULT_PARAMETER)
   const [trajectory, setTrajectory] = useState<GradientDescentState[]>([describeState(DEFAULT_PARAMETER)])
-  const prefersReducedMotion = useMemo(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches, [])
+  const prefersReducedMotion = useMemo(
+    () => typeof window !== 'undefined' && typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    [],
+  )
   const [isAutoplaying, setIsAutoplaying] = useState(false)
 
   const current = trajectory[trajectory.length - 1]
