@@ -4,6 +4,11 @@ import { Link } from 'react-router-dom'
 import { useI18n } from '../../app/i18n-context'
 import type { LessonStatus } from '../../types/learning'
 
+export { LessonCardBody } from './LessonCardBody'
+export type { LessonCardBodyProps } from './LessonCardBody'
+export { MetaBadge } from './MetaBadge'
+export type { MetaBadgeProps } from './MetaBadge'
+
 type LessonCardProps = {
   icon: ReactNode
   label: string

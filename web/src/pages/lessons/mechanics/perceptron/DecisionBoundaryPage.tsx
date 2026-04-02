@@ -8,18 +8,14 @@ import {
   ObservationPromptsCard,
 } from '../../../../components/learning/LessonPrimitives'
 import {
-  classifyPoint,
   decisionBoundaryDatasets,
   describeDecisionBoundary,
-  projectToViewport,
   summarizeDataset,
 } from '../../../../features/perceptron/lib/decisionBoundary'
+import { DecisionBoundaryVisualization } from '../../../../features/perceptron/components/DecisionBoundaryVisualization'
 import { getAdjacentLessons } from '../../../../content/learningPath'
 import { useI18n } from '../../../../app/i18n-context'
-
-const VIEWBOX_SIZE = 320
-const AXIS_MIN = -2
-const AXIS_MAX = 2
+import { StatCard } from '../../../../components/visualization'
 
 export function DecisionBoundaryPage() {
   const { locale, messages } = useI18n()
@@ -130,132 +126,3 @@ export function DecisionBoundaryPage() {
   )
 }
 
-type DecisionBoundaryVisualizationProps = {
-  summary: ReturnType<typeof summarizeDataset>
-  boundary: ReturnType<typeof describeDecisionBoundary>
-  datasetName: string
-  weights: {
-    w1: number
-    w2: number
-    bias: number
-  }
-}
-
-function DecisionBoundaryVisualization({ summary, boundary, datasetName, weights }: DecisionBoundaryVisualizationProps) {
-  const { messages } = useI18n()
-  const copy = messages.perceptron.decisionBoundaryPage.visualization
-  const positiveRegion = 'rgba(34, 211, 238, 0.15)'
-  const negativeRegion = 'rgba(148, 163, 184, 0.10)'
-
-  return (
-    <div className="space-y-4">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <p className="text-sm font-medium uppercase tracking-[0.18em] text-cyan-300">{copy.eyebrow}</p>
-          <h2 className="text-xl font-semibold text-white">{datasetName}</h2>
-        </div>
-        <div className="rounded-full border border-white/10 px-3 py-1 text-xs uppercase tracking-[0.18em] text-slate-300">
-          {copy.regionBadge}
-        </div>
-      </div>
-
-      <svg
-        viewBox={`0 0 ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}`}
-        className="w-full rounded-2xl border border-white/10 bg-slate-950"
-        role="img"
-        aria-label={copy.ariaLabel}
-      >
-        <title>{copy.ariaLabel}</title>
-        <rect x="0" y="0" width={VIEWBOX_SIZE} height={VIEWBOX_SIZE} fill={negativeRegion} />
-        {renderRegionTiles(weights, positiveRegion)}
-
-        <line x1="0" y1={VIEWBOX_SIZE / 2} x2={VIEWBOX_SIZE} y2={VIEWBOX_SIZE / 2} stroke="rgba(148, 163, 184, 0.35)" strokeDasharray="4 6" />
-        <line x1={VIEWBOX_SIZE / 2} y1="0" x2={VIEWBOX_SIZE / 2} y2={VIEWBOX_SIZE} stroke="rgba(148, 163, 184, 0.35)" strokeDasharray="4 6" />
-
-        {renderBoundaryLine(boundary)}
-
-        {summary.points.map((point) => {
-          const x = projectToViewport(point.x)
-          const y = VIEWBOX_SIZE - projectToViewport(point.y)
-          const fill = point.prediction === 1 ? '#22d3ee' : '#94a3b8'
-          const stroke = point.correct ? '#f8fafc' : '#fb7185'
-
-          return (
-            <g key={point.id} aria-label={`point-${point.id}-${point.correct ? 'correct' : 'mismatch'}`}>
-              <circle cx={x} cy={y} r="10" fill={fill} stroke={stroke} strokeWidth="3" />
-              <text x={x} y={y + 4} textAnchor="middle" fontSize="10" fill="#020617">
-                {point.label}
-              </text>
-            </g>
-          )
-        })}
-      </svg>
-
-      <div className="grid gap-3 sm:grid-cols-2">
-        <LegendItem color="bg-cyan-400" label={copy.legend.positiveRegion} />
-        <LegendItem color="bg-slate-400" label={copy.legend.negativeRegion} />
-        <LegendItem color="bg-white" label={copy.legend.correctOutline} />
-        <LegendItem color="bg-rose-400" label={copy.legend.mismatchOutline} />
-      </div>
-    </div>
-  )
-}
-
-function renderBoundaryLine(boundary: ReturnType<typeof describeDecisionBoundary>) {
-  if (boundary.kind === 'none') {
-    return null
-  }
-
-  if (boundary.kind === 'vertical') {
-    const x = projectToViewport(boundary.x)
-    return <line x1={x} y1="0" x2={x} y2={VIEWBOX_SIZE} stroke="#f8fafc" strokeWidth="3" />
-  }
-
-  return (
-    <line
-      x1={projectToViewport(boundary.p1.x)}
-      y1={VIEWBOX_SIZE - projectToViewport(boundary.p1.y)}
-      x2={projectToViewport(boundary.p2.x)}
-      y2={VIEWBOX_SIZE - projectToViewport(boundary.p2.y)}
-      stroke="#f8fafc"
-      strokeWidth="3"
-    />
-  )
-}
-
-function renderRegionTiles(weights: { w1: number; w2: number; bias: number }, fill: string) {
-  const tilesPerAxis = 12
-  const tileSize = VIEWBOX_SIZE / tilesPerAxis
-
-  return Array.from({ length: tilesPerAxis * tilesPerAxis }, (_, index) => {
-    const xi = index % tilesPerAxis
-    const yi = Math.floor(index / tilesPerAxis)
-    const x = AXIS_MIN + ((xi + 0.5) / tilesPerAxis) * (AXIS_MAX - AXIS_MIN)
-    const y = AXIS_MAX - ((yi + 0.5) / tilesPerAxis) * (AXIS_MAX - AXIS_MIN)
-    const prediction = classifyPoint({ x, y }, weights)
-
-    if (prediction !== 1) {
-      return null
-    }
-
-    return <rect key={`${xi}-${yi}`} x={xi * tileSize} y={yi * tileSize} width={tileSize} height={tileSize} fill={fill} />
-  })
-}
-
-function LegendItem({ color, label }: { color: string; label: string }) {
-  return (
-    <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-slate-300">
-      <span className={`h-3 w-3 rounded-full ${color}`} />
-      <span>{label}</span>
-    </div>
-  )
-}
-
-function StatCard({ label, value, accent = false }: { label: string; value: string; accent?: boolean }) {
-  return (
-    <div className={`rounded-2xl border p-4 ${accent ? 'border-cyan-400/20 bg-cyan-400/10' : 'border-white/10 bg-slate-950/40'}`}>
-      <p className="text-xs uppercase tracking-[0.18em] text-slate-400">{label}</p>
-      <p className="mt-2 text-lg font-semibold text-white">{value}</p>
-    </div>
-  )
-}
