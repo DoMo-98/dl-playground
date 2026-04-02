@@ -130,6 +130,7 @@ Important docs:
 - `docs/web/content-map.md`
 - `docs/web/mvp.md`
 - `docs/web/architecture.md`
+- `docs/web/ui-component-policy.md`
 - `docs/web/backlog.md`
 - `docs/web/scaffold-plan.md`
 
