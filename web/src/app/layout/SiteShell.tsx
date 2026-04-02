@@ -29,7 +29,7 @@ function LocaleSwitcher({
   return (
     <label
       className={[
-        'group inline-flex cursor-pointer items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 text-sm text-slate-200 outline-none transition',
+        'group relative inline-flex cursor-pointer items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 text-sm text-slate-200 outline-none transition',
         py,
         'hover:bg-white/10 hover:text-white',
         'focus-within:ring-1 focus-within:ring-cyan-300/50',
@@ -38,10 +38,11 @@ function LocaleSwitcher({
     >
       <Languages className="h-4 w-4 shrink-0 text-cyan-300" aria-hidden="true" />
       {isPanel && <span className="min-w-0 flex-1 text-slate-300">{label}</span>}
+      <span className="pointer-events-none text-sm text-slate-100">{localeLabels[locale]}</span>
       <select
         value={locale}
         onChange={(event) => onChange(event.target.value as keyof typeof localeLabels)}
-        className="cursor-pointer appearance-none bg-transparent text-sm text-slate-100 outline-none"
+        className="absolute inset-0 cursor-pointer opacity-0"
         aria-label={label}
       >
         {Object.entries(localeLabels).map(([value, optionLabel]) => (
