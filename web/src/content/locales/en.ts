@@ -1,4 +1,5 @@
 import type { Locale } from '../../types/i18n'
+import { hiddenLayerCount } from '../../features/initialization/lib/initialization'
 
 type LocalizedSectionCopy = {
   title: string
@@ -302,6 +303,54 @@ type LocalizedMessages = {
           visitedStep: string
         }
       }
+    }
+  }
+  stableTraining: {
+    initializationPage: {
+      eyebrow: string
+      title: string
+      description: string
+      objective: string
+      coreIdeaDescription: string
+      coreIdeaBullets: string[]
+      initializationTitle: string
+      initializationOptions: Record<'tiny' | 'xavier' | 'he' | 'large', {
+        label: string
+        description: string
+      }>
+      activationTitle: string
+      activationOptions: Record<'relu' | 'tanh', {
+        label: string
+        description: string
+      }>
+      controlsHintTitle: string
+      controlsHintBullets: string[]
+      layerLabel: (layerIndex: number) => string
+      layerDescription: (layerIndex: number) => string
+      zeroFractionLabel: (value: number) => string
+      activationCardTitle: string
+      gradientCardTitle: string
+      meterLabels: {
+        activationStd: string
+        activationMeanAbs: string
+        gradientStd: string
+        gradientMeanAbs: string
+      }
+      stats: {
+        regime: string
+        finalActivationStd: string
+        firstLayerGradientStd: string
+      }
+      regimes: Record<'vanishing' | 'stable' | 'exploding', {
+        label: string
+        title: string
+        description: string
+      }>
+      readingGuideTitle: string
+      readingGuideBullets: string[]
+      bridgeTitle: string
+      bridgeDescription: (mode: 'tiny' | 'xavier' | 'he' | 'large', activation: 'relu' | 'tanh') => string
+      prompts: string[]
     }
   }
   sections: Record<string, LocalizedSectionCopy>
@@ -773,6 +822,121 @@ export const enMessages: LocalizedMessages = {
       },
     },
   },
+  stableTraining: {
+    initializationPage: {
+      eyebrow: 'Stable training · Initialization',
+      title: 'Bad initialization vs stable initialization',
+      description:
+        'Before learning begins, the starting weight scale already shapes what signal survives through depth. This lesson compares bad and stable presets across a fixed deep network.',
+      objective:
+        'How much can the starting weight scale change what a deep network passes forward and what a backward update can still send back through earlier layers?',
+      coreIdeaDescription:
+        'Glorot & Bengio (2010) frame initialization as a signal-scale problem, and He et al. (2015) adapt that story to rectifiers. If the starting weights are too small, signals shrink; if they are too large, they blow up or saturate; the useful zone keeps forward activations and backward updates in a workable range.',
+      coreIdeaBullets: [
+        'Initialization matters before the first optimizer step because it sets the starting signal scale.',
+        'A good starting scale preserves enough variation layer to layer instead of crushing it or amplifying it uncontrollably.',
+        'The best scale depends on the activation family, which is why Xavier and He are not interchangeable defaults.',
+      ],
+      initializationTitle: 'Initialization presets',
+      initializationOptions: {
+        tiny: {
+          label: 'Tiny weights',
+          description: 'Too little variance: later layers mostly receive almost-flat signals.',
+        },
+        xavier: {
+          label: 'Xavier-style balance',
+          description: 'A balanced default that keeps tanh-like activations from collapsing too quickly.',
+        },
+        he: {
+          label: 'He-style balance',
+          description: 'A rectifier-friendly scale that tries to keep ReLU signal flow alive.',
+        },
+        large: {
+          label: 'Oversized weights',
+          description: 'Too much variance: deep layers become dominated by exaggerated responses.',
+        },
+      },
+      activationTitle: 'Activation family',
+      activationOptions: {
+        relu: {
+          label: 'ReLU',
+          description: 'Useful for seeing why He initialization helps keep rectifier pathways alive.',
+        },
+        tanh: {
+          label: 'tanh',
+          description: 'Useful for seeing why saturation becomes a problem when the scale is too large.',
+        },
+      },
+      controlsHintTitle: 'How to read the layer cards',
+      controlsHintBullets: [
+        'Each row is one hidden layer in the same fixed network depth.',
+        'Activation bars show what the forward signal still looks like after that layer.',
+        'Gradient bars show a backward proxy: whether an update could still reach early layers with useful scale.',
+      ],
+      layerLabel: (layerIndex: number) => `Layer ${layerIndex}`,
+      layerDescription: (layerIndex: number) =>
+        layerIndex === 1
+          ? 'Closest hidden layer to the input.'
+          : layerIndex === hiddenLayerCount
+            ? 'Deepest hidden layer in this toy stack.'
+            : 'Another hidden layer in the same forward/backward chain.',
+      zeroFractionLabel: (value: number) => `${Math.round(value * 100)}% zeros`,
+      activationCardTitle: 'Forward signal',
+      gradientCardTitle: 'Backward proxy',
+      meterLabels: {
+        activationStd: 'Activation std',
+        activationMeanAbs: 'Mean |activation|',
+        gradientStd: 'Gradient std',
+        gradientMeanAbs: 'Mean |gradient|',
+      },
+      stats: {
+        regime: 'Observed regime',
+        finalActivationStd: 'Deepest-layer activation std',
+        firstLayerGradientStd: 'Earliest-layer gradient std',
+      },
+      regimes: {
+        vanishing: {
+          label: 'Vanishing range',
+          title: 'Signal is fading before the network can use depth well',
+          description:
+            'The later activations or earlier gradients are collapsing toward zero. Even if the architecture is deep, very little useful variation survives across layers.',
+        },
+        stable: {
+          label: 'Stable range',
+          title: 'Forward and backward scales stay in a workable corridor',
+          description:
+            'This is the target intuition: activations keep enough spread to carry information, and backward updates still have enough scale to influence early layers.',
+        },
+        exploding: {
+          label: 'Exploding range',
+          title: 'Depth is amplifying values too aggressively',
+          description:
+            'The network is now magnifying responses so much that later layers or backward updates become badly scaled. This makes optimization brittle even before discussing the optimizer itself.',
+        },
+      },
+      readingGuideTitle: 'What to compare first',
+      readingGuideBullets: [
+        'Keep ReLU selected and switch between Tiny, He, and Oversized weights. Watch how the bars either collapse, stay usable, or blow up.',
+        'Then switch to tanh and compare Xavier against Oversized weights. Notice how large weights push tanh toward saturation.',
+        'Focus on both ends of the stack: deep activations tell you what survives forward, while early-layer gradients tell you what can still learn backward.',
+      ],
+      bridgeTitle: 'Why this matters after convolution',
+      bridgeDescription: (mode, activation) => {
+        const modeLabel = {
+          tiny: 'tiny weights',
+          xavier: 'Xavier-style balance',
+          he: 'He-style balance',
+          large: 'oversized weights',
+        }[mode]
+        return `${modeLabel} with ${activation.toUpperCase()} changes the network before training even starts. The lesson is not that initialization solves everything, but that stable training begins by keeping signal flow usable enough for later optimization to do meaningful work.`
+      },
+      prompts: [
+        'Start with He + ReLU. Which layers keep a similar amount of signal instead of collapsing immediately?',
+        'Switch to Tiny weights. Do the later layers still show meaningful activation spread, or does everything flatten out?',
+        'Try Oversized weights. Which metric blows up first: the forward signal or the backward proxy?',
+      ],
+    },
+  },
   sections: {
     foundations: {
       title: 'Foundations',
@@ -883,6 +1047,15 @@ export const enMessages: LocalizedMessages = {
       objectives: [
         'Relate kernel values to local match strength',
         'Interpret the feature map as a scan of local evidence',
+      ],
+    },
+    'initialization-bad-vs-stable': {
+      title: 'Initialization · bad init vs stable init',
+      shortTitle: 'Bad initialization vs stable initialization',
+      summary: 'Compare initialization presets to see when deep signal flow fades, stays usable, or explodes before training really starts.',
+      objectives: [
+        'Connect initialization scale to forward activation spread',
+        'Relate the same starting scale to a simple backward-stability proxy',
       ],
     },
   },
