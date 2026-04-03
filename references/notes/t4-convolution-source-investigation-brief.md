@@ -17,6 +17,7 @@ Prepare the source-grounding phase for the lesson `Convolution as local pattern 
 ## Secondary context anchor
 - **He et al. (2015)** — *Deep Residual Learning for Image Recognition*
 - Use only as modern CNN context or downstream continuity, not as the primary source of the convolution mechanism lesson.
+- Not re-audited in this investigation: already confirmed as `full-text-ok` in `references/index.md`, so no re-audit required.
 
 ## Current known access state
 - LeCun et al. (1998): `abstract-or-metadata-only`
@@ -93,3 +94,8 @@ Do not imply:
 
 ## Decision heuristic
 If the source situation is ambiguous, prefer a narrower but faithful lesson over a broader lesson with shaky source fidelity.
+
+## Resolution
+- **Outcome:** `SOURCE_PARTIAL`
+- **Investigation report:** `references/notes/t4-convolution-source-investigation-2026-04-02.md`
+- **Date:** 2026-04-02
