@@ -55,6 +55,21 @@ describe('localized app routing', () => {
       'href',
       '/es/learn/foundations/optimization/gradient-descent',
     )
+    expect(screen.getByRole('link', { name: /siguiente.*mala inicialización vs inicialización estable/i })).toHaveAttribute(
+      'href',
+      '/es/learn/stable-training/initialization/bad-vs-stable',
+    )
+  })
+
+  it('opens the initialization lesson on locale-prefixed routes', () => {
+    render(
+      <MemoryRouter initialEntries={['/es/learn/stable-training/initialization/bad-vs-stable']}>
+        <AppRoutes />
+      </MemoryRouter>,
+    )
+
+    expect(screen.getByRole('heading', { name: 'Mala inicialización vs inicialización estable' })).toBeInTheDocument()
+    expect(screen.getByText('Entrenamiento estable · Inicialización')).toBeInTheDocument()
   })
 
   it('switches locale while preserving the current lesson route', async () => {

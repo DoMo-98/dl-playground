@@ -11,6 +11,7 @@ import { DecisionBoundaryPage } from '../pages/lessons/mechanics/perceptron/Deci
 import { ActivationsPage } from '../pages/lessons/mechanics/mlp/ActivationsPage'
 import { GradientDescentPage } from '../pages/lessons/foundations/optimization/GradientDescentPage'
 import { LocalPatternPage } from '../pages/lessons/cnns/convolutions/LocalPatternPage'
+import { InitializationPage } from '../pages/lessons/foundations/stable-training/InitializationPage'
 import { NotFoundPage } from '../pages/not-found/NotFoundPage'
 
 const lessonRouteElements = {
@@ -19,6 +20,7 @@ const lessonRouteElements = {
   'perceptron-decision-boundary': <DecisionBoundaryPage />,
   'mlp-activations': <ActivationsPage />,
   'cnn-local-patterns': <LocalPatternPage />,
+  'initialization-bad-vs-stable': <InitializationPage />,
 } as const
 
 function LocaleLayout() {

@@ -33,6 +33,7 @@ Implemented today:
 - interactive lesson: **MLP · activation functions and non-linearity**
 - interactive lesson: **Gradient descent intuition**
 - interactive lesson: **Convolution as local pattern detector**
+- interactive lesson: **Initialization · bad init vs stable init**
 
 Current learner-facing lesson order:
 
@@ -41,6 +42,7 @@ Current learner-facing lesson order:
 3. **MLP · activation functions and non-linearity**
 4. **Gradient descent intuition**
 5. **Convolution as local pattern detector**
+6. **Initialization · bad init vs stable init**
 
 Current top-level taxonomy:
 
@@ -57,11 +59,11 @@ Important rule: section taxonomy groups topics, while the learner-facing lesson 
 
 Immediate next lesson:
 
-- **Initialization · bad init vs stable init**
+- **Normalization · BatchNorm intuition**
 
 Near-term queue after that:
 
-- stable-training intuition modules
+- residual and regularization intuition modules
 - deeper sequence and memory topics
 
 For the canonical task state (`DONE`, `NEXT`, `QUEUED`) and the paper-readiness context behind that ordering, see:

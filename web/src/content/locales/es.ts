@@ -465,6 +465,121 @@ export const esMessages: LocalizedMessages = {
       },
     },
   },
+  stableTraining: {
+    initializationPage: {
+      eyebrow: 'Entrenamiento estable · Inicialización',
+      title: 'Mala inicialización vs inicialización estable',
+      description:
+        'Antes de que empiece el aprendizaje, la escala inicial de los pesos ya condiciona qué señal sobrevive en profundidad. Esta lección compara presets malos y estables sobre una misma red profunda fija.',
+      objective:
+        '¿Cuánto puede cambiar la escala inicial de los pesos lo que una red profunda consigue pasar hacia delante y lo que una actualización hacia atrás aún puede devolver a las capas tempranas?',
+      coreIdeaDescription:
+        'Glorot & Bengio (2010) presentan la inicialización como un problema de escala de señal, y He et al. (2015) adaptan esa historia al caso de las activaciones rectificadoras. Si los pesos empiezan demasiado pequeños, la señal se apaga; si empiezan demasiado grandes, explota o se satura; la zona útil mantiene activaciones y actualizaciones dentro de un rango trabajable.',
+      coreIdeaBullets: [
+        'La inicialización importa antes del primer paso del optimizador porque fija la escala inicial de la señal.',
+        'Una buena escala conserva variación útil capa a capa en lugar de aplastarla o amplificarla sin control.',
+        'La mejor escala depende de la familia de activaciones; por eso Xavier y He no son defaults intercambiables.',
+      ],
+      initializationTitle: 'Presets de inicialización',
+      initializationOptions: {
+        tiny: {
+          label: 'Pesos diminutos',
+          description: 'Demasiada poca varianza: las capas profundas reciben señales casi planas.',
+        },
+        xavier: {
+          label: 'Equilibrio estilo Xavier',
+          description: 'Un punto de partida equilibrado para que activaciones tipo tanh no colapsen demasiado pronto.',
+        },
+        he: {
+          label: 'Equilibrio estilo He',
+          description: 'Una escala pensada para rectificadores que intenta mantener vivo el flujo con ReLU.',
+        },
+        large: {
+          label: 'Pesos sobredimensionados',
+          description: 'Demasiada varianza: las capas profundas quedan dominadas por respuestas exageradas.',
+        },
+      },
+      activationTitle: 'Familia de activación',
+      activationOptions: {
+        relu: {
+          label: 'ReLU',
+          description: 'Útil para ver por qué la inicialización He ayuda a mantener activas las rutas rectificadas.',
+        },
+        tanh: {
+          label: 'tanh',
+          description: 'Útil para ver por qué la saturación aparece cuando la escala es demasiado grande.',
+        },
+      },
+      controlsHintTitle: 'Cómo leer las tarjetas por capa',
+      controlsHintBullets: [
+        'Cada fila representa una capa oculta de la misma profundidad fija.',
+        'Las barras de activación muestran qué aspecto conserva la señal hacia delante tras esa capa.',
+        'Las barras de gradiente muestran un proxy hacia atrás: si una actualización aún puede llegar con escala útil a las capas tempranas.',
+      ],
+      layerLabel: (layerIndex: number) => `Capa ${layerIndex}`,
+      layerDescription: (layerIndex: number) =>
+        layerIndex === 1
+          ? 'Capa oculta más cercana a la entrada.'
+          : layerIndex === 4
+            ? 'Capa oculta más profunda de esta pila de juguete.'
+            : 'Otra capa oculta dentro de la misma cadena forward/backward.',
+      zeroFractionLabel: (value: number) => `${Math.round(value * 100)}% ceros`,
+      activationCardTitle: 'Señal hacia delante',
+      gradientCardTitle: 'Proxy hacia atrás',
+      meterLabels: {
+        activationStd: 'Desv. típica de activación',
+        activationMeanAbs: 'Media |activación|',
+        gradientStd: 'Desv. típica de gradiente',
+        gradientMeanAbs: 'Media |gradiente|',
+      },
+      stats: {
+        regime: 'Régimen observado',
+        finalActivationStd: 'Desv. típica en la capa más profunda',
+        firstLayerGradientStd: 'Desv. típica del gradiente en la primera capa',
+      },
+      regimes: {
+        vanishing: {
+          label: 'Rango desvanecido',
+          title: 'La señal se apaga antes de que la profundidad resulte útil',
+          description:
+            'Las activaciones profundas o los gradientes tempranos se están colapsando hacia cero. Aunque la arquitectura tenga profundidad, sobrevive muy poca variación útil entre capas.',
+        },
+        stable: {
+          label: 'Rango estable',
+          title: 'Las escalas forward y backward se mantienen en un corredor útil',
+          description:
+            'Esta es la intuición objetivo: las activaciones conservan suficiente dispersión para transportar información y las actualizaciones hacia atrás aún tienen escala bastante para influir en capas tempranas.',
+        },
+        exploding: {
+          label: 'Rango explosivo',
+          title: 'La profundidad está amplificando demasiado los valores',
+          description:
+            'La red está magnificando las respuestas hasta el punto de desescalar activaciones o actualizaciones hacia atrás. Eso vuelve frágil la optimización incluso antes de hablar del optimizador.',
+        },
+      },
+      readingGuideTitle: 'Qué comparar primero',
+      readingGuideBullets: [
+        'Mantén ReLU y cambia entre Pesos diminutos, He y Pesos sobredimensionados. Mira cómo las barras colapsan, se mantienen o explotan.',
+        'Después cambia a tanh y compara Xavier con Pesos sobredimensionados. Fíjate en cómo los pesos grandes empujan tanh hacia saturación.',
+        'Mira ambos extremos de la pila: las activaciones profundas te dicen qué sobrevive hacia delante y los gradientes tempranos qué puede seguir aprendiendo hacia atrás.',
+      ],
+      bridgeTitle: 'Por qué importa después de convolución',
+      bridgeDescription: (mode, activation) => {
+        const modeLabel = {
+          tiny: 'pesos diminutos',
+          xavier: 'equilibrio estilo Xavier',
+          he: 'equilibrio estilo He',
+          large: 'pesos sobredimensionados',
+        }[mode]
+        return `${modeLabel} con ${activation.toUpperCase()} cambia la red antes incluso de entrenarla. La idea no es que la inicialización lo resuelva todo, sino que el entrenamiento estable empieza manteniendo el flujo de señal lo bastante utilizable como para que la optimización posterior tenga algo con lo que trabajar.`
+      },
+      prompts: [
+        'Empieza con He + ReLU. ¿Qué capas conservan una cantidad parecida de señal en lugar de colapsar enseguida?',
+        'Cambia a Pesos diminutos. ¿Las capas profundas siguen mostrando dispersión útil o todo se aplana?',
+        'Prueba Pesos sobredimensionados. ¿Qué métrica explota antes: la señal hacia delante o el proxy hacia atrás?',
+      ],
+    },
+  },
   sections: {
     foundations: {
       title: 'Fundamentos',
@@ -578,6 +693,15 @@ export const esMessages: LocalizedMessages = {
       objectives: [
         'Relacionar los valores del kernel con la fuerza de coincidencia local',
         'Interpretar el mapa de características como un barrido de evidencia local',
+      ],
+    },
+    'initialization-bad-vs-stable': {
+      title: 'Inicialización · mala inicialización vs inicialización estable',
+      shortTitle: 'Mala inicialización vs inicialización estable',
+      summary: 'Compara presets de inicialización para ver cuándo el flujo profundo de señal se apaga, se mantiene útil o explota antes de que el entrenamiento empiece de verdad.',
+      objectives: [
+        'Conectar la escala inicial con la dispersión de activaciones hacia delante',
+        'Relacionar esa misma escala con un proxy simple de estabilidad hacia atrás',
       ],
     },
   },

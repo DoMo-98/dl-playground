@@ -120,7 +120,20 @@ const sectionBases: LearningSectionBase[] = [
       {
         slug: 'initialization',
         order: 1,
-        lessons: [],
+        lessons: [
+          {
+            id: 'initialization-bad-vs-stable',
+            slug: 'bad-vs-stable',
+            status: 'ready',
+            kind: 'interactive',
+            sectionSlug: 'stable-training',
+            unitSlug: 'initialization',
+            order: 6,
+            estimatedMinutes: 12,
+            concepts: ['initialization', 'signal scale', 'gradient stability'],
+            prerequisites: ['cnn-local-patterns'],
+          },
+        ],
       },
       {
         slug: 'normalization-and-regularization',
