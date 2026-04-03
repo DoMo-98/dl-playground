@@ -1,4 +1,4 @@
-import { ActionButton } from '../../../../components/form/ActionButton'
+import { Button } from '../../../../components/form/Button'
 import { Control } from '../../../../components/form/Control'
 import { LearningPageLayout } from '../../../../components/learning/LearningPageLayout'
 import {
@@ -53,19 +53,15 @@ export function GradientDescentPage() {
             <p className="text-sm font-semibold text-white">{copy.presetLabel}</p>
             <div className="grid gap-2">
               {copy.presets.map((preset) => (
-                <button
+                <Button
                   key={preset.id}
-                  type="button"
+                  variant={Math.abs(learningRate - preset.learningRate) < 0.001 ? 'accent' : 'default'}
                   onClick={() => handlePreset(preset.learningRate)}
-                  className={`rounded-xl border px-3 py-3 text-left text-sm transition ${
-                    Math.abs(learningRate - preset.learningRate) < 0.001
-                      ? 'border-cyan-400/30 bg-cyan-400/10 text-cyan-50'
-                      : 'border-white/10 bg-slate-950/30 text-slate-200 hover:bg-white/5'
-                  }`}
+                  className="text-left"
                 >
                   <span className="block font-medium text-white">{preset.label}</span>
                   <span className="block text-slate-300">{preset.description}</span>
-                </button>
+                </Button>
               ))}
             </div>
           </div>
@@ -94,13 +90,14 @@ export function GradientDescentPage() {
           />
 
           <div className="grid gap-2 sm:grid-cols-3">
-            <ActionButton label={copy.actions.step} onClick={handleStep} disabled={!canStep} accent />
-            <ActionButton
-              label={isAutoplaying ? copy.actions.pause : copy.actions.autoplay}
+            <Button variant="accent" onClick={handleStep} disabled={!canStep}>{copy.actions.step}</Button>
+            <Button
               onClick={() => setIsAutoplaying((value) => !value)}
               disabled={!canStep}
-            />
-            <ActionButton label={copy.actions.reset} onClick={() => resetTrajectory()} />
+            >
+              {isAutoplaying ? copy.actions.pause : copy.actions.autoplay}
+            </Button>
+            <Button onClick={() => resetTrajectory()}>{copy.actions.reset}</Button>
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-300">

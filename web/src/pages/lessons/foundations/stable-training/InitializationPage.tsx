@@ -8,6 +8,7 @@ import {
 } from '../../../../components/learning/LessonPrimitives'
 import { StatCard } from '../../../../components/visualization'
 import { useI18n } from '../../../../app/i18n-context'
+import { OptionCard } from '../../../../components/form/OptionCard'
 import { getAdjacentLessons } from '../../../../content/learningPath'
 import {
   activationModes,
@@ -60,27 +61,18 @@ export function InitializationPage() {
               {initializationModes.map((option) => {
                 const optionCopy = copy.initializationOptions[option]
                 return (
-                  <label
+                  <OptionCard
                     key={option}
-                    className={`flex cursor-pointer items-start gap-3 rounded-xl border px-3 py-3 text-sm transition ${
-                      mode === option
-                        ? 'border-cyan-400/30 bg-cyan-400/10 text-cyan-50'
-                        : 'border-white/10 bg-slate-950/30 text-slate-200 hover:bg-white/5'
-                    }`}
+                    name="init-mode"
+                    value={option}
+                    selected={mode === option}
+                    onChange={() => setMode(option)}
                   >
-                    <input
-                      type="radio"
-                      name="init-mode"
-                      value={option}
-                      checked={mode === option}
-                      onChange={() => setMode(option)}
-                      className="mt-1 accent-cyan-400"
-                    />
                     <span>
                       <span className="block font-medium text-white">{optionCopy.label}</span>
                       <span className="block text-slate-300">{optionCopy.description}</span>
                     </span>
-                  </label>
+                  </OptionCard>
                 )
               })}
             </div>
@@ -92,27 +84,18 @@ export function InitializationPage() {
               {activationModes.map((option) => {
                 const optionCopy = copy.activationOptions[option]
                 return (
-                  <label
+                  <OptionCard
                     key={option}
-                    className={`flex cursor-pointer items-start gap-3 rounded-xl border px-3 py-3 text-sm transition ${
-                      activation === option
-                        ? 'border-cyan-400/30 bg-cyan-400/10 text-cyan-50'
-                        : 'border-white/10 bg-slate-950/30 text-slate-200 hover:bg-white/5'
-                    }`}
+                    name="activation-mode"
+                    value={option}
+                    selected={activation === option}
+                    onChange={() => setActivation(option)}
                   >
-                    <input
-                      type="radio"
-                      name="activation-mode"
-                      value={option}
-                      checked={activation === option}
-                      onChange={() => setActivation(option)}
-                      className="mt-1 accent-cyan-400"
-                    />
                     <span>
                       <span className="block font-medium text-white">{optionCopy.label}</span>
                       <span className="block text-slate-300">{optionCopy.description}</span>
                     </span>
-                  </label>
+                  </OptionCard>
                 )
               })}
             </div>

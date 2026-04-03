@@ -134,7 +134,7 @@ export function SiteShell() {
                 <button
                   type="button"
                   className={[
-                    'inline-flex items-center justify-center rounded-xl border p-2 text-slate-100 transition md:hidden',
+                    'inline-flex items-center justify-center rounded-xl border p-2 text-slate-100 transition-all md:hidden active:scale-[0.93] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900',
                     menuOpen
                       ? 'border-cyan-400/40 bg-cyan-400/10 text-cyan-100'
                       : 'border-white/10 bg-white/5 hover:bg-white/10',

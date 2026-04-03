@@ -16,6 +16,7 @@ import { DecisionBoundaryVisualization } from '../../../../features/perceptron/c
 import { getAdjacentLessons } from '../../../../content/learningPath'
 import { useI18n } from '../../../../app/i18n-context'
 import { StatCard } from '../../../../components/visualization'
+import { OptionCard } from '../../../../components/form/OptionCard'
 
 export function DecisionBoundaryPage() {
   const { locale, messages } = useI18n()
@@ -51,27 +52,18 @@ export function DecisionBoundaryPage() {
                 const candidateDescription = copy.datasetDescriptions[candidate.id as keyof typeof copy.datasetDescriptions]
 
                 return (
-                  <label
+                  <OptionCard
                     key={candidate.id}
-                    className={`flex cursor-pointer items-start gap-3 rounded-xl border px-3 py-3 text-sm transition ${
-                      candidate.id === dataset.id
-                        ? 'border-cyan-400/30 bg-cyan-400/10 text-cyan-50'
-                        : 'border-white/10 bg-slate-950/30 text-slate-200 hover:bg-white/5'
-                    }`}
+                    name="dataset"
+                    value={candidate.id}
+                    selected={candidate.id === dataset.id}
+                    onChange={() => setDatasetId(candidate.id)}
                   >
-                    <input
-                      type="radio"
-                      name="dataset"
-                      value={candidate.id}
-                      checked={candidate.id === dataset.id}
-                      onChange={() => setDatasetId(candidate.id)}
-                      className="mt-1 accent-cyan-400"
-                    />
                     <span>
                       <span className="block font-medium text-white">{candidateName}</span>
                       <span className="block text-slate-300">{candidateDescription}</span>
                     </span>
-                  </label>
+                  </OptionCard>
                 )
               })}
             </div>
