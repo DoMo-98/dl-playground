@@ -7,7 +7,7 @@ describe('NotFoundPage', () => {
   it('sets document.title', () => {
     renderWithI18n(<NotFoundPage />, { initialEntries: ['/en'] })
 
-    expect(document.title).toBe('Page not found — DL Playground')
+    expect(document.title).toBe('dl-playground')
   })
 
   it('renders CTAs linking to home and the learning path', () => {

@@ -9,8 +9,8 @@ export function NotFoundPage() {
   const { messages, toLocalizedPath } = useI18n()
 
   useEffect(() => {
-    document.title = `${messages.notFound.eyebrow} — DL Playground`
-  }, [messages.notFound.eyebrow])
+    document.title = 'dl-playground'
+  }, [])
 
   return (
     <Card as="section" className="rounded-3xl p-8">

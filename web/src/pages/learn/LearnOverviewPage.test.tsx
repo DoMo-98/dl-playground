@@ -9,7 +9,7 @@ describe('LearnOverviewPage', () => {
   it('sets the document title', () => {
     renderWithI18n(<LearnOverviewPage />, { initialEntries: ['/en/learn'] })
 
-    expect(document.title).toBe('Learn — DL Playground')
+    expect(document.title).toBe('dl-playground')
   })
 
   it('renders the primary CTA as a Button wrapping a link', () => {

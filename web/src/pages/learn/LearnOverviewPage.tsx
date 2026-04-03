@@ -20,8 +20,8 @@ export function LearnOverviewPage() {
   const nextReadyLesson = getNextReadyLesson(locale)
 
   useEffect(() => {
-    document.title = `${messages.nav.learn} — DL Playground`
-  }, [messages.nav.learn])
+    document.title = 'dl-playground'
+  }, [])
 
   return (
     <div className="space-y-10">

@@ -7,7 +7,7 @@ describe('HomePage', () => {
   it('sets the document title', () => {
     renderWithI18n(<HomePage />, { initialEntries: ['/en'] })
 
-    expect(document.title).toBe('DL Playground')
+    expect(document.title).toBe('dl-playground')
   })
 
   it('renders the primary CTA as a link to the learning path', () => {

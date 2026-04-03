@@ -10,7 +10,7 @@ export function HomePage() {
   const { messages, toLocalizedPath } = useI18n()
 
   useEffect(() => {
-    document.title = 'DL Playground'
+    document.title = 'dl-playground'
   }, [])
 
   return (

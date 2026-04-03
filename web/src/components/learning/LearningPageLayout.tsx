@@ -92,7 +92,7 @@ export function LearningPageLayout({
 
   useEffect(() => {
     headingRef.current?.focus({ preventScroll: true })
-    document.title = `${title} — DL Playground`
+    document.title = 'dl-playground'
   }, [pathname, title])
 
   return (
