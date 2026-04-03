@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { ArrowRight, BookOpen, CheckCircle2, Clock3, Sparkles } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useI18n } from '../../app/i18n-context'
@@ -18,10 +17,6 @@ export function LearnOverviewPage() {
   const { locale, messages } = useI18n()
   const learningSections = getLearningSections(locale)
   const nextReadyLesson = getNextReadyLesson(locale)
-
-  useEffect(() => {
-    document.title = 'dl-playground'
-  }, [])
 
   return (
     <div className="space-y-10">

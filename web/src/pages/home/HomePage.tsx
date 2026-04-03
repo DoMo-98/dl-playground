@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { ArrowRight, Orbit } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { ROUTES } from '../../config/routes'
@@ -8,10 +7,6 @@ import { Button } from '../../components/form/Button'
 
 export function HomePage() {
   const { messages, toLocalizedPath } = useI18n()
-
-  useEffect(() => {
-    document.title = 'dl-playground'
-  }, [])
 
   return (
     <div className="space-y-12">

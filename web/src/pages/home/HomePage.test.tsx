@@ -4,12 +4,6 @@ import { renderWithI18n } from '../../test/renderWithI18n'
 import { HomePage } from './HomePage'
 
 describe('HomePage', () => {
-  it('sets the document title', () => {
-    renderWithI18n(<HomePage />, { initialEntries: ['/en'] })
-
-    expect(document.title).toBe('dl-playground')
-  })
-
   it('renders the primary CTA as a link to the learning path', () => {
     renderWithI18n(<HomePage />, { initialEntries: ['/en'] })
 

@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { ArrowRight, Home } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useI18n } from '../../app/i18n-context'
@@ -7,10 +6,6 @@ import { Card } from '../../components/Card'
 
 export function NotFoundPage() {
   const { messages, toLocalizedPath } = useI18n()
-
-  useEffect(() => {
-    document.title = 'dl-playground'
-  }, [])
 
   return (
     <Card as="section" className="rounded-3xl p-8">

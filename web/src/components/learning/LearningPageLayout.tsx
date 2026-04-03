@@ -92,8 +92,7 @@ export function LearningPageLayout({
 
   useEffect(() => {
     headingRef.current?.focus({ preventScroll: true })
-    document.title = 'dl-playground'
-  }, [pathname, title])
+  }, [pathname])
 
   return (
     <div className="space-y-8">

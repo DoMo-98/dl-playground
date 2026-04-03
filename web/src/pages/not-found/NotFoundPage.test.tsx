@@ -4,12 +4,6 @@ import { renderWithI18n } from '../../test/renderWithI18n'
 import { NotFoundPage } from './NotFoundPage'
 
 describe('NotFoundPage', () => {
-  it('sets document.title', () => {
-    renderWithI18n(<NotFoundPage />, { initialEntries: ['/en'] })
-
-    expect(document.title).toBe('dl-playground')
-  })
-
   it('renders CTAs linking to home and the learning path', () => {
     renderWithI18n(<NotFoundPage />, { initialEntries: ['/en'] })
 
