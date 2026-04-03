@@ -1,5 +1,6 @@
 import type { LocalizedMessages } from './en'
 import type { Locale } from '../../types/i18n'
+import { hiddenLayerCount } from '../../features/initialization/lib/initialization'
 
 export const esMessages: LocalizedMessages = {
   languageName: 'Español',
@@ -520,7 +521,7 @@ export const esMessages: LocalizedMessages = {
       layerDescription: (layerIndex: number) =>
         layerIndex === 1
           ? 'Capa oculta más cercana a la entrada.'
-          : layerIndex === 4
+          : layerIndex === hiddenLayerCount
             ? 'Capa oculta más profunda de esta pila de juguete.'
             : 'Otra capa oculta dentro de la misma cadena forward/backward.',
       zeroFractionLabel: (value: number) => `${Math.round(value * 100)}% ceros`,

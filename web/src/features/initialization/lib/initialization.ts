@@ -181,5 +181,6 @@ export function classifyRegime(finalActivationStd: number, finalGradientStd: num
   return 'stable'
 }
 
+export const hiddenLayerCount = layerSizes.length - 1
 export const initializationModes: InitializationMode[] = initConfigs.map((config) => config.id)
 export const activationModes: ActivationMode[] = ['relu', 'tanh']

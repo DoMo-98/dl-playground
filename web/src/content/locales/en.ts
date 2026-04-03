@@ -1,4 +1,5 @@
 import type { Locale } from '../../types/i18n'
+import { hiddenLayerCount } from '../../features/initialization/lib/initialization'
 
 type LocalizedSectionCopy = {
   title: string
@@ -876,7 +877,7 @@ export const enMessages: LocalizedMessages = {
       layerDescription: (layerIndex: number) =>
         layerIndex === 1
           ? 'Closest hidden layer to the input.'
-          : layerIndex === 4
+          : layerIndex === hiddenLayerCount
             ? 'Deepest hidden layer in this toy stack.'
             : 'Another hidden layer in the same forward/backward chain.',
       zeroFractionLabel: (value: number) => `${Math.round(value * 100)}% zeros`,
