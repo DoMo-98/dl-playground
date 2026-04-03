@@ -1,10 +1,16 @@
+import { useEffect } from 'react'
 import { ArrowRight, Home } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useI18n } from '../../app/i18n-context'
+import { Button } from '../../components/form/Button'
 import { Card } from '../../components/Card'
 
 export function NotFoundPage() {
   const { messages, toLocalizedPath } = useI18n()
+
+  useEffect(() => {
+    document.title = `${messages.notFound.eyebrow} — DL Playground`
+  }, [messages.notFound.eyebrow])
 
   return (
     <Card as="section" className="rounded-3xl p-8">
@@ -15,20 +21,18 @@ export function NotFoundPage() {
       </div>
 
       <div className="mt-6 flex flex-wrap gap-3">
-        <Link
-          to={toLocalizedPath('/')}
-          className="inline-flex items-center gap-2 rounded-xl bg-cyan-300 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-200"
-        >
-          <Home className="h-4 w-4" />
-          {messages.notFound.primaryCta}
-        </Link>
-        <Link
-          to={toLocalizedPath('/learn')}
-          className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-5 py-3 text-sm font-medium text-slate-100 transition hover:bg-white/5"
-        >
-          {messages.notFound.secondaryCta}
-          <ArrowRight className="h-4 w-4" />
-        </Link>
+        <Button asChild variant="solid" size="lg">
+          <Link to={toLocalizedPath('/')} className="inline-flex items-center gap-2">
+            <Home className="h-4 w-4" />
+            {messages.notFound.primaryCta}
+          </Link>
+        </Button>
+        <Button asChild variant="default" size="lg">
+          <Link to={toLocalizedPath('/learn')} className="inline-flex items-center gap-2">
+            {messages.notFound.secondaryCta}
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </Button>
       </div>
     </Card>
   )

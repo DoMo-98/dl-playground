@@ -1,9 +1,25 @@
-import { screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { cleanup, screen } from '@testing-library/react'
+import { afterEach, describe, expect, it } from 'vitest'
 import { renderWithI18n } from '../../test/renderWithI18n'
 import { LearnOverviewPage } from './LearnOverviewPage'
 
 describe('LearnOverviewPage', () => {
+  afterEach(cleanup)
+
+  it('sets the document title', () => {
+    renderWithI18n(<LearnOverviewPage />, { initialEntries: ['/en/learn'] })
+
+    expect(document.title).toBe('Learn — DL Playground')
+  })
+
+  it('renders the primary CTA as a Button wrapping a link', () => {
+    renderWithI18n(<LearnOverviewPage />, { initialEntries: ['/en/learn'] })
+
+    const startLink = screen.getByRole('link', { name: /open lesson/i })
+    // The Button component applies focus-visible ring classes
+    expect(startLink.className).toContain('focus-visible:ring')
+  })
+
   it('highlights the first ready lesson and keeps planned lessons non-clickable', () => {
     renderWithI18n(<LearnOverviewPage />, { initialEntries: ['/en/learn'] })
 

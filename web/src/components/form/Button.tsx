@@ -3,7 +3,7 @@ import { clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 import type { ButtonHTMLAttributes } from 'react'
 
-type ButtonVariant = 'default' | 'accent' | 'ghost'
+type ButtonVariant = 'default' | 'accent' | 'solid' | 'ghost'
 type ButtonSize = 'sm' | 'md' | 'lg'
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -22,6 +22,11 @@ const variantStyles: Record<ButtonVariant, string> = {
     'border-cyan-400/30 bg-cyan-400/10 text-cyan-50',
     'hover:bg-cyan-400/18',
     'active:scale-[0.97] active:bg-cyan-400/25',
+  ),
+  solid: clsx(
+    'border-transparent bg-cyan-300 text-slate-950',
+    'hover:bg-cyan-200',
+    'active:scale-[0.97] active:bg-cyan-200',
   ),
   ghost: clsx(
     'border-transparent bg-transparent text-slate-300',

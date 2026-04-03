@@ -1,6 +1,8 @@
+import { useEffect } from 'react'
 import { ArrowRight, BookOpen, CheckCircle2, Clock3, Sparkles } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useI18n } from '../../app/i18n-context'
+import { Button } from '../../components/form/Button'
 import { Card } from '../../components/Card'
 import { LessonCardBody } from '../../components/learning/LessonCardBody'
 import { MetaBadge } from '../../components/learning/MetaBadge'
@@ -16,6 +18,10 @@ export function LearnOverviewPage() {
   const { locale, messages } = useI18n()
   const learningSections = getLearningSections(locale)
   const nextReadyLesson = getNextReadyLesson(locale)
+
+  useEffect(() => {
+    document.title = `${messages.nav.learn} — DL Playground`
+  }, [messages.nav.learn])
 
   return (
     <div className="space-y-10">
@@ -47,13 +53,12 @@ export function LearnOverviewPage() {
               </div>
             </div>
 
-            <Link
-              to={nextReadyLesson.href}
-              className="inline-flex items-center gap-2 rounded-full bg-cyan-300 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-200"
-            >
-              {messages.learn.openLesson}
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+            <Button asChild variant="solid" size="lg">
+              <Link to={nextReadyLesson.href} className="inline-flex items-center gap-2 rounded-full px-5 font-semibold">
+                {messages.learn.openLesson}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
           </div>
         </section>
       ) : null}

@@ -1,11 +1,17 @@
+import { useEffect } from 'react'
 import { ArrowRight, Orbit } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { ROUTES } from '../../config/routes'
 import { useI18n } from '../../app/i18n-context'
 import { Card } from '../../components/Card'
+import { Button } from '../../components/form/Button'
 
 export function HomePage() {
   const { messages, toLocalizedPath } = useI18n()
+
+  useEffect(() => {
+    document.title = 'DL Playground'
+  }, [])
 
   return (
     <div className="space-y-12">
@@ -23,19 +29,17 @@ export function HomePage() {
           </div>
 
           <div className="flex flex-wrap gap-3">
-            <Link
-              to={toLocalizedPath(ROUTES.LEARN)}
-              className="inline-flex items-center gap-2 rounded-xl bg-cyan-400 px-5 py-3 font-medium text-slate-950 transition hover:bg-cyan-300"
-            >
-              {messages.home.primaryCta}
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link
-              to={toLocalizedPath(ROUTES.FIRST_LESSON)}
-              className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-5 py-3 font-medium text-slate-100 transition hover:bg-white/5"
-            >
-              {messages.home.secondaryCta}
-            </Link>
+            <Button asChild variant="solid" size="lg">
+              <Link to={toLocalizedPath(ROUTES.LEARN)} className="inline-flex items-center gap-2">
+                {messages.home.primaryCta}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+            <Button asChild variant="default" size="lg">
+              <Link to={toLocalizedPath(ROUTES.FIRST_LESSON)}>
+                {messages.home.secondaryCta}
+              </Link>
+            </Button>
           </div>
         </div>
 
