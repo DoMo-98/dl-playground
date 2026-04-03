@@ -169,7 +169,7 @@ export function analyzeInitialization(mode: InitializationMode, activation: Acti
   }
 }
 
-export function classifyRegime(finalActivationStd: number, finalGradientStd: number): StabilityRegime {
+function classifyRegime(finalActivationStd: number, finalGradientStd: number): StabilityRegime {
   if (finalActivationStd < 0.05 || finalGradientStd < 0.05) {
     return 'vanishing'
   }

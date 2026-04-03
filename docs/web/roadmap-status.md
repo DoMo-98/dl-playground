@@ -6,15 +6,12 @@ This file is the **in-repo orientation point** for current status, current next 
 
 Use these in order:
 
-1. **Operational roadmap (canonical, outside the repo):** `/root/.openclaw/workspace/memory/2026-03-29-dl-roadmap.md`
+1. **This file** — canonical source for task state (`DONE`, `NEXT`, `QUEUED`) and execution order. (Previously tracked in an external planning system at `/root/.openclaw/workspace/memory/2026-03-29-dl-roadmap.md`, which is no longer in use.)
 2. **Subagent execution philosophy:** `docs/web/subagent-working-philosophy.md`
 3. **Paper readiness / access truth:** `references/operational-paper-set.md`
 4. **Tracked paper metadata:** `references/index.md`
 
-Important distinction:
-
-- The file in workspace `memory/` is the **operational source of truth** for task state (`DONE`, `NEXT`, `QUEUED`) and execution order.
-- The files inside this repository are the **shareable project docs** that should help contributors understand the same state without guessing.
+All planning truth now lives inside this repository.
 
 ## Confirmed current product status
 
@@ -29,6 +26,8 @@ Implemented in the app today:
 - interactive lesson: **Perceptron · decision boundary intuition**
 - interactive lesson: **MLP · activation functions and non-linearity**
 - interactive lesson: **Gradient descent intuition**
+- interactive lesson: **Convolution as local pattern detector**
+- interactive lesson: **Initialization · bad init vs stable init**
 
 Current learner-facing lesson order:
 
@@ -36,7 +35,8 @@ Current learner-facing lesson order:
 2. **Perceptron · decision boundary intuition**
 3. **MLP · activation functions and non-linearity**
 4. **Gradient descent intuition**
-5. **Convolution as local pattern detector** *(planned)*
+5. **Convolution as local pattern detector**
+6. **Initialization · bad init vs stable init**
 
 Current top-level taxonomy in the app:
 
@@ -53,19 +53,11 @@ Rule of thumb: taxonomy groups lessons by theme; the learner-facing sequence may
 
 Not yet implemented in the app:
 
-- **Convolution as local pattern detector**
-- the broader stable-training, sequence/memory, and research lesson blocks
+- the broader stable-training, sequence/memory, and research lesson blocks (beyond the initialization lesson already shipped)
 
 ## Current next lesson
 
-**NEXT:** `T4 — Convolution as local pattern detector`
-
-In plain English:
-
-- the next lesson should teach that a convolution applies a **small shared kernel** across local neighborhoods
-- the learner should manipulate the **input pattern** and **kernel weights**
-- the UI should show the sliding local response and resulting feature-map values immediately
-- this lesson should be treated as the next execution target unless the canonical roadmap changes
+**Status:** The first 6 lessons (through Initialization) are shipped. The next lesson is determined by this file's roadmap state.
 
 ## Why the next lesson is not just “build the next page”
 
@@ -78,11 +70,10 @@ That means roadmap execution depends on both:
 - lesson sequencing
 - source-readiness / anchor clarity
 
-For the current next lesson:
+For the current state:
 
-- the perceptron, MLP, and gradient-descent lessons are already shipped in the app
-- `T4` is next, and its visible slot in the learning path is now after the optimization lesson to preserve a beginner-friendly intuition flow
-- the next implementation run should confirm the strongest usable convolution anchor, then build the smallest coherent interactive lesson around local pattern detection
+- the perceptron, MLP, gradient-descent, convolution, and initialization lessons are already shipped in the app
+- the next implementation run should consult this file for the next execution target
 
 ## How to use the rest of the docs in this folder
 
@@ -98,7 +89,7 @@ For the current next lesson:
 
 When a contributor changes repo-level docs that mention status, next steps, or roadmap order, they should verify those statements against:
 
-- `/root/.openclaw/workspace/memory/2026-03-29-dl-roadmap.md`
+- This file (the canonical roadmap status)
 - `references/operational-paper-set.md`
 
 If they disagree, update the repo docs or explicitly label them as historical/non-canonical rather than leaving silent drift behind.

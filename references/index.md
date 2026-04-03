@@ -149,7 +149,7 @@ Current policy:
 ### Understanding the difficulty of training deep feedforward neural networks
 - Authors: Xavier Glorot, Yoshua Bengio
 - Year: 2010
-- Status: linked
+- Status: lesson-linked
 - Topic(s): initialization, optimization, stable-training
 - Source strategy:
   - official-preferred: AISTATS / PMLR
@@ -254,7 +254,7 @@ Current policy:
 ### Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification
 - Authors: Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun
 - Year: 2015
-- Status: linked
+- Status: lesson-linked
 - Topic(s): relu, initialization, activations, cnn
 - Source strategy:
   - official-preferred: ICCV proceedings
@@ -266,7 +266,7 @@ Current policy:
 - Teaching fit: visual-first
 - Relevance: key source for rectifier behavior and He initialization.
 - Notes: `references/notes/2015-rectifiers.md`
-- Access status: full-text-ok
+- Access status: abstract-or-metadata-only
 - Potential lesson use:
   - dead neurons intuition
   - ReLU family behavior
@@ -287,7 +287,7 @@ Current policy:
 - Teaching fit: visual-first
 - Relevance: core normalization paper with strong direct lesson value.
 - Notes: `references/notes/2015-batch-normalization.md`
-- Access status: full-text-ok
+- Access status: abstract-or-metadata-only
 - Potential lesson use:
   - train-time batch statistics
   - running averages at inference

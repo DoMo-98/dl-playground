@@ -1,14 +1,14 @@
 export { locales, type Locale } from '../types/i18n'
 import type { Locale } from '../types/i18n'
 
-export const defaultLocale: Locale = 'en'
-export const localeStorageKey = 'dl-playground-locale'
+const defaultLocale: Locale = 'en'
+const localeStorageKey = 'dl-playground-locale'
 
 export function isLocale(value: string | undefined | null): value is Locale {
   return value === 'en' || value === 'es'
 }
 
-export function normalizeLocale(value: string | undefined | null): Locale | null {
+function normalizeLocale(value: string | undefined | null): Locale | null {
   if (!value) {
     return null
   }

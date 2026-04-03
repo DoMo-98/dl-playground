@@ -231,7 +231,7 @@ export function getLearningLessons(locale: Locale = 'en') {
     .map(({ lesson }) => lesson)
 }
 
-export function getLearningLessonById(locale: Locale = 'en') {
+function getLearningLessonById(locale: Locale = 'en') {
   const learningLessons = getLearningLessons(locale)
   return Object.fromEntries(learningLessons.map((lesson) => [lesson.id, lesson]))
 }
@@ -255,7 +255,7 @@ export function getSectionStats(section: LearningSection) {
   }
 }
 
-export function getLessonIndex(lessonId: string, locale: Locale = 'en') {
+function getLessonIndex(lessonId: string, locale: Locale = 'en') {
   return getLearningLessons(locale).findIndex((lesson) => lesson.id === lessonId)
 }
 

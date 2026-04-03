@@ -17,11 +17,11 @@ export const gradientDescentDomain = {
   max: 1.8,
 } as const
 
-export function evaluateLoss(parameter: number) {
+function evaluateLoss(parameter: number) {
   return 0.12 * (parameter + 1.8) ** 4 + 0.55 * (parameter - 1) ** 2 + 0.2
 }
 
-export function evaluateGradient(parameter: number) {
+function evaluateGradient(parameter: number) {
   return 0.48 * (parameter + 1.8) ** 3 + 1.1 * (parameter - 1)
 }
 

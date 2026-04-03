@@ -108,7 +108,8 @@ This is the sequence that the current app should present to learners:
 2. Perceptron: decision boundary intuition
 3. MLP: activation functions and non-linearity
 4. Gradient descent intuition
-5. Convolution as local pattern detector *(planned)*
+5. Convolution as local pattern detector
+6. Initialization: bad init vs stable init
 
 This list is repeated here only as an orientation aid; if drift appears, `web/src/content/learningPath.ts` wins.
 

@@ -65,7 +65,7 @@ Recommended Vercel project setting:
 Why:
 
 - the app uses `BrowserRouter`
-- deep links like `/learn/mechanics/perceptron/weighted-sum` need an SPA rewrite to `index.html`
+- deep links like `/learn/foundations/perceptron/weighted-sum` need an SPA rewrite to `index.html`
 - `vercel.json` in this folder configures build/output, SPA rewrites, asset caching, and basic security headers
 
 Old preview deployments for the same branch are cleaned up automatically by `.github/workflows/vercel-preview-cleanup.yml`. The cleanup now runs when GitHub receives a successful `deployment_status` event for a non-production deployment, so it only starts after the newest Vercel preview is actually ready instead of waiting a fixed amount of time. A manual `workflow_dispatch` fallback is still available for ad-hoc cleanup. To enable it, add these GitHub Actions secrets:

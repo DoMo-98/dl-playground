@@ -1,5 +1,7 @@
 # Initial Scaffold Plan
 
+> **Note:** This document is an early planning artifact and does not reflect what was actually built. The component families listed below (Panel, Slider, Toggle, etc.) are aspirational — none were implemented as described. See `web/src/components/` for the current, simpler component structure.
+
 ## Goal
 
 Define the initial filesystem scaffold for the interactive web so implementation can begin with a clean, reusable structure.

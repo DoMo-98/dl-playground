@@ -6,7 +6,7 @@ import { localeLabels } from '../../lib/i18n'
 import { REPOSITORY_URL } from '../../config/constants'
 import { ROUTES } from '../../config/routes'
 import { useI18n } from '../i18n-context'
-import { HeaderFeatureLink, HeaderUtilityLink } from '../../components/header/headerPrimitives'
+import { HeaderFeatureLink, HeaderUtilityLink } from '../../components/header/HeaderPrimitives'
 
 type HeaderLocaleVariant = 'compact' | 'panel'
 

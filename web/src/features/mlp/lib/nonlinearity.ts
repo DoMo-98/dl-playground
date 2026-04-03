@@ -20,7 +20,7 @@ export function applyActivation(kind: ActivationKind, value: number) {
   }
 }
 
-export function evaluateTinyMlp(x: number, activation: ActivationKind, params: TinyMlpParams) {
+function evaluateTinyMlp(x: number, activation: ActivationKind, params: TinyMlpParams) {
   const h1Pre = params.hiddenScale * (1.4 * x - 0.6)
   const h2Pre = params.hiddenScale * (-1.1 * x + 0.9)
   const h1 = applyActivation(activation, h1Pre)
