@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { ArrowLeft, ArrowRight, BookOpen, Lightbulb, Lock, NotebookPen, Target } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { Button } from '../form/Button'
 import { useI18n } from '../../app/i18n-context'
 import type { LessonStatus } from '../../types/learning'
 
@@ -129,13 +130,12 @@ export function LessonNavigation({ overviewHref, previousLesson, nextLesson }: L
       title={messages.lessonChrome.navigationTitle}
     >
       <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-        <Link
-          to={overviewHref ?? toLocalizedPath('/learn')}
-          className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-4 py-3 text-sm font-medium text-slate-100 transition hover:bg-white/5"
-        >
-          <BookOpen className="h-4 w-4" />
-          {messages.lessonChrome.backToLearningPath}
-        </Link>
+        <Button asChild size="lg">
+          <Link to={overviewHref ?? toLocalizedPath('/learn')} className="inline-flex items-center gap-2">
+            <BookOpen className="h-4 w-4" />
+            {messages.lessonChrome.backToLearningPath}
+          </Link>
+        </Button>
 
         <LessonNavigationAction direction="previous" lesson={previousLesson} />
         <LessonNavigationAction direction="next" lesson={nextLesson} />
@@ -161,18 +161,13 @@ function LessonNavigationAction({ direction, lesson }: LessonNavigationActionPro
 
   if (lesson.status === 'ready') {
     return (
-      <Link
-        to={lesson.href}
-        className={
-          direction === 'next'
-            ? 'inline-flex items-center gap-2 rounded-xl border border-cyan-400/20 bg-cyan-400/10 px-4 py-3 text-sm font-medium text-cyan-50 transition hover:bg-cyan-400/15'
-            : 'inline-flex items-center gap-2 rounded-xl border border-white/10 px-4 py-3 text-sm font-medium text-slate-100 transition hover:bg-white/5'
-        }
-      >
-        {direction === 'previous' ? icon : null}
-        <span>{label}</span>
-        {direction === 'next' ? icon : null}
-      </Link>
+      <Button asChild variant={direction === 'next' ? 'accent' : 'default'} size="lg">
+        <Link to={lesson.href} className="inline-flex items-center gap-2">
+          {direction === 'previous' ? icon : null}
+          <span>{label}</span>
+          {direction === 'next' ? icon : null}
+        </Link>
+      </Button>
     )
   }
 

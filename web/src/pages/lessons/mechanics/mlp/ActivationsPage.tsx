@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Control } from '../../../../components/form/Control'
+import { OptionCard } from '../../../../components/form/OptionCard'
 import { LearningPageLayout } from '../../../../components/learning/LearningPageLayout'
 import {
   CoreIdeaCard,
@@ -47,27 +48,18 @@ export function ActivationsPage() {
                 const candidateCopy = copy.activationOptions[candidate]
 
                 return (
-                  <label
+                  <OptionCard
                     key={candidate}
-                    className={`flex cursor-pointer items-start gap-3 rounded-xl border px-3 py-3 text-sm transition ${
-                      candidate === activation
-                        ? 'border-cyan-400/30 bg-cyan-400/10 text-cyan-50'
-                        : 'border-white/10 bg-slate-950/30 text-slate-200 hover:bg-white/5'
-                    }`}
+                    name="activation"
+                    value={candidate}
+                    selected={candidate === activation}
+                    onChange={() => setActivation(candidate)}
                   >
-                    <input
-                      type="radio"
-                      name="activation"
-                      value={candidate}
-                      checked={candidate === activation}
-                      onChange={() => setActivation(candidate)}
-                      className="mt-1 accent-cyan-400"
-                    />
                     <span>
                       <span className="block font-medium text-white">{candidateCopy.label}</span>
                       <span className="block text-slate-300">{candidateCopy.description}</span>
                     </span>
-                  </label>
+                  </OptionCard>
                 )
               })}
             </div>

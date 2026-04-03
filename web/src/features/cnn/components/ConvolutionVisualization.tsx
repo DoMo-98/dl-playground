@@ -38,7 +38,7 @@ function GridCellButton({
           ? 'bg-rose-400/15 text-rose-50 border-rose-400/20'
           : 'bg-slate-950/40 text-slate-300 border-white/10'
 
-  const baseClassName = `flex aspect-square min-h-12 items-center justify-center rounded-xl border text-sm font-semibold transition ${baseTone}`
+  const baseClassName = `flex aspect-square min-h-12 items-center justify-center rounded-xl border text-sm font-semibold transition-all ${baseTone}`
 
   if (onClick) {
     return (
@@ -47,7 +47,7 @@ function GridCellButton({
         aria-label={label}
         aria-pressed={pressed}
         onClick={onClick}
-        className={`${baseClassName} hover:bg-white/10`}
+        className={`${baseClassName} hover:bg-white/10 active:scale-[0.95] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900`}
       >
         {value}
       </button>
@@ -99,11 +99,11 @@ export function ConvolutionVisualization({
                     aria-pressed={value === 1}
                     aria-label={`${copy.inputCellLabel} (${rowIndex + 1}, ${colIndex + 1})`}
                     onClick={() => onToggleInput(rowIndex, colIndex)}
-                    className={`flex aspect-square min-h-12 items-center justify-center rounded-xl border text-sm font-semibold transition ${
+                    className={`flex aspect-square min-h-12 items-center justify-center rounded-xl border text-sm font-semibold transition-all ${
                       value === 1
                         ? 'border-cyan-400/30 bg-cyan-400/15 text-cyan-50'
                         : 'border-white/10 bg-slate-950/40 text-slate-300'
-                    } ${isInSelectedPatch ? 'ring-2 ring-amber-300/70 ring-offset-2 ring-offset-slate-900' : 'hover:bg-white/10'}`}
+                    } ${isInSelectedPatch ? 'ring-2 ring-amber-300/70 ring-offset-2 ring-offset-slate-900' : 'hover:bg-white/10'} active:scale-[0.93] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900`}
                   >
                     {value}
                   </button>
@@ -147,7 +147,7 @@ export function ConvolutionVisualization({
                 key={cell.id}
                 type="button"
                 onClick={() => onSelectFeature(cell.id)}
-                className={`rounded-xl border p-3 text-center text-sm transition ${
+                className={`rounded-xl border p-3 text-center text-sm transition-all active:scale-[0.95] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 ${
                   cell.id === selectedFeature.id
                     ? 'border-amber-300/70 bg-amber-300/15 text-amber-50'
                     : cell.value > 0

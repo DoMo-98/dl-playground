@@ -1,5 +1,6 @@
 import { useMemo, useReducer } from 'react'
-import { ActionButton } from '../../../../components/form/ActionButton'
+import { Button } from '../../../../components/form/Button'
+import { OptionCard } from '../../../../components/form/OptionCard'
 import { LearningPageLayout } from '../../../../components/learning/LearningPageLayout'
 import {
   CoreIdeaCard,
@@ -87,27 +88,18 @@ function PresetRadioGroup({
         const presetCopy = presetOptions[preset.id]
 
         return (
-          <label
+          <OptionCard
             key={preset.id}
-            className={`flex cursor-pointer items-start gap-3 rounded-xl border px-3 py-3 text-sm transition ${
-              preset.id === selectedId
-                ? 'border-cyan-400/30 bg-cyan-400/10 text-cyan-50'
-                : 'border-white/10 bg-slate-950/30 text-slate-200 hover:bg-white/5'
-            }`}
+            name="cnn-preset"
+            value={preset.id}
+            selected={preset.id === selectedId}
+            onChange={() => onSelect(preset.id)}
           >
-            <input
-              type="radio"
-              name="cnn-preset"
-              value={preset.id}
-              checked={preset.id === selectedId}
-              onChange={() => onSelect(preset.id)}
-              className="mt-1 accent-cyan-400"
-            />
             <span>
               <span className="block font-medium text-white">{presetCopy.label}</span>
               <span className="block text-slate-300">{presetCopy.description}</span>
             </span>
-          </label>
+          </OptionCard>
         )
       })}
     </div>
@@ -153,11 +145,8 @@ export function LocalPatternPage() {
           </fieldset>
 
           <div className="grid gap-2 sm:grid-cols-2">
-            <ActionButton label={copy.actions.resetPreset} onClick={() => dispatch({ type: 'apply-preset', presetId: state.presetId })} accent />
-            <ActionButton
-              label={copy.actions.clearKernel}
-              onClick={() => dispatch({ type: 'clear-kernel' })}
-            />
+            <Button variant="accent" onClick={() => dispatch({ type: 'apply-preset', presetId: state.presetId })}>{copy.actions.resetPreset}</Button>
+            <Button onClick={() => dispatch({ type: 'clear-kernel' })}>{copy.actions.clearKernel}</Button>
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-300">
