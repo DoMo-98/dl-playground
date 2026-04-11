@@ -275,7 +275,7 @@ Current policy:
 ### Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift
 - Authors: Sergey Ioffe, Christian Szegedy
 - Year: 2015
-- Status: linked
+- Status: summarized
 - Topic(s): batchnorm, normalization, stable-training
 - Source strategy:
   - official-preferred: ICML / PMLR
@@ -286,8 +286,8 @@ Current policy:
 - Lesson priority: high
 - Teaching fit: visual-first
 - Relevance: core normalization paper with strong direct lesson value.
-- Notes: `references/notes/2015-batch-normalization.md`
-- Access status: abstract-or-metadata-only
+- Notes: `references/notes/t6-batchnorm-source-investigation-2026-04-11.md`
+- Access status: full-text-ok
 - Potential lesson use:
   - train-time batch statistics
   - running averages at inference
