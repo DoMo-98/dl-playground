@@ -580,6 +580,108 @@ export const esMessages: LocalizedMessages = {
         'Prueba Pesos sobredimensionados. ¿Qué métrica explota antes: la señal hacia delante o el proxy hacia atrás?',
       ],
     },
+    batchNormPage: {
+      eyebrow: 'Entrenamiento estable · Normalización',
+      title: 'Intuición de BatchNorm',
+      description:
+        'Batch normalization recentra y reescala activaciones usando estadísticas del batch durante entrenamiento, y luego cambia a estadísticas acumuladas en inferencia. Esta lección mantiene ese contraste visible sobre un batch diminuto.',
+      objective:
+        '¿Qué cambia cuando las mismas activaciones pasan por ausencia de normalización, BatchNorm en modo entrenamiento o BatchNorm en modo inferencia?',
+      coreIdeaDescription:
+        'Ioffe & Szegedy (2015) sitúan BatchNorm alrededor de estadísticas dependientes del batch. La intuición aquí es deliberadamente estrecha y fiel: el minibatch actual fija la media y la varianza durante entrenamiento, pero en inferencia hay que usar estimaciones acumuladas previamente.',
+      coreIdeaBullets: [
+        'BatchNorm en entrenamiento usa el batch actual, así que un batch desplazado puede volver a un rango más controlado.',
+        'La inferencia no puede mirar el batch completo de entrenamiento, así que usa media y varianza acumuladas.',
+        'El mecanismo no es “dejar todo en cero para siempre”, sino estabilizar lo que ve cada capa manteniendo una escala predecible.',
+      ],
+      presetTitle: 'Presets de batch de activaciones',
+      presetOptions: {
+        balanced: {
+          label: 'Batch equilibrado',
+          description: 'Las activaciones ya rodean el cero con una dispersión moderada.',
+          interpretation: 'Este batch ya está bastante centrado, así que BatchNorm cambia menos dramáticamente.',
+        },
+        shifted: {
+          label: 'Batch desplazado hacia arriba',
+          description: 'La mayoría de las activaciones quedan muy por encima de cero, como una capa oculta que deriva.',
+          interpretation: 'Es el caso más claro para ver cómo BatchNorm recentra un batch desplazado durante entrenamiento.',
+        },
+        mixed: {
+          label: 'Batch mixto / desigual',
+          description: 'Un batch más ancho con activaciones negativas y muy positivas.',
+          interpretation: 'Este preset facilita comparar un batch ruidoso con estadísticas acumuladas más suaves en inferencia.',
+        },
+      },
+      modeTitle: 'Modo de normalización',
+      modeOptions: {
+        none: {
+          label: 'Sin BatchNorm',
+          description: 'Deja intactas las activaciones crudas.',
+          interpretation: 'Sin normalización, la salida conserva el mismo desplazamiento de media y la misma escala del batch entrante.',
+        },
+        train: {
+          label: 'BatchNorm, modo entrenamiento',
+          description: 'Normaliza con la media y la varianza del batch actual.',
+          interpretation: 'El modo entrenamiento recentra este batch concreto y lleva su dispersión cerca de una desviación típica.',
+        },
+        inference: {
+          label: 'BatchNorm, modo inferencia',
+          description: 'Normaliza con estadísticas acumuladas en lugar del batch vivo.',
+          interpretation: 'El modo inferencia es más predecible entre peticiones, pero ya no recentra perfectamente este batch exacto.',
+        },
+      },
+      controlsHintTitle: 'Cómo leer la comparación',
+      controlsHintBullets: [
+        'Elige primero un preset de batch y luego cambia de modo para mantener visibles exactamente las mismas activaciones.',
+        'Las estadísticas ámbar describen el batch vivo antes de normalizar.',
+        'Las estadísticas cian describen lo que vería la siguiente capa después de aplicar el modo elegido.',
+      ],
+      stats: {
+        batchMean: 'Media del batch',
+        batchStd: 'Desv. típica del batch',
+        outputMean: 'Media de salida',
+        outputStd: 'Desv. típica de salida',
+        runningMean: 'Media acumulada',
+        runningStd: 'Desv. típica acumulada',
+        meanShift: 'Cambio de media en salida',
+        range: 'Rango de salida',
+      },
+      readingGuideTitle: 'Qué comparar primero',
+      readingGuideBullets: [
+        'Empieza con el batch desplazado y sin BatchNorm. Fíjate en que todas las barras de salida siguen desplazadas hacia arriba.',
+        'Cambia a modo entrenamiento y comprueba cómo la media del batch se acerca a cero mientras la dispersión se controla mejor.',
+        'Después cambia a modo inferencia. La salida sigue normalizada, pero ahora depende de estadísticas acumuladas y no del batch exacto actual.',
+      ],
+      bridgeTitle: 'Conexión con la lección anterior',
+      bridgeDescription: (mode, batchMean, outputMean) => {
+        if (mode === 'none') {
+          return `La media del batch entrante es ${batchMean.toFixed(2)} y, sin BatchNorm, la siguiente capa hereda esa misma deriva. Después de la lección de inicialización, la idea nueva aquí es que el entrenamiento estable también puede venir de controlar las activaciones que recibe cada capa.`
+        }
+
+        if (mode === 'train') {
+          return `BatchNorm en entrenamiento transforma una media de batch de ${batchMean.toFixed(2)} en una media de salida cercana a ${outputMean.toFixed(2)} usando las estadísticas de este minibatch. Esa dependencia del batch es justo la parte que no conviene perder en la simplificación.`
+        }
+
+        return `El modo inferencia sigue normalizando, pero lo hace con estadísticas acumuladas, así que la media de salida cae cerca de ${outputMean.toFixed(2)} en lugar de quedar perfectamente en cero. Por eso importa distinguir entrenamiento e inferencia en BatchNorm.`
+      },
+      prompts: [
+        'Usa el batch desplazado. ¿Qué modo recentra con más claridad las salidas alrededor de cero?',
+        'Cambia de entrenamiento a inferencia sobre el batch mixto. ¿Por qué cambian las barras de salida si las activaciones crudas siguen siendo idénticas?',
+        'Vuelve a sin BatchNorm. ¿Qué parte del problema de deriva o escala se transmite ahora directamente a la siguiente capa?',
+      ],
+      visualization: {
+        batchStatsTitle: 'Estadísticas del batch entrante',
+        outputStatsTitle: 'Lo que ve la siguiente capa',
+        ariaLabel: 'Visualización de BatchNorm mostrando activaciones crudas y normalizadas para cada muestra',
+        sampleLabel: (index) => `Muestra ${index}`,
+        rawLabel: 'Activación cruda',
+        outputLabels: {
+          none: 'Activación de salida',
+          normalized: 'Activación normalizada',
+        },
+        rangeValue: (min, max) => `${min.toFixed(2)} a ${max.toFixed(2)}`,
+      },
+    },
   },
   sections: {
     foundations: {
@@ -703,6 +805,15 @@ export const esMessages: LocalizedMessages = {
       objectives: [
         'Conectar la escala inicial con la dispersión de activaciones hacia delante',
         'Relacionar esa misma escala con un proxy simple de estabilidad hacia atrás',
+      ],
+    },
+    'normalization-batchnorm-intuition': {
+      title: 'Normalización · intuición de BatchNorm',
+      shortTitle: 'Intuición de BatchNorm',
+      summary: 'Compara activaciones crudas, BatchNorm en entrenamiento y BatchNorm en inferencia para ver cómo las estadísticas del batch cambian lo que recibe la siguiente capa.',
+      objectives: [
+        'Relacionar las estadísticas del batch con la normalización en entrenamiento',
+        'Contrastar la normalización del batch vivo con las estadísticas acumuladas de inferencia',
       ],
     },
   },

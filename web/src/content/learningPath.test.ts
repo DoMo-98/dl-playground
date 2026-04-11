@@ -73,6 +73,14 @@ describe('learningPath registry', () => {
     expect(getSectionPath(foundations!)).toBe('/en/learn/foundations/perceptron/weighted-sum')
   })
 
+  it('places BatchNorm right after initialization in the learner sequence', () => {
+    const initialization = getAdjacentLessons('initialization-bad-vs-stable')
+    const batchNorm = getAdjacentLessons('normalization-batchnorm-intuition')
+
+    expect(initialization.next?.id).toBe('normalization-batchnorm-intuition')
+    expect(batchNorm.previous?.id).toBe('initialization-bad-vs-stable')
+  })
+
   it('falls back safely when adjacency is requested for an unknown lesson', () => {
     expect(getAdjacentLessons('missing-lesson')).toEqual({
       previous: null,

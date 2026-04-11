@@ -12,6 +12,7 @@ import { ActivationsPage } from '../pages/lessons/foundations/mlp/ActivationsPag
 import { GradientDescentPage } from '../pages/lessons/foundations/optimization/GradientDescentPage'
 import { LocalPatternPage } from '../pages/lessons/cnns/convolutions/LocalPatternPage'
 import { InitializationPage } from '../pages/lessons/foundations/stable-training/InitializationPage'
+import { BatchNormPage } from '../pages/lessons/foundations/stable-training/BatchNormPage'
 import { NotFoundPage } from '../pages/not-found/NotFoundPage'
 
 const lessonRouteElements = {
@@ -21,6 +22,7 @@ const lessonRouteElements = {
   'mlp-activations': <ActivationsPage />,
   'cnn-local-patterns': <LocalPatternPage />,
   'initialization-bad-vs-stable': <InitializationPage />,
+  'normalization-batchnorm-intuition': <BatchNormPage />,
 } as const
 
 function LocaleLayout() {

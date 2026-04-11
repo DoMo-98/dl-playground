@@ -138,7 +138,20 @@ const sectionBases: LearningSectionBase[] = [
       {
         slug: 'normalization-and-regularization',
         order: 2,
-        lessons: [],
+        lessons: [
+          {
+            id: 'normalization-batchnorm-intuition',
+            slug: 'batchnorm-intuition',
+            status: 'ready',
+            kind: 'interactive',
+            sectionSlug: 'stable-training',
+            unitSlug: 'normalization-and-regularization',
+            order: 7,
+            estimatedMinutes: 12,
+            concepts: ['batch statistics', 'normalization', 'train vs inference'],
+            prerequisites: ['initialization-bad-vs-stable'],
+          },
+        ],
       },
     ],
   },

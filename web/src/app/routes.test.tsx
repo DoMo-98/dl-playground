@@ -72,6 +72,20 @@ describe('localized app routing', () => {
     expect(screen.getByText('Entrenamiento estable · Inicialización')).toBeInTheDocument()
   })
 
+  it('opens the BatchNorm lesson on locale-prefixed routes', () => {
+    render(
+      <MemoryRouter initialEntries={['/es/learn/stable-training/normalization-and-regularization/batchnorm-intuition']}>
+        <AppRoutes />
+      </MemoryRouter>,
+    )
+
+    expect(screen.getByRole('heading', { name: 'Intuición de BatchNorm' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /anterior.*mala inicialización vs inicialización estable/i })).toHaveAttribute(
+      'href',
+      '/es/learn/stable-training/initialization/bad-vs-stable',
+    )
+  })
+
   it('switches locale while preserving the current lesson route', async () => {
     const user = userEvent.setup()
 
