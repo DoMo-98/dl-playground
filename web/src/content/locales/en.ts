@@ -352,6 +352,45 @@ type LocalizedMessages = {
       bridgeDescription: (mode: 'tiny' | 'xavier' | 'he' | 'large', activation: 'relu' | 'tanh') => string
       prompts: string[]
     }
+    batchNormPage: {
+      eyebrow: string
+      title: string
+      description: string
+      objective: string
+      coreIdeaDescription: string
+      coreIdeaBullets: string[]
+      presetTitle: string
+      presetOptions: Record<'balanced' | 'shifted' | 'mixed', { label: string; description: string; interpretation: string }>
+      modeTitle: string
+      modeOptions: Record<'none' | 'train' | 'inference', { label: string; description: string; interpretation: string }>
+      controlsHintTitle: string
+      controlsHintBullets: string[]
+      stats: {
+        batchMean: string
+        batchStd: string
+        outputMean: string
+        outputStd: string
+        runningMean: string
+        runningStd: string
+        meanShift: string
+        range: string
+      }
+      readingGuideTitle: string
+      readingGuideBullets: string[]
+      bridgeTitle: string
+      bridgeDescription: (mode: 'none' | 'train' | 'inference', batchMean: number, outputMean: number) => string
+      prompts: string[]
+      visualization: {
+        batchStatsTitle: string
+        outputStatsTitle: string
+        ariaLabel: string
+        sampleLabel: (index: number) => string
+        outputLabels: {
+          none: string
+          normalized: string
+        }
+      }
+    }
   }
   sections: Record<string, LocalizedSectionCopy>
   units: Record<string, LocalizedUnitCopy>
@@ -936,6 +975,106 @@ export const enMessages: LocalizedMessages = {
         'Try Oversized weights. Which metric blows up first: the forward signal or the backward proxy?',
       ],
     },
+    batchNormPage: {
+      eyebrow: 'Stable training · Normalization',
+      title: 'BatchNorm intuition',
+      description:
+        'Batch normalization recenters and rescales activations using batch statistics during training, then switches to running statistics at inference time. This lesson keeps that contrast visible on one tiny activation batch.',
+      objective:
+        'What changes when the same activations pass through no normalization, BatchNorm in training mode, or BatchNorm in inference mode?',
+      coreIdeaDescription:
+        'Ioffe & Szegedy (2015) frame BatchNorm around batch-dependent statistics. The core intuition here is narrow and faithful: the current mini-batch sets the mean and variance during training, but inference has to rely on running estimates collected earlier.',
+      coreIdeaBullets: [
+        'Training-mode BatchNorm uses the current batch, so a shifted batch gets pulled back toward a more controlled range.',
+        'Inference cannot peek at the full training batch, so it uses running mean and variance instead.',
+        'The mechanism is not “make everything zero forever”, but “stabilize what each layer sees while preserving a predictable scale.”',
+      ],
+      presetTitle: 'Activation batch presets',
+      presetOptions: {
+        balanced: {
+          label: 'Balanced batch',
+          description: 'Activations already straddle zero with a moderate spread.',
+          interpretation: 'This batch is already fairly centered, so BatchNorm changes less dramatically.',
+        },
+        shifted: {
+          label: 'Shifted upward batch',
+          description: 'Most activations sit well above zero, mimicking a drifting hidden layer.',
+          interpretation: 'This is the clearest case for seeing BatchNorm recenter a drifting batch during training.',
+        },
+        mixed: {
+          label: 'Mixed / uneven batch',
+          description: 'A wider batch with both negative and strongly positive activations.',
+          interpretation: 'This preset makes it easy to compare a noisy batch against smoother running statistics at inference.',
+        },
+      },
+      modeTitle: 'Normalization mode',
+      modeOptions: {
+        none: {
+          label: 'No BatchNorm',
+          description: 'Leave the raw activations untouched.',
+          interpretation: 'Without normalization, the output keeps the same mean shift and scale as the incoming batch.',
+        },
+        train: {
+          label: 'BatchNorm, training mode',
+          description: 'Normalize with the current batch mean and variance.',
+          interpretation: 'Training mode recenters this specific batch and pushes its spread close to one standard deviation.',
+        },
+        inference: {
+          label: 'BatchNorm, inference mode',
+          description: 'Normalize with stored running statistics instead of the live batch.',
+          interpretation: 'Inference mode stays predictable across requests, but it no longer perfectly recenters this exact batch.',
+        },
+      },
+      controlsHintTitle: 'How to read the comparison',
+      controlsHintBullets: [
+        'Pick a batch preset first, then switch modes so the exact same activations stay in view.',
+        'The amber stats describe the live batch before normalization.',
+        'The cyan stats describe what the next layer would see after the chosen mode is applied.',
+      ],
+      stats: {
+        batchMean: 'Batch mean',
+        batchStd: 'Batch std',
+        outputMean: 'Output mean',
+        outputStd: 'Output std',
+        runningMean: 'Running mean',
+        runningStd: 'Running std',
+        meanShift: 'Output mean shift',
+        range: 'Output range',
+      },
+      readingGuideTitle: 'What to compare first',
+      readingGuideBullets: [
+        'Start with the shifted batch and no BatchNorm. Notice that every output bar stays displaced upward.',
+        'Switch to training mode and check how the batch mean moves close to zero while the spread becomes more controlled.',
+        'Then switch to inference mode. The output still uses normalization, but now it follows stored running statistics instead of the exact current batch.',
+      ],
+      bridgeTitle: 'Connection to the previous lesson',
+      bridgeDescription: (mode, batchMean, outputMean) => {
+        if (mode === 'none') {
+          return `The incoming batch mean is ${batchMean.toFixed(2)}, and without BatchNorm the next layer inherits that same drift. After the initialization lesson, this is the key new idea: stable training can also come from controlling the activations each layer receives.`
+        }
+
+        if (mode === 'train') {
+          return `Training-mode BatchNorm turns a batch mean of ${batchMean.toFixed(2)} into an output mean near ${outputMean.toFixed(2)} by using this mini-batch's own statistics. That is the batch-dependent part you should not lose in the simplification.`
+        }
+
+        return `Inference mode still normalizes, but it does so with stored running statistics, so the output mean lands near ${outputMean.toFixed(2)} instead of perfectly zero. This is why train-vs-inference behavior matters in BatchNorm.`
+      },
+      prompts: [
+        'Use the shifted batch. Which mode most clearly recenters the outputs around zero?',
+        'Switch from training to inference on the mixed batch. Why do the output bars change even though the raw activations stayed identical?',
+        'Return to no BatchNorm. Which part of the drift or scale problem is now passed directly to the next layer?',
+      ],
+      visualization: {
+        batchStatsTitle: 'Incoming batch statistics',
+        outputStatsTitle: 'What the next layer sees',
+        ariaLabel: 'BatchNorm lesson visualization showing raw and normalized activations for each sample',
+        sampleLabel: (index) => `Sample ${index}`,
+        outputLabels: {
+          none: 'Output activation',
+          normalized: 'Normalized activation',
+        },
+      },
+    },
   },
   sections: {
     foundations: {
@@ -1056,6 +1195,15 @@ export const enMessages: LocalizedMessages = {
       objectives: [
         'Connect initialization scale to forward activation spread',
         'Relate the same starting scale to a simple backward-stability proxy',
+      ],
+    },
+    'normalization-batchnorm-intuition': {
+      title: 'Normalization · BatchNorm intuition',
+      shortTitle: 'BatchNorm intuition',
+      summary: 'Compare raw activations, training-time BatchNorm, and inference-time BatchNorm to see how batch statistics change what the next layer receives.',
+      objectives: [
+        'Relate batch statistics to training-time normalization',
+        'Contrast live batch normalization with inference-time running statistics',
       ],
     },
   },
