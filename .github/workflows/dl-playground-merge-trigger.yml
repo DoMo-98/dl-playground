@@ -17,19 +17,9 @@ jobs:
         id: filter
         env:
           PR_AUTHOR: ${{ github.event.pull_request.user.login }}
-          PR_HEAD: ${{ github.event.pull_request.head.ref }}
-          PR_LABELS_JSON: ${{ toJson(github.event.pull_request.labels.*.name) }}
         run: |
           set -euo pipefail
           if [[ "$PR_AUTHOR" == "clawsdomoassistant-cell" ]]; then
-            echo "eligible=true" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          if [[ "$PR_HEAD" == claws/* || "$PR_HEAD" == agent/* || "$PR_HEAD" == dl-cycle/* ]]; then
-            echo "eligible=true" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          if jq -e '.[] | select(. == "dl-cycle")' <<<"$PR_LABELS_JSON" >/dev/null; then
             echo "eligible=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -37,7 +27,7 @@ jobs:
 
       - name: Skip non-cycle merge
         if: steps.filter.outputs.eligible != 'true'
-        run: echo "Merged PR does not match dl-playground cycle filters; skipping hook trigger."
+        run: echo "Merged PR author is not eligible for the dl-playground cycle hook; skipping trigger."
 
       - name: Trigger OpenClaw hook
         if: steps.filter.outputs.eligible == 'true'
