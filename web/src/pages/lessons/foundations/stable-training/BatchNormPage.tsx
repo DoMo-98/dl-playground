@@ -22,7 +22,19 @@ function formatValue(value: number) {
   return value.toFixed(2)
 }
 
-function SignalRow({ label, raw, output, outputLabel }: { label: string; raw: number; output: number; outputLabel: string }) {
+function SignalRow({
+  label,
+  raw,
+  output,
+  rawLabel,
+  outputLabel,
+}: {
+  label: string
+  raw: number
+  output: number
+  rawLabel: string
+  outputLabel: string
+}) {
   const rawWidth = `${Math.min(100, Math.abs(raw) * 20)}%`
   const outputWidth = `${Math.min(100, Math.abs(output) * 20)}%`
 
@@ -36,7 +48,7 @@ function SignalRow({ label, raw, output, outputLabel }: { label: string; raw: nu
       <div className="space-y-3">
         <div>
           <div className="mb-1 flex items-center justify-between text-[11px] uppercase tracking-[0.18em] text-slate-400">
-            <span>Raw activation</span>
+            <span>{rawLabel}</span>
             <span>{formatValue(raw)}</span>
           </div>
           <div className="h-2 rounded-full bg-white/10">
@@ -157,6 +169,7 @@ export function BatchNormPage() {
                 label={copy.visualization.sampleLabel(sample.index)}
                 raw={sample.raw}
                 output={sample.output}
+                rawLabel={copy.visualization.rawLabel}
                 outputLabel={mode === 'none' ? copy.visualization.outputLabels.none : copy.visualization.outputLabels.normalized}
               />
             ))}
@@ -169,7 +182,7 @@ export function BatchNormPage() {
             <StatCard label={copy.stats.runningMean} value={formatValue(analysis.runningStats.mean)} accent />
             <StatCard label={copy.stats.runningStd} value={formatValue(analysis.runningStats.std)} />
             <StatCard label={copy.stats.meanShift} value={formatValue(analysis.meanShift)} />
-            <StatCard label={copy.stats.range} value={`${formatValue(analysis.outputRange.min)} to ${formatValue(analysis.outputRange.max)}`} />
+            <StatCard label={copy.stats.range} value={copy.visualization.rangeValue(analysis.outputRange.min, analysis.outputRange.max)} />
           </div>
 
           <div>

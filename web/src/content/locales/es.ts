@@ -674,10 +674,12 @@ export const esMessages: LocalizedMessages = {
         outputStatsTitle: 'Lo que ve la siguiente capa',
         ariaLabel: 'Visualización de BatchNorm mostrando activaciones crudas y normalizadas para cada muestra',
         sampleLabel: (index) => `Muestra ${index}`,
+        rawLabel: 'Activación cruda',
         outputLabels: {
           none: 'Activación de salida',
           normalized: 'Activación normalizada',
         },
+        rangeValue: (min, max) => `${min.toFixed(2)} a ${max.toFixed(2)}`,
       },
     },
   },

@@ -385,10 +385,12 @@ type LocalizedMessages = {
         outputStatsTitle: string
         ariaLabel: string
         sampleLabel: (index: number) => string
+        rawLabel: string
         outputLabels: {
           none: string
           normalized: string
         }
+        rangeValue: (min: number, max: number) => string
       }
     }
   }
@@ -1069,10 +1071,12 @@ export const enMessages: LocalizedMessages = {
         outputStatsTitle: 'What the next layer sees',
         ariaLabel: 'BatchNorm lesson visualization showing raw and normalized activations for each sample',
         sampleLabel: (index) => `Sample ${index}`,
+        rawLabel: 'Raw activation',
         outputLabels: {
           none: 'Output activation',
           normalized: 'Normalized activation',
         },
+        rangeValue: (min, max) => `${min.toFixed(2)} to ${max.toFixed(2)}`,
       },
     },
   },
