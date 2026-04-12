@@ -770,6 +770,88 @@ export const esMessages: LocalizedMessages = {
         layerNormLabel: 'Salida con LayerNorm',
       },
     },
+    residualConnectionsPage: {
+      eyebrow: 'Entrenamiento estable · Conexiones residuales',
+      title: 'Por qué ayudan las skip connections',
+      description:
+        'Los bloques residuales dejan que cada capa añada una corrección en vez de reemplazar toda la representación. Esta lección contrasta una pila plana con una pila residual para que se vea cómo el camino identidad preserva señal útil cuando aumenta la profundidad.',
+      objective:
+        '¿Por qué añadir un camino identidad hace más fácil que una pila profunda siga siendo útil que pedir a cada bloque que reescriba toda la señal?',
+      coreIdeaDescription:
+        'He et al. plantean el aprendizaje residual como ajustar una función residual encima de un atajo identidad. La lección fiel y acotada aquí es que un bloque se vuelve más fácil de usar cuando puede conservar la representación actual y solo sumar lo que hace falta cambiar.',
+      coreIdeaBullets: [
+        'Una pila plana entrega a cada bloque solo la salida transformada del bloque anterior, así que la profundidad puede sobrescribir o encoger la señal original muy deprisa.',
+        'Un bloque residual mantiene vivo un carril identidad y añade encima una corrección aprendida.',
+        'La idea no es que la rama residual no haga nada, sino que puede hacer pequeños ajustes útiles sin obligar a reconstruir toda la representación en cada capa.',
+      ],
+      presetTitle: 'Comportamiento de la rama residual',
+      presetOptions: {
+        denoise: {
+          label: 'Rama de limpieza suave',
+          description: 'Cada bloque propone una corrección pequeña, tipo limpieza de señal.',
+          plainInterpretation: 'En la pila plana, la salida de la rama pasa a ser el estado completo siguiente, así que la señal original se apaga rápido.',
+          residualInterpretation: 'En la pila residual, esa misma rama de limpieza actúa como una corrección ligera superpuesta a las features originales.',
+        },
+        'feature-boost': {
+          label: 'Rama que refuerza features',
+          description: 'Cada bloque amplifica algunas features y recorta otras.',
+          plainInterpretation: 'Sin el skip path, repetir ese refuerzo acaba reemplazando el patrón original por la preferencia de la rama.',
+          residualInterpretation: 'Con el skip path, la rama puede enfatizar features útiles mientras el patrón de entrada sigue sobreviviendo por debajo.',
+        },
+        'context-mix': {
+          label: 'Rama que mezcla contexto',
+          description: 'Cada bloque mezcla features vecinas de forma más agresiva.',
+          plainInterpretation: 'La pila plana colapsa pronto hacia el comportamiento de mezcla de la rama porque cada capa solo puede reenviar ese estado remezclado.',
+          residualInterpretation: 'La pila residual también mezcla contexto, pero conserva una ruta explícita para que la representación previa atraviese la profundidad.',
+        },
+      },
+      depthTitle: 'Profundidad de la pila',
+      depthOptionLabel: (depth) => `${depth} bloques`,
+      depthOptionDescription: (depth) => depth <= 2
+        ? 'Una pila corta donde ambos diseños todavía se parecen bastante.'
+        : depth <= 4
+          ? 'Suficiente profundidad para que la ruta plana empiece a alejarse de la entrada.'
+          : 'Una pila más profunda donde el skip path debe mantener viva la señal original a través de muchos bloques.',
+      controlsHintTitle: 'Cómo leer la comparación',
+      controlsHintBullets: [
+        'Las barras de entrada nunca cambian, así que actúan como la representación de referencia que queremos preservar o refinar.',
+        'Compara la salida morada de la pila plana con la salida cian de la pila residual después de cambiar solo la rama o la profundidad.',
+        'Luego mira la traza por bloques. Una distancia menor respecto a la entrada significa que esa pila todavía está transportando más de la representación original.',
+      ],
+      stats: {
+        plainDistance: 'Distancia de la pila plana a la entrada',
+        plainNorm: 'Norma de señal de la pila plana',
+        residualDistance: 'Distancia de la pila residual a la entrada',
+        residualNorm: 'Norma de señal de la pila residual',
+        preservationGain: 'Ventaja de preservación residual',
+        preservationGainValue: (gain) => `${gain.toFixed(1)}× mejor`,
+        residualDeltaNorm: 'Tamaño de la corrección residual',
+        depth: 'Profundidad activa',
+      },
+      layerTraceTitle: 'Distancia a la entrada original a lo largo de la profundidad',
+      layerLabel: (layerIndex) => `Bloque ${layerIndex}`,
+      readingGuideTitle: 'Qué comparar primero',
+      readingGuideBullets: [
+        'Empieza con 2 bloques y observa que ambos diseños siguen relativamente cerca de la entrada, sobre todo en el preset más suave.',
+        'Sube a 4 u 8 bloques. La pila plana ahora depende por completo de salidas de rama repetidas, así que se aleja más de la señal original.',
+        'Mira en cambio la pila residual: el camino identidad sigue transportando la señal original mientras cada bloque solo añade una corrección.',
+      ],
+      bridgeTitle: 'Conexión con la idea central de ResNet',
+      bridgeDescription: (depth, gain) => `Con ${depth} bloques, la pila residual está preservando la representación original alrededor de ${gain.toFixed(1)}× mejor que la pila plana en este ejemplo juguete. Eso captura la idea pedagógica estrecha de He et al.: aprender una actualización residual puede ser más fácil que reaprender el mapeo completo en cada capa.`,
+      prompts: [
+        'Mantén el mismo preset y pasa de 2 a 8 bloques. ¿Qué pila se mantiene visualmente más cerca de las barras de entrada?',
+        'Cambia de Rama de limpieza suave a Rama que mezcla contexto. ¿Cómo altera el skip path el efecto de la profundidad sobre la representación original?',
+        'Mira la traza por bloques. ¿En qué bloque empieza la pila plana a derivar mucho más rápido que la pila residual?',
+      ],
+      visualization: {
+        plainTitle: 'Pila plana tras el último bloque',
+        residualTitle: 'Pila residual tras el último bloque',
+        featureAriaLabel: 'Visualización de conexiones residuales comparando entrada, salida de pila plana y salida de pila residual por feature',
+        inputLabel: 'Señal de entrada',
+        plainLabel: 'Salida plana',
+        residualLabel: 'Salida residual',
+      },
+    },
   },
   sections: {
     foundations: {
@@ -822,6 +904,10 @@ export const esMessages: LocalizedMessages = {
     'normalization-and-regularization': {
       title: 'Normalización y regularización',
       description: 'Herramientas de estabilidad que moldean activaciones, gradientes y generalización.',
+    },
+    'residual-connections': {
+      title: 'Conexiones residuales',
+      description: 'Atajos identidad que permiten a pilas profundas conservar señal útil mientras aprenden correcciones.',
     },
     'rnns-and-lstms': {
       title: 'RNNs y LSTMs',
@@ -911,6 +997,15 @@ export const esMessages: LocalizedMessages = {
       objectives: [
         'Contrastar la normalización dependiente del batch con la normalización por muestra',
         'Ver por qué LayerNorm se mantiene estable cuando cambian las vecinas del batch',
+      ],
+    },
+    'residual-connections-why-skip-connections-help': {
+      title: 'Conexiones residuales · por qué ayudan las skip connections',
+      shortTitle: 'Por qué ayudan las skip connections',
+      summary: 'Compara una pila plana con una pila residual para ver cómo los atajos identidad conservan señal útil mientras cada bloque solo aprende una corrección.',
+      objectives: [
+        'Contrastar reemplazo completo frente a corrección residual a medida que crece la profundidad',
+        'Ver por qué un atajo identidad ayuda a que las representaciones profundas sigan siendo utilizables',
       ],
     },
   },

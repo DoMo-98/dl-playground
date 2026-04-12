@@ -77,11 +77,14 @@ describe('learningPath registry', () => {
     const initialization = getAdjacentLessons('initialization-bad-vs-stable')
     const batchNorm = getAdjacentLessons('normalization-batchnorm-intuition')
     const layerNorm = getAdjacentLessons('normalization-layernorm-intuition')
+    const residual = getAdjacentLessons('residual-connections-why-skip-connections-help')
 
     expect(initialization.next?.id).toBe('normalization-batchnorm-intuition')
     expect(batchNorm.previous?.id).toBe('initialization-bad-vs-stable')
     expect(batchNorm.next?.id).toBe('normalization-layernorm-intuition')
     expect(layerNorm.previous?.id).toBe('normalization-batchnorm-intuition')
+    expect(layerNorm.next?.id).toBe('residual-connections-why-skip-connections-help')
+    expect(residual.previous?.id).toBe('normalization-layernorm-intuition')
   })
 
   it('falls back safely when adjacency is requested for an unknown lesson', () => {

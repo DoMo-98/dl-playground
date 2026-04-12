@@ -100,6 +100,20 @@ describe('localized app routing', () => {
     )
   })
 
+  it('opens the residual connections lesson on locale-prefixed routes', () => {
+    render(
+      <MemoryRouter initialEntries={['/es/learn/stable-training/residual-connections/why-skip-connections-help']}>
+        <AppRoutes />
+      </MemoryRouter>,
+    )
+
+    expect(screen.getByRole('heading', { name: 'Por qué ayudan las skip connections' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /anterior.*intuición de layernorm/i })).toHaveAttribute(
+      'href',
+      '/es/learn/stable-training/normalization-and-regularization/layernorm-intuition',
+    )
+  })
+
   it('switches locale while preserving the current lesson route', async () => {
     const user = userEvent.setup()
 

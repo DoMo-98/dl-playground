@@ -429,6 +429,51 @@ type LocalizedMessages = {
         layerNormLabel: string
       }
     }
+    residualConnectionsPage: {
+      eyebrow: string
+      title: string
+      description: string
+      objective: string
+      coreIdeaDescription: string
+      coreIdeaBullets: string[]
+      presetTitle: string
+      presetOptions: Record<'denoise' | 'feature-boost' | 'context-mix', {
+        label: string
+        description: string
+        plainInterpretation: string
+        residualInterpretation: string
+      }>
+      depthTitle: string
+      depthOptionLabel: (depth: number) => string
+      depthOptionDescription: (depth: number) => string
+      controlsHintTitle: string
+      controlsHintBullets: string[]
+      stats: {
+        plainDistance: string
+        plainNorm: string
+        residualDistance: string
+        residualNorm: string
+        preservationGain: string
+        preservationGainValue: (gain: number) => string
+        residualDeltaNorm: string
+        depth: string
+      }
+      layerTraceTitle: string
+      layerLabel: (layerIndex: number) => string
+      readingGuideTitle: string
+      readingGuideBullets: string[]
+      bridgeTitle: string
+      bridgeDescription: (depth: number, gain: number) => string
+      prompts: string[]
+      visualization: {
+        plainTitle: string
+        residualTitle: string
+        featureAriaLabel: string
+        inputLabel: string
+        plainLabel: string
+        residualLabel: string
+      }
+    }
   }
   sections: Record<string, LocalizedSectionCopy>
   units: Record<string, LocalizedUnitCopy>
@@ -1203,6 +1248,88 @@ export const enMessages: LocalizedMessages = {
         layerNormLabel: 'LayerNorm output',
       },
     },
+    residualConnectionsPage: {
+      eyebrow: 'Stable training · Residual connections',
+      title: 'Why skip connections help',
+      description:
+        'Residual blocks let each layer add a correction instead of replacing the whole representation. This lesson contrasts a plain stack with a residual stack so you can see how the identity path preserves useful signal as depth grows.',
+      objective:
+        'Why does adding an identity skip path make deep stacks easier to keep useful than asking every block to rewrite the full signal?',
+      coreIdeaDescription:
+        'He et al. frame residual learning as fitting a residual function on top of an identity shortcut. The faithful, narrow lesson here is that a block becomes easier to use when it can keep the current representation and only add what needs changing.',
+      coreIdeaBullets: [
+        'A plain stack feeds each block only the transformed output of the previous block, so depth can overwrite or shrink the original signal quickly.',
+        'A residual block keeps an identity lane alive and adds a learned correction on top of it.',
+        'The point is not that residual branches do nothing, but that they can make small useful edits without forcing the whole representation to be rebuilt each time.',
+      ],
+      presetTitle: 'Residual branch behavior',
+      presetOptions: {
+        denoise: {
+          label: 'Gentle cleanup branch',
+          description: 'Each block proposes a small cleanup-style correction.',
+          plainInterpretation: 'In the plain stack, the branch output becomes the entire next state, so the original signal fades quickly.',
+          residualInterpretation: 'In the residual stack, that same cleanup branch acts like a light correction layered on top of the original features.',
+        },
+        'feature-boost': {
+          label: 'Feature boosting branch',
+          description: 'Each block amplifies some features while trimming others.',
+          plainInterpretation: 'Without the skip path, repeated feature boosting starts to replace the original pattern with the branch preference alone.',
+          residualInterpretation: 'With the skip path, the branch can emphasize useful features while the input pattern still survives underneath.',
+        },
+        'context-mix': {
+          label: 'Context mixing branch',
+          description: 'Each block mixes neighboring features more aggressively.',
+          plainInterpretation: 'The plain stack quickly collapses into the branch mixing behavior because every layer must pass only that remixed state onward.',
+          residualInterpretation: 'The residual stack still mixes context, but it keeps an explicit route for the pre-existing representation to travel through depth.',
+        },
+      },
+      depthTitle: 'Stack depth',
+      depthOptionLabel: (depth) => `${depth} blocks`,
+      depthOptionDescription: (depth) => depth <= 2
+        ? 'A short stack where both designs still look fairly close.'
+        : depth <= 4
+          ? 'Enough depth for the plain path to start drifting away from the input.'
+          : 'A deeper stack where the skip path has to keep the original signal alive across many blocks.',
+      controlsHintTitle: 'How to read the comparison',
+      controlsHintBullets: [
+        'The input bars never move, so they act as the reference representation we want to preserve or refine.',
+        'Compare the purple plain output with the cyan residual output after changing only the branch behavior or depth.',
+        'Then scan the layer trace below. Smaller distance-to-input means that stack is still carrying more of the original representation forward.',
+      ],
+      stats: {
+        plainDistance: 'Plain stack distance to input',
+        plainNorm: 'Plain stack signal norm',
+        residualDistance: 'Residual stack distance to input',
+        residualNorm: 'Residual stack signal norm',
+        preservationGain: 'Residual preservation gain',
+        preservationGainValue: (gain) => `${gain.toFixed(1)}× better`,
+        residualDeltaNorm: 'Residual correction size',
+        depth: 'Active depth',
+      },
+      layerTraceTitle: 'Distance to the original input across depth',
+      layerLabel: (layerIndex) => `Block ${layerIndex}`,
+      readingGuideTitle: 'What to compare first',
+      readingGuideBullets: [
+        'Start with 2 blocks and note that both designs are still fairly close to the input, especially in the gentler preset.',
+        'Increase depth to 4 or 8 blocks. The plain stack now depends entirely on repeated branch outputs, so it drifts farther from the original signal.',
+        'Watch the residual stack instead: the identity path still carries the original signal while each block only adds a correction.',
+      ],
+      bridgeTitle: 'Connection to the ResNet paper claim',
+      bridgeDescription: (depth, gain) => `At ${depth} blocks, the residual stack is preserving the original representation about ${gain.toFixed(1)}× better than the plain stack in this toy setup. That captures the narrow teaching claim from He et al.: learning a residual update can be easier than relearning the whole mapping at every layer.`,
+      prompts: [
+        'Keep the same preset and move from 2 to 8 blocks. Which stack stays visually closer to the input bars?',
+        'Switch from Gentle cleanup to Context mixing. How does the skip path change what depth does to the original representation?',
+        'Look at the layer trace. At which block does the plain stack start drifting much faster than the residual stack?',
+      ],
+      visualization: {
+        plainTitle: 'Plain stack after the last block',
+        residualTitle: 'Residual stack after the last block',
+        featureAriaLabel: 'Residual lesson visualization comparing input, plain stack output, and residual stack output by feature',
+        inputLabel: 'Input signal',
+        plainLabel: 'Plain output',
+        residualLabel: 'Residual output',
+      },
+    },
   },
   sections: {
     foundations: {
@@ -1255,6 +1382,10 @@ export const enMessages: LocalizedMessages = {
     'normalization-and-regularization': {
       title: 'Normalization and regularization',
       description: 'Stability tools that shape activations, gradients, and generalization behavior.',
+    },
+    'residual-connections': {
+      title: 'Residual connections',
+      description: 'Identity shortcuts that let deep stacks keep useful signal while learning corrections.',
     },
     'rnns-and-lstms': {
       title: 'RNNs and LSTMs',
@@ -1341,6 +1472,15 @@ export const enMessages: LocalizedMessages = {
       objectives: [
         'Contrast batch-dependent normalization with per-sample normalization',
         'See why LayerNorm stays stable when batch neighbors change',
+      ],
+    },
+    'residual-connections-why-skip-connections-help': {
+      title: 'Residual connections · why skip connections help',
+      shortTitle: 'Why skip connections help',
+      summary: 'Compare a plain stack with a residual stack to see how identity shortcuts preserve useful signal while each block only learns a correction.',
+      objectives: [
+        'Contrast full replacement with residual correction across depth',
+        'See why an identity shortcut helps deep representations stay usable',
       ],
     },
   },

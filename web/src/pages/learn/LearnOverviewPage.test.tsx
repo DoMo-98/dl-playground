@@ -44,6 +44,10 @@ describe('LearnOverviewPage', () => {
       'href',
       '/en/learn/stable-training/initialization/bad-vs-stable',
     )
+    expect(screen.getByRole('link', { name: /why skip connections help/i })).toHaveAttribute(
+      'href',
+      '/en/learn/stable-training/residual-connections/why-skip-connections-help',
+    )
   })
 
   it('localizes visible metadata badges on Spanish routes', () => {
@@ -59,9 +63,9 @@ describe('LearnOverviewPage', () => {
     expect(screen.getAllByText('4/4 ready').length).toBeGreaterThan(0)
     expect(screen.getAllByText('42 min total').length).toBeGreaterThan(0)
     expect(screen.getAllByText('1/1 ready').length).toBeGreaterThan(0)
-    expect(screen.getAllByText('3/3 ready').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('4/4 ready').length).toBeGreaterThan(0)
     expect(screen.getAllByText('12 min total').length).toBeGreaterThan(0)
-    expect(screen.getAllByText('36 min total').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('48 min total').length).toBeGreaterThan(0)
     expect(screen.getAllByText('Section roadmap').length).toBeGreaterThan(0)
     expect(screen.queryAllByText(/thematic taxonomy/i).length).toBeGreaterThan(0)
   })
