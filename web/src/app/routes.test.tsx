@@ -86,6 +86,20 @@ describe('localized app routing', () => {
     )
   })
 
+  it('opens the LayerNorm lesson on locale-prefixed routes', () => {
+    render(
+      <MemoryRouter initialEntries={['/es/learn/stable-training/normalization-and-regularization/layernorm-intuition']}>
+        <AppRoutes />
+      </MemoryRouter>,
+    )
+
+    expect(screen.getByRole('heading', { name: 'Intuición de LayerNorm' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /anterior.*intuición de batchnorm/i })).toHaveAttribute(
+      'href',
+      '/es/learn/stable-training/normalization-and-regularization/batchnorm-intuition',
+    )
+  })
+
   it('switches locale while preserving the current lesson route', async () => {
     const user = userEvent.setup()
 

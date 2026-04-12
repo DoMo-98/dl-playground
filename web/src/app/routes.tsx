@@ -13,6 +13,7 @@ import { GradientDescentPage } from '../pages/lessons/foundations/optimization/G
 import { LocalPatternPage } from '../pages/lessons/cnns/convolutions/LocalPatternPage'
 import { InitializationPage } from '../pages/lessons/foundations/stable-training/InitializationPage'
 import { BatchNormPage } from '../pages/lessons/foundations/stable-training/BatchNormPage'
+import { LayerNormPage } from '../pages/lessons/foundations/stable-training/LayerNormPage'
 import { NotFoundPage } from '../pages/not-found/NotFoundPage'
 
 const lessonRouteElements = {
@@ -23,6 +24,7 @@ const lessonRouteElements = {
   'cnn-local-patterns': <LocalPatternPage />,
   'initialization-bad-vs-stable': <InitializationPage />,
   'normalization-batchnorm-intuition': <BatchNormPage />,
+  'normalization-layernorm-intuition': <LayerNormPage />,
 } as const
 
 function LocaleLayout() {

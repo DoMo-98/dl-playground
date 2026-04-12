@@ -76,9 +76,12 @@ describe('learningPath registry', () => {
   it('places BatchNorm right after initialization in the learner sequence', () => {
     const initialization = getAdjacentLessons('initialization-bad-vs-stable')
     const batchNorm = getAdjacentLessons('normalization-batchnorm-intuition')
+    const layerNorm = getAdjacentLessons('normalization-layernorm-intuition')
 
     expect(initialization.next?.id).toBe('normalization-batchnorm-intuition')
     expect(batchNorm.previous?.id).toBe('initialization-bad-vs-stable')
+    expect(batchNorm.next?.id).toBe('normalization-layernorm-intuition')
+    expect(layerNorm.previous?.id).toBe('normalization-batchnorm-intuition')
   })
 
   it('falls back safely when adjacency is requested for an unknown lesson', () => {
