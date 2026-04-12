@@ -254,7 +254,7 @@ Current policy:
 ### Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification
 - Authors: Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun
 - Year: 2015
-- Status: lesson-linked
+- Status: summarized
 - Topic(s): relu, initialization, activations, cnn
 - Source strategy:
   - official-preferred: ICCV proceedings
@@ -265,8 +265,8 @@ Current policy:
 - Lesson priority: medium
 - Teaching fit: visual-first
 - Relevance: key source for rectifier behavior and He initialization.
-- Notes: `references/notes/2015-rectifiers.md`
-- Access status: abstract-or-metadata-only
+- Notes: `references/notes/t8-xavier-he-source-investigation-2026-04-12.md`
+- Access status: full-text-ok
 - Potential lesson use:
   - dead neurons intuition
   - ReLU family behavior
