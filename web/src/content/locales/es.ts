@@ -682,6 +682,94 @@ export const esMessages: LocalizedMessages = {
         rangeValue: (min, max) => `${min.toFixed(2)} a ${max.toFixed(2)}`,
       },
     },
+    layerNormPage: {
+      eyebrow: 'Entrenamiento estable · Normalización',
+      title: 'Intuición de LayerNorm',
+      description:
+        'Layer normalization reescala cada muestra usando las estadísticas de sus propias features. Esta lección mantiene fija una muestra mientras cambia el resto del batch, para que se vea por qué LayerNorm no hereda la dependencia de BatchNorm respecto al batch.',
+      objective:
+        '¿Por qué LayerNorm se mantiene estable para una muestra aunque cambien las otras muestras del batch?',
+      coreIdeaDescription:
+        'Ba, Kiros y Hinton (2016) normalizan a través de las features dentro de cada caso individual. La intuición fiel y acotada aquí es que la muestra enfocada lleva su propia media y varianza, así que cambiar las muestras vecinas no debería alterar la salida de LayerNorm para ese caso.',
+      coreIdeaBullets: [
+        'BatchNorm mezcla información entre muestras porque normaliza cada feature con estadísticas compartidas del batch.',
+        'LayerNorm normaliza a través de las features de una sola muestra, así que la misma muestra conserva el mismo patrón normalizado aunque sus vecinas deriven.',
+        'La meta no es borrar la estructura, sino controlar escala y offset sin depender de la composición del minibatch actual.',
+      ],
+      presetTitle: 'Preset de la muestra enfocada',
+      presetOptions: {
+        balanced: {
+          label: 'Perfil equilibrado de features',
+          description: 'La muestra enfocada sube de forma suave a través de sus tres features.',
+          interpretation: 'Esto ayuda a ver que LayerNorm conserva el mismo patrón interno mientras lo recentra dentro de la muestra.',
+        },
+        shifted: {
+          label: 'Perfil positivo desplazado',
+          description: 'Las tres features quedan elevadas, como un estado oculto que deriva.',
+          interpretation: 'Es el preset más claro para ver cómo LayerNorm elimina el offset de la muestra sin depender de qué compañeras comparten el batch.',
+        },
+        contrast: {
+          label: 'Perfil de alto contraste',
+          description: 'La muestra enfocada combina features negativas, medias y muy positivas.',
+          interpretation: 'Este preset deja ver que LayerNorm mantiene el contraste relativo entre features mientras estandariza la muestra en conjunto.',
+        },
+      },
+      contextTitle: 'Contexto del resto del batch',
+      contextOptions: {
+        'steady-peers': {
+          label: 'Compañeras estables',
+          description: 'Las otras muestras se parecen bastante a la muestra enfocada.',
+          interpretation: 'Cuando las compañeras son parecidas, BatchNorm y LayerNorm se parecen más sobre la muestra enfocada.',
+        },
+        'shifted-peers': {
+          label: 'Compañeras desplazadas',
+          description: 'Las otras muestras se mueven hacia arriba mientras la muestra enfocada permanece idéntica.',
+          interpretation: 'Aquí se mueven las estadísticas del batch completo, así que BatchNorm cambia para la muestra enfocada mientras LayerNorm sigue atado solo a esa muestra.',
+        },
+      },
+      controlsHintTitle: 'Cómo leer la comparación',
+      controlsHintBullets: [
+        'La primera muestra es la única mostrada en detalle, y nunca cambia al modificar el contexto vecino.',
+        'Compara las barras cian de BatchNorm con las verdes de LayerNorm después de cambiar solo las muestras compañeras.',
+        'Si LayerNorm está haciendo su trabajo, el patrón verde de la muestra enfocada debería mantenerse idéntico entre contextos.',
+      ],
+      stats: {
+        rawMean: 'Media de la muestra enfocada',
+        rawStd: 'Desv. típica de la muestra enfocada',
+        batchMean: 'Media tras BatchNorm',
+        batchStd: 'Desv. típica tras BatchNorm',
+        layerMean: 'Media tras LayerNorm',
+        layerStd: 'Desv. típica tras LayerNorm',
+        batchVsLayerGap: 'Máx. diferencia BatchNorm vs LayerNorm',
+      },
+      readingGuideTitle: 'Qué comparar primero',
+      readingGuideBullets: [
+        'Empieza con Compañeras estables y anota los tres valores de la muestra enfocada: crudo, BatchNorm y LayerNorm.',
+        'Cambia a Compañeras desplazadas. Los valores crudos siguen fijos porque la muestra enfocada no se movió.',
+        'Observa qué normalización cambia de todos modos: BatchNorm reacciona al nuevo contexto del batch, mientras LayerNorm conserva el mismo patrón feature a feature para la muestra enfocada.',
+      ],
+      bridgeTitle: 'Conexión con la lección de BatchNorm',
+      bridgeDescription: (context, gap) => {
+        if (context === 'steady-peers') {
+          return `Con compañeras estables, BatchNorm y LayerNorm quedan relativamente cerca sobre la muestra enfocada, así que el contraste es más suave. Eso ayuda a ver que no son opuestos, sino normalizaciones sobre ejes distintos.`
+        }
+
+        return `Con compañeras desplazadas, la muestra enfocada mantiene exactamente los mismos valores internos, pero BatchNorm se mueve porque cambió el batch alrededor. La diferencia máxima actual de ${gap.toFixed(2)} hace visible la ventaja de LayerNorm: la normalización por muestra no depende de quién más llegó en el batch.`
+      },
+      prompts: [
+        'Mantén la misma muestra enfocada y cambia de Compañeras estables a Compañeras desplazadas. ¿Qué barras se mueven aunque la muestra no haya cambiado?',
+        'Mira la media y la desviación típica de LayerNorm. ¿Por qué se mantienen cerca de cero y uno para la muestra enfocada en ambos contextos?',
+        'Vuelve al preset de alto contraste. ¿Qué parte de la muestra sobrevive a la normalización: el offset absoluto o el patrón relativo entre features?',
+      ],
+      visualization: {
+        focusTitle: 'Muestra enfocada antes de normalizar',
+        peerTitle: 'Qué cambia cuando derivan las compañeras',
+        ariaLabel: 'Visualización de LayerNorm comparando valores crudos, BatchNorm y LayerNorm para una muestra enfocada',
+        rawLabel: 'Feature cruda',
+        batchNormLabel: 'Salida con BatchNorm',
+        layerNormLabel: 'Salida con LayerNorm',
+      },
+    },
   },
   sections: {
     foundations: {
@@ -814,6 +902,15 @@ export const esMessages: LocalizedMessages = {
       objectives: [
         'Relacionar las estadísticas del batch con la normalización en entrenamiento',
         'Contrastar la normalización del batch vivo con las estadísticas acumuladas de inferencia',
+      ],
+    },
+    'normalization-layernorm-intuition': {
+      title: 'Normalización · intuición de LayerNorm',
+      shortTitle: 'Intuición de LayerNorm',
+      summary: 'Mantén fija una muestra mientras cambian las demás para ver por qué LayerNorm depende de estadísticas por muestra y no de la composición del batch.',
+      objectives: [
+        'Contrastar la normalización dependiente del batch con la normalización por muestra',
+        'Ver por qué LayerNorm se mantiene estable cuando cambian las vecinas del batch',
       ],
     },
   },

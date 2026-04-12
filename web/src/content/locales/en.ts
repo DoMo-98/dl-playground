@@ -393,6 +393,42 @@ type LocalizedMessages = {
         rangeValue: (min: number, max: number) => string
       }
     }
+    layerNormPage: {
+      eyebrow: string
+      title: string
+      description: string
+      objective: string
+      coreIdeaDescription: string
+      coreIdeaBullets: string[]
+      presetTitle: string
+      presetOptions: Record<'balanced' | 'shifted' | 'contrast', { label: string; description: string; interpretation: string }>
+      contextTitle: string
+      contextOptions: Record<'steady-peers' | 'shifted-peers', { label: string; description: string; interpretation: string }>
+      controlsHintTitle: string
+      controlsHintBullets: string[]
+      stats: {
+        rawMean: string
+        rawStd: string
+        batchMean: string
+        batchStd: string
+        layerMean: string
+        layerStd: string
+        batchVsLayerGap: string
+      }
+      readingGuideTitle: string
+      readingGuideBullets: string[]
+      bridgeTitle: string
+      bridgeDescription: (context: 'steady-peers' | 'shifted-peers', gap: number) => string
+      prompts: string[]
+      visualization: {
+        focusTitle: string
+        peerTitle: string
+        ariaLabel: string
+        rawLabel: string
+        batchNormLabel: string
+        layerNormLabel: string
+      }
+    }
   }
   sections: Record<string, LocalizedSectionCopy>
   units: Record<string, LocalizedUnitCopy>
@@ -1079,6 +1115,94 @@ export const enMessages: LocalizedMessages = {
         rangeValue: (min, max) => `${min.toFixed(2)} to ${max.toFixed(2)}`,
       },
     },
+    layerNormPage: {
+      eyebrow: 'Stable training · Normalization',
+      title: 'LayerNorm intuition',
+      description:
+        "Layer normalization rescales each sample using that sample's own feature statistics. This lesson keeps one focused sample fixed while the surrounding batch changes, so you can see why LayerNorm does not inherit BatchNorm's batch dependence.",
+      objective:
+        'Why does LayerNorm stay stable for one sample even when the other samples in the batch change?',
+      coreIdeaDescription:
+        'Ba, Kiros, and Hinton (2016) normalize across the features inside each individual case. The faithful narrow intuition here is that the focused sample carries its own mean and variance, so changing neighboring samples should not change the LayerNorm output for that case.',
+      coreIdeaBullets: [
+        'BatchNorm mixes information across samples because it normalizes each feature with batch-wide statistics.',
+        'LayerNorm normalizes across features inside one sample, so the same sample keeps the same normalized pattern even if its neighbors drift.',
+        'The goal is not to erase structure, but to control scale and offset without depending on the current mini-batch composition.',
+      ],
+      presetTitle: 'Focused sample preset',
+      presetOptions: {
+        balanced: {
+          label: 'Balanced feature profile',
+          description: 'The focused sample rises smoothly across its three features.',
+          interpretation: 'This makes it easy to see that LayerNorm preserves the same internal pattern while re-centering it within the sample.',
+        },
+        shifted: {
+          label: 'Shifted positive profile',
+          description: 'All three features are elevated, similar to a drifting hidden state.',
+          interpretation: 'This is the clearest preset for seeing LayerNorm remove sample-level offset without caring which peers share the batch.',
+        },
+        contrast: {
+          label: 'High-contrast profile',
+          description: 'The focused sample spans negative, medium, and large positive features.',
+          interpretation: 'This preset highlights that LayerNorm keeps relative feature contrast while standardizing the sample as a whole.',
+        },
+      },
+      contextTitle: 'Neighboring batch context',
+      contextOptions: {
+        'steady-peers': {
+          label: 'Steady peers',
+          description: 'The other samples stay close to the focused sample.',
+          interpretation: 'When peers stay similar, BatchNorm and LayerNorm look more alike on the focused sample.',
+        },
+        'shifted-peers': {
+          label: 'Shifted peers',
+          description: 'The other samples drift upward while the focused sample stays exactly the same.',
+          interpretation: 'Now the batch-wide statistics move, so BatchNorm changes for the focused sample while LayerNorm stays locked to the sample itself.',
+        },
+      },
+      controlsHintTitle: 'How to read the comparison',
+      controlsHintBullets: [
+        'The first sample is the only one shown in detail, and it never changes when you switch neighboring context.',
+        'Compare the cyan BatchNorm bars against the green LayerNorm bars after changing only the peer samples.',
+        'If LayerNorm is doing its job, the green pattern for the focused sample should stay identical across contexts.',
+      ],
+      stats: {
+        rawMean: 'Focused-sample mean',
+        rawStd: 'Focused-sample std',
+        batchMean: 'BatchNorm output mean',
+        batchStd: 'BatchNorm output std',
+        layerMean: 'LayerNorm output mean',
+        layerStd: 'LayerNorm output std',
+        batchVsLayerGap: 'Max BatchNorm vs LayerNorm gap',
+      },
+      readingGuideTitle: 'What to compare first',
+      readingGuideBullets: [
+        'Start with Steady peers and note the three values for the focused sample: raw, BatchNorm, and LayerNorm.',
+        'Switch to Shifted peers. The raw values stay fixed because the focused sample did not move.',
+        'Watch which normalization changes anyway: BatchNorm reacts to the new batch context, while LayerNorm keeps the same feature-wise pattern for the focused sample.',
+      ],
+      bridgeTitle: 'Connection to the BatchNorm lesson',
+      bridgeDescription: (context, gap) => {
+        if (context === 'steady-peers') {
+          return `With steady peers, BatchNorm and LayerNorm stay relatively close on the focused sample, so the contrast is milder. That is useful because it shows the methods are not opposites, they simply normalize along different axes.`
+        }
+
+        return `With shifted peers, the focused sample still has the same internal values, but BatchNorm now moves because the surrounding batch changed. The current max gap of ${gap.toFixed(2)} makes the LayerNorm payoff visible: per-sample normalization does not depend on who else arrived in the batch.`
+      },
+      prompts: [
+        'Keep the same focused sample and switch from Steady peers to Shifted peers. Which bars move even though the sample itself did not change?',
+        'Look at the LayerNorm output mean and std. Why do they stay near zero and one for the focused sample across both contexts?',
+        'Return to the high-contrast preset. Which part of the sample survives normalization: absolute offset or relative feature pattern?',
+      ],
+      visualization: {
+        focusTitle: 'Focused sample before normalization',
+        peerTitle: 'What changes when peers drift',
+        ariaLabel: 'LayerNorm lesson visualization comparing raw, BatchNorm, and LayerNorm values for one focused sample',
+        rawLabel: 'Raw feature',
+        batchNormLabel: 'BatchNorm output',
+        layerNormLabel: 'LayerNorm output',
+      },
+    },
   },
   sections: {
     foundations: {
@@ -1208,6 +1332,15 @@ export const enMessages: LocalizedMessages = {
       objectives: [
         'Relate batch statistics to training-time normalization',
         'Contrast live batch normalization with inference-time running statistics',
+      ],
+    },
+    'normalization-layernorm-intuition': {
+      title: 'Normalization · LayerNorm intuition',
+      shortTitle: 'LayerNorm intuition',
+      summary: 'Keep one sample fixed while neighboring samples drift to see why LayerNorm depends on per-sample feature statistics instead of batch composition.',
+      objectives: [
+        'Contrast batch-dependent normalization with per-sample normalization',
+        'See why LayerNorm stays stable when batch neighbors change',
       ],
     },
   },
