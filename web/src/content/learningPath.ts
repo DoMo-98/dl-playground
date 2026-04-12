@@ -165,6 +165,24 @@ const sectionBases: LearningSectionBase[] = [
           },
         ],
       },
+      {
+        slug: 'residual-connections',
+        order: 3,
+        lessons: [
+          {
+            id: 'residual-connections-why-skip-connections-help',
+            slug: 'why-skip-connections-help',
+            status: 'ready',
+            kind: 'interactive',
+            sectionSlug: 'stable-training',
+            unitSlug: 'residual-connections',
+            order: 9,
+            estimatedMinutes: 12,
+            concepts: ['identity path', 'residual correction', 'depth stability'],
+            prerequisites: ['normalization-layernorm-intuition'],
+          },
+        ],
+      },
     ],
   },
   {

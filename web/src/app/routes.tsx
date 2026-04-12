@@ -14,6 +14,7 @@ import { LocalPatternPage } from '../pages/lessons/cnns/convolutions/LocalPatter
 import { InitializationPage } from '../pages/lessons/foundations/stable-training/InitializationPage'
 import { BatchNormPage } from '../pages/lessons/foundations/stable-training/BatchNormPage'
 import { LayerNormPage } from '../pages/lessons/foundations/stable-training/LayerNormPage'
+import { ResidualConnectionsPage } from '../pages/lessons/foundations/stable-training/ResidualConnectionsPage'
 import { NotFoundPage } from '../pages/not-found/NotFoundPage'
 
 const lessonRouteElements = {
@@ -25,6 +26,7 @@ const lessonRouteElements = {
   'initialization-bad-vs-stable': <InitializationPage />,
   'normalization-batchnorm-intuition': <BatchNormPage />,
   'normalization-layernorm-intuition': <LayerNormPage />,
+  'residual-connections-why-skip-connections-help': <ResidualConnectionsPage />,
 } as const
 
 function LocaleLayout() {
