@@ -202,8 +202,8 @@ Current policy:
 - Lesson priority: high
 - Teaching fit: visual-first
 - Relevance: straightforward and teachable regularization mechanism with strong interactive potential.
-- Notes: `references/notes/2014-dropout.md`
-- Access status: abstract-or-metadata-only
+- Notes: `references/notes/t10-dropout-source-investigation-2026-04-12.md`
+- Access status: full-text-ok
 - Potential lesson use:
   - overfitting intuition
   - subnetworks and robustness
