@@ -34,6 +34,9 @@ Implemented today:
 - interactive lesson: **Gradient descent intuition**
 - interactive lesson: **Convolution as local pattern detector**
 - interactive lesson: **Initialization · bad init vs stable init**
+- interactive lesson: **Normalization · BatchNorm intuition**
+- interactive lesson: **Normalization · LayerNorm intuition**
+- interactive lesson: **Residual connections · why skip connections help**
 
 Current learner-facing lesson order:
 
@@ -43,6 +46,9 @@ Current learner-facing lesson order:
 4. **Gradient descent intuition**
 5. **Convolution as local pattern detector**
 6. **Initialization · bad init vs stable init**
+7. **Normalization · BatchNorm intuition**
+8. **Normalization · LayerNorm intuition**
+9. **Residual connections · why skip connections help**
 
 Current top-level taxonomy:
 
@@ -59,11 +65,12 @@ Important rule: section taxonomy groups topics, while the learner-facing lesson 
 
 Immediate next lesson:
 
-- **Normalization · BatchNorm intuition**
+- **Initialization · Xavier and He intuition**
 
 Near-term queue after that:
 
-- residual and regularization intuition modules
+- **Regularization · dropout behavior** *(source-ready research already closed; lesson not yet implemented in the app)*
+- activation-comparison and gradient-flow stable-training lessons
 - deeper sequence and memory topics
 
 For the canonical task state (`DONE`, `NEXT`, `QUEUED`) and the paper-readiness context behind that ordering, see:
@@ -101,9 +108,11 @@ Spatial pattern extraction and hierarchical visual feature building.
 
 ### 3. Stable Training
 Techniques that make optimization and depth behave reliably.
+- [x] **Initialization:** bad init vs stable init.
 - [ ] **Initialization:** Xavier/He intuition.
-- [ ] **Normalization and regularization:** BatchNorm/LayerNorm, dropout, weight decay.
-- [ ] **Residual pathways:** why skip connections help.
+- [x] **Normalization:** BatchNorm intuition and LayerNorm intuition.
+- [x] **Residual pathways:** why skip connections help.
+- [ ] **Regularization:** dropout, weight decay.
 
 ### 4. Sequence & Memory
 Stateful architectures and ordered-data modeling.
